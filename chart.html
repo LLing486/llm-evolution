@@ -297,21 +297,27 @@ let hoverDir = 1;
 function parseParams(p) {
   if (!p || p === '未公开') return null;
   p = p.replace(/~/g, '').replace(/,/g, '').trim();
+  // Match first number+unit; ignore parenthetical MoE active params like "671B (37B激活)"
   const m = p.match(/([\d.]+)\s*([TtBbMm万亿])/);
   if (!m) return null;
   let val = parseFloat(m[1]);
   const u = m[2].toUpperCase();
-  if (u === 'T' || u === '万') val *= 1000;   // T = trillion = 1000B
-  else if (u === '亿') val *= 10000;           // 亿 = 10B in Chinese
+  if (u === 'T') val *= 1000;           // T = trillion = 1000B
   else if (u === 'B') val *= 1;
   else if (u === 'M') val /= 1000;
+  // 万/亿 not used in current data; ignore to avoid incorrect conversion
+  else return null;
   return val;
 }
 
 /* ===================== Date parsing ===================== */
 function parseDate(d) {
+  if (!d || typeof d !== 'string') return null;
   const parts = d.split('-');
-  return new Date(parseInt(parts[0]), parseInt(parts[1] || 1) - 1);
+  const year = parseInt(parts[0]);
+  const month = parseInt(parts[1] || 1);
+  if (isNaN(year) || isNaN(month)) return null;
+  return new Date(year, month - 1);
 }
 
 /* ===================== Load ===================== */
@@ -327,13 +333,16 @@ async function load() {
   unknownModels = [];
   allModels.forEach(m => {
     const p = parseParams(m.params);
-    const enriched = { ...m, _paramsNum: p, _date: parseDate(m.date) };
+    const d = parseDate(m.date);
+    if (!d) return; // skip models with invalid dates
+    const enriched = { ...m, _paramsNum: p, _date: d };
     if (p !== null) parsedModels.push(enriched);
     else unknownModels.push(enriched);
   });
 
   // Sort by date
   parsedModels.sort((a, b) => a._date - b._date);
+  unknownModels.sort((a, b) => a._date - b._date);
 
   // Init active companies (all)
   Object.keys(companies).forEach(c => activeCompanies.add(c));
@@ -407,18 +416,26 @@ function resize() {
 
 /* ===================== Scales ===================== */
 function getXRange() {
-  const dates = parsedModels.map(m => m._date.getTime());
-  return [Math.min(...dates), Math.max(...dates)];
+  const visible = parsedModels.filter(m => activeCompanies.has(m.company));
+  if (!visible.length) return [new Date(2018,0).getTime(), new Date(2026,0).getTime()];
+  const dates = visible.map(m => m._date.getTime());
+  const min = Math.min(...dates), max = Math.max(...dates);
+  return min === max ? [min - 86400000*180, max + 86400000*180] : [min, max];
 }
 
 function getYRange() {
-  const params = parsedModels.map(m => m._paramsNum);
-  return [Math.min(...params) * 0.5, Math.max(...params) * 2];
+  const visible = parsedModels.filter(m => activeCompanies.has(m.company));
+  if (!visible.length) return [0.1, 10000];
+  const params = visible.map(m => m._paramsNum);
+  const min = Math.min(...params), max = Math.max(...params);
+  return min === max ? [min * 0.1, max * 10] : [min * 0.5, max * 2];
 }
 
 function scaleX(t) {
   const [x0, x1] = getXRange();
-  return PAD.left + (t - x0) / (x1 - x0) * (W - PAD.left - PAD.right);
+  const span = x1 - x0;
+  if (span === 0) return PAD.left + (W - PAD.left - PAD.right) / 2;
+  return PAD.left + (t - x0) / span * (W - PAD.left - PAD.right);
 }
 
 function scaleY(v) {
@@ -426,7 +443,9 @@ function scaleY(v) {
   const logV = Math.log10(v);
   const logMin = Math.log10(y0);
   const logMax = Math.log10(y1);
-  return H - PAD.bottom - (logV - logMin) / (logMax - logMin) * (H - PAD.top - PAD.bottom);
+  const span = logMax - logMin;
+  if (span === 0) return PAD.top + (H - PAD.top - PAD.bottom) / 2;
+  return H - PAD.bottom - (logV - logMin) / span * (H - PAD.top - PAD.bottom);
 }
 
 /* ===================== Draw ===================== */
