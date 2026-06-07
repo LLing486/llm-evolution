@@ -152,8 +152,8 @@
     "name": "GPT-3.5",
     "company": "OpenAI",
     "origin": "us",
-    "date": "2022-11",
-    "params": "~175B",
+    "date": "2022-03",
+    "params": "175B",
     "flagship": false,
     "desc": "ChatGPT 背后的模型，基于 RLHF 对齐，引爆全球 AI 热潮。",
     "tags": [
@@ -1013,10 +1013,10 @@
     "name": "o1",
     "company": "OpenAI",
     "origin": "us",
-    "date": "2024-09",
+    "date": "2024-12",
     "params": "未公开",
     "flagship": true,
-    "desc": "推理模型，通过 Chain-of-Thought 推理在数学和编程竞赛中表现突出。",
+    "desc": "首个完整版推理模型，通过Chain-of-Thought推理在数学和编程竞赛中表现突出。前身o1-preview于2024年9月发布。",
     "tags": [
       "推理",
       "CoT",
@@ -1099,6 +1099,25 @@
       "推理",
       "轻量",
       "代码"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "o1-preview",
+    "name": "o1-preview",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2024-09",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "o1推理模型的预览版，首次展示Chain-of-Thought推理能力，在数学和编程任务中表现突出。",
+    "tags": [
+      "推理",
+      "CoT",
+      "预览"
     ],
     "open_source": false,
     "modalities": [
@@ -1394,25 +1413,6 @@
       "超轻量",
       "AWS",
       "低延迟"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
-    "id": "o3",
-    "name": "o3",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2025-01",
-    "params": "未公开",
-    "flagship": true,
-    "desc": "下一代推理模型，在 ARC-AGI 基准上取得突破性成绩。",
-    "tags": [
-      "推理",
-      "AGI",
-      "突破"
     ],
     "open_source": false,
     "modalities": [
@@ -1777,6 +1777,25 @@
     ]
   },
   {
+    "id": "o3",
+    "name": "o3",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2025-04",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "下一代推理模型，在 ARC-AGI 基准上取得突破性成绩。",
+    "tags": [
+      "推理",
+      "AGI",
+      "突破"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
     "id": "gpt41",
     "name": "GPT-4.1",
     "company": "OpenAI",
@@ -2052,6 +2071,24 @@
     ]
   },
   {
+    "id": "o3-pro",
+    "name": "o3-pro",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2025-06",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "o3的Pro版本，使用更多计算资源获得更可靠的推理结果，定位为OpenAI最强推理模型。",
+    "tags": [
+      "推理",
+      "Pro"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
     "id": "glm45",
     "name": "GLM-4.5",
     "company": "智谱AI",
@@ -2112,51 +2149,12 @@
     ]
   },
   {
-    "id": "gpt5-mini",
-    "name": "GPT-5 mini",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2025-08",
-    "params": "未公开",
-    "flagship": false,
-    "desc": "GPT-5轻量版。",
-    "tags": [
-      "轻量",
-      "性价比",
-      "GPT-5"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text",
-      "image"
-    ]
-  },
-  {
-    "id": "gpt5-nano",
-    "name": "GPT-5 nano",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2025-08",
-    "params": "未公开",
-    "flagship": false,
-    "desc": "GPT-5超轻量版。",
-    "tags": [
-      "超轻量",
-      "边缘",
-      "低成本"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
     "id": "gpt-oss",
     "name": "GPT-OSS",
     "company": "OpenAI",
     "origin": "us",
     "date": "2025-08",
-    "params": "117B",
+    "params": "未公开",
     "flagship": false,
     "desc": "OpenAI首个开源模型，Apache 2.0协议。",
     "tags": [
@@ -2288,6 +2286,27 @@
     "modalities": [
       "text",
       "image"
+    ]
+  },
+  {
+    "id": "gpt51",
+    "name": "GPT-5.1",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2025-11",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "GPT-5系列迭代版本，新增8种可自定义人格，默认人格更温暖。包含Instant和Thinking两种模式。",
+    "tags": [
+      "多模态",
+      "人格定制",
+      "推理"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image",
+      "audio"
     ]
   },
   {
@@ -2616,28 +2635,6 @@
       "旗舰",
       "推理",
       "编程"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text",
-      "image",
-      "audio"
-    ]
-  },
-  {
-    "id": "gpt6",
-    "name": "GPT-6",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2026-04",
-    "params": "5-6T (MoE)",
-    "flagship": true,
-    "desc": "采用 5-6 万亿参数 MoE 架构，支持 200万 token 上下文和原生多模态，性能提升 40%。",
-    "tags": [
-      "MoE",
-      "2M上下文",
-      "多模态",
-      "旗舰"
     ],
     "open_source": false,
     "modalities": [
