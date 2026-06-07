@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>参数规模趋势 — LLM Evolution</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root, [data-theme="light"] {
+    --bg: #FAFAFA; --bg2: #FFFFFF; --bg3: #F3F4F6;
+    --text: #1A1A1A; --text2: #6B7280; --text3: #9CA3AF;
+    --border: #E5E7EB; --accent: #6366F1;
+    --chart-bg: #FFFFFF; --grid: #E5E7EB; --grid-text: #9CA3AF;
+    --tooltip-bg: rgba(255,255,255,0.96); --tooltip-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    --glow: rgba(99,102,241,0.3);
+  }
+  [data-theme="dark"] {
+    --bg: #0F1117; --bg2: #1A1B23; --bg3: #252630;
+    --text: #E8E8ED; --text2: #9CA3AF; --text3: #6B7280;
+    --border: #2D2E3A; --accent: #818CF8;
+    --chart-bg: #14151E; --grid: #2A2B36; --grid-text: #555;
+    --tooltip-bg: rgba(26,27,35,0.96); --tooltip-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --glow: rgba(129,140,248,0.3);
+  }
+
+  body {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 32px; border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .header h1 { font-size: 20px; font-weight: 600; }
+  .header h1 span { color: var(--accent); }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .back-link {
+    color: var(--text2); text-decoration: none; font-size: 13px;
+    padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border);
+    transition: all .2s;
+  }
+  .back-link:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-btn {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 10px; cursor: pointer; font-size: 16px; color: var(--text);
+    transition: all .2s;
+  }
+  .theme-btn:hover { border-color: var(--accent); }
+
+  /* Layout */
+  .main { display: flex; height: calc(100vh - 61px); }
+  .sidebar {
+    width: 260px; min-width: 260px; background: var(--bg2);
+    border-right: 1px solid var(--border); padding: 20px 16px;
+    display: flex; flex-direction: column; gap: 20px;
+    overflow-y: auto;
+  }
+  .chart-area { flex: 1; position: relative; padding: 20px; }
+  .chart-container {
+    width: 100%; height: 100%; position: relative;
+    background: var(--chart-bg); border-radius: 12px;
+    border: 1px solid var(--border); overflow: hidden;
+  }
+
+  /* Sidebar sections */
+  .section-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text3); margin-bottom: 10px;
+  }
+  .filter-actions {
+    display: flex; gap: 6px; margin-bottom: 10px;
+  }
+  .filter-btn-sm {
+    font-size: 11px; padding: 3px 8px; border-radius: 4px;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text2); cursor: pointer; transition: all .15s;
+  }
+  .filter-btn-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Company chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all .2s; border: 2px solid transparent;
+    user-select: none;
+  }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .chip.inactive { opacity: 0.35; }
+  .chip:hover { transform: scale(1.04); }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card {
+    background: var(--bg3); border-radius: 8px; padding: 12px;
+    text-align: center;
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .stat-bar-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+  .stat-bar {
+    flex: 1; height: 4px; border-radius: 2px; background: var(--bg);
+    overflow: hidden;
+  }
+  .stat-bar-fill { height: 100%; border-radius: 2px; transition: width .5s ease; }
+  .stat-bar-label { font-size: 10px; color: var(--text3); min-width: 20px; text-align: right; }
+
+  /* Company breakdown */
+  .company-stats { display: flex; flex-direction: column; gap: 4px; }
+  .company-row {
+    display: flex; align-items: center; gap: 6px; font-size: 12px;
+    padding: 3px 0;
+  }
+  .company-row .c-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .company-row .c-name { flex: 1; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .company-row .c-count { font-weight: 600; color: var(--text); min-width: 20px; text-align: right; }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed; pointer-events: none; z-index: 1000;
+    background: var(--tooltip-bg); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; min-width: 200px;
+    box-shadow: var(--tooltip-shadow); backdrop-filter: blur(12px);
+    opacity: 0; transform: translateY(4px);
+    transition: opacity .15s, transform .15s;
+  }
+  .tooltip.show { opacity: 1; transform: translateY(0); }
+  .tooltip-name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .tooltip-company { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 5px; }
+  .tooltip-company .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .tooltip-rows { margin-top: 8px; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: 12px; }
+  .tooltip-key { color: var(--text3); }
+  .tooltip-val { color: var(--text); font-weight: 500; }
+
+  /* Canvas */
+  canvas { display: block; width: 100%; height: 100%; }
+
+  /* Legend in chart */
+  .chart-legend {
+    position: absolute; bottom: 16px; right: 16px;
+    font-size: 11px; color: var(--text3);
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .legend-circle {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--text3); opacity: 0.5;
+  }
+  .legend-line { width: 20px; height: 2px; background: var(--text3); opacity: 0.3; border-radius: 1px; }
+
+  /* No data label */
+  .unknown-label {
+    position: absolute; bottom: 16px; left: 16px;
+    font-size: 11px; color: var(--text3);
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main { flex-direction: column; height: auto; }
+    .sidebar {
+      width: 100%; min-width: unset; border-right: none;
+      border-bottom: 1px solid var(--border); padding: 16px;
+      flex-direction: row; flex-wrap: wrap; gap: 12px;
+    }
+    .sidebar > div { flex: 1; min-width: 200px; }
+    .chart-area { height: 60vh; min-height: 400px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 参数规模趋势 — <span>LLM Evolution</span></h1>
+  <div class="header-right">
+    <a class="back-link" href="index.html">← 时间轴</a>
+    <button class="theme-btn" onclick="toggleTheme()" title="切换主题">🌓</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="sidebar">
+    <!-- Filters -->
+    <div>
+      <div class="section-title">公司筛选</div>
+      <div class="filter-actions">
+        <button class="filter-btn-sm" onclick="selectAll()">全选</button>
+        <button class="filter-btn-sm" onclick="selectNone()">清除</button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <!-- Stats -->
+    <div>
+      <div class="section-title">统计概览</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-total">0</div>
+          <div class="stat-label">模型总数</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-companies">0</div>
+          <div class="stat-label">公司数量</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-open">0%</div>
+          <div class="stat-label">开源比例</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-median">-</div>
+          <div class="stat-label">中位参数</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Open source bar -->
+    <div>
+      <div class="section-title">开源 vs 闭源</div>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <div class="stat-bar-row" style="flex:1">
+          <div class="stat-bar"><div class="stat-bar-fill" id="bar-open" style="width:0;background:#10b981"></div></div>
+          <div class="stat-bar-label" id="lbl-open">0</div>
+        </div>
+        <div class="stat-bar-row" style="flex:1">
+          <div class="stat-bar"><div class="stat-bar-fill" id="bar-closed" style="width:0;background:#ef4444"></div></div>
+          <div class="stat-bar-label" id="lbl-closed">0</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)">
+        <span>🟢 开源</span><span>🔴 闭源</span>
+      </div>
+    </div>
+
+    <!-- Company breakdown -->
+    <div>
+      <div class="section-title">公司模型数</div>
+      <div class="company-stats" id="company-stats"></div>
+    </div>
+  </div>
+
+  <div class="chart-area">
+    <div class="chart-container" id="chart-container">
+      <canvas id="chart"></canvas>
+    </div>
+    <div class="chart-legend">
+      <div class="legend-circle"></div><span>已公开参数</span>
+      <span style="margin:0 4px">·</span>
+      <div class="legend-line"></div><span>同公司演进</span>
+    </div>
+    <div class="unknown-label">底部灰色标记 · 参数未公开的模型</div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tt-name"></div>
+  <div class="tooltip-company"><div class="dot" id="tt-dot"></div><span id="tt-company"></span></div>
+  <div class="tooltip-rows">
+    <span class="tooltip-key">发布时间</span><span class="tooltip-val" id="tt-date"></span>
+    <span class="tooltip-key">参数规模</span><span class="tooltip-val" id="tt-params"></span>
+    <span class="tooltip-key">开源</span><span class="tooltip-val" id="tt-open"></span>
+    <span class="tooltip-key">类型</span><span class="tooltip-val" id="tt-mods"></span>
+    <span class="tooltip-key">描述</span><span class="tooltip-val" id="tt-desc" style="grid-column:1/-1;white-space:normal;line-height:1.4"></span>
+  </div>
+</div>
+
+<script>
+/* ===================== Data ===================== */
+let allModels = [], companies = {};
+let activeCompanies = new Set();
+let parsedModels = []; // models with numeric params
+let unknownModels = []; // models without parseable params
+
+/* ===================== Canvas state ===================== */
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+let W, H, dpr;
+const PAD = { top: 40, right: 30, bottom: 50, left: 70 };
+
+/* ===================== Animation state ===================== */
+let animProgress = 0; // 0→1 for entry animation
+let animStart = 0;
+const ANIM_DURATION = 1800; // ms
+let hoveredIdx = -1;
+let hoverGlow = 0;
+let hoverDir = 1;
+
+/* ===================== Params parsing ===================== */
+function parseParams(p) {
+  if (!p || p === '未公开') return null;
+  p = p.replace(/~/g, '').replace(/,/g, '').trim();
+  const m = p.match(/([\d.]+)\s*([TtBbMm万亿])/);
+  if (!m) return null;
+  let val = parseFloat(m[1]);
+  const u = m[2].toUpperCase();
+  if (u === 'T' || u === '万') val *= 1000;   // T = trillion = 1000B
+  else if (u === '亿') val *= 10000;           // 亿 = 10B in Chinese
+  else if (u === 'B') val *= 1;
+  else if (u === 'M') val /= 1000;
+  return val;
+}
+
+/* ===================== Date parsing ===================== */
+function parseDate(d) {
+  const parts = d.split('-');
+  return new Date(parseInt(parts[0]), parseInt(parts[1] || 1) - 1);
+}
+
+/* ===================== Load ===================== */
+async function load() {
+  const [modelsRes, compRes] = await Promise.all([
+    fetch('data/models.json'), fetch('data/companies.json')
+  ]);
+  allModels = await modelsRes.json();
+  companies = await compRes.json();
+
+  // Separate parsed vs unknown
+  parsedModels = [];
+  unknownModels = [];
+  allModels.forEach(m => {
+    const p = parseParams(m.params);
+    const enriched = { ...m, _paramsNum: p, _date: parseDate(m.date) };
+    if (p !== null) parsedModels.push(enriched);
+    else unknownModels.push(enriched);
+  });
+
+  // Sort by date
+  parsedModels.sort((a, b) => a._date - b._date);
+
+  // Init active companies (all)
+  Object.keys(companies).forEach(c => activeCompanies.add(c));
+
+  buildChips();
+  resize();
+  window.addEventListener('resize', resize);
+  canvas.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('mouseleave', onMouseLeave);
+  animStart = performance.now();
+  requestAnimationFrame(loop);
+}
+
+/* ===================== Chips ===================== */
+function buildChips() {
+  const container = document.getElementById('chips');
+  // Sort by model count desc
+  const counts = {};
+  allModels.forEach(m => { counts[m.company] = (counts[m.company] || 0) + 1; });
+  const sorted = Object.keys(companies).sort((a, b) => (counts[b] || 0) - (counts[a] || 0));
+
+  container.innerHTML = sorted.map(c => {
+    const col = companies[c].color;
+    return `<div class="chip" data-company="${c}" style="background:${col}18;color:${col};border-color:${col}40"
+      onclick="toggleCompany('${c}')"><div class="dot" style="background:${col}"></div>${c}</div>`;
+  }).join('');
+  updateChipStyles();
+}
+
+function updateChipStyles() {
+  document.querySelectorAll('.chip').forEach(el => {
+    const c = el.dataset.company;
+    el.classList.toggle('inactive', !activeCompanies.has(c));
+  });
+}
+
+function toggleCompany(c) {
+  if (activeCompanies.has(c)) activeCompanies.delete(c);
+  else activeCompanies.add(c);
+  updateChipStyles();
+  updateStats();
+  animStart = performance.now() - ANIM_DURATION; // instant
+  requestAnimationFrame(loop);
+}
+
+function selectAll() {
+  Object.keys(companies).forEach(c => activeCompanies.add(c));
+  updateChipStyles(); updateStats(); triggerAnim();
+}
+function selectNone() {
+  activeCompanies.clear();
+  updateChipStyles(); updateStats(); triggerAnim();
+}
+
+function triggerAnim() {
+  animStart = performance.now();
+  requestAnimationFrame(loop);
+}
+
+/* ===================== Resize ===================== */
+function resize() {
+  const container = document.getElementById('chart-container');
+  const rect = container.getBoundingClientRect();
+  dpr = window.devicePixelRatio || 1;
+  W = rect.width; H = rect.height;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  draw();
+}
+
+/* ===================== Scales ===================== */
+function getXRange() {
+  const dates = parsedModels.map(m => m._date.getTime());
+  return [Math.min(...dates), Math.max(...dates)];
+}
+
+function getYRange() {
+  const params = parsedModels.map(m => m._paramsNum);
+  return [Math.min(...params) * 0.5, Math.max(...params) * 2];
+}
+
+function scaleX(t) {
+  const [x0, x1] = getXRange();
+  return PAD.left + (t - x0) / (x1 - x0) * (W - PAD.left - PAD.right);
+}
+
+function scaleY(v) {
+  const [y0, y1] = getYRange();
+  const logV = Math.log10(v);
+  const logMin = Math.log10(y0);
+  const logMax = Math.log10(y1);
+  return H - PAD.bottom - (logV - logMin) / (logMax - logMin) * (H - PAD.top - PAD.bottom);
+}
+
+/* ===================== Draw ===================== */
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  drawGrid();
+  drawConnections();
+  drawUnknownStrip();
+  drawPoints();
+}
+
+function drawGrid() {
+  const [x0, x1] = getXRange();
+  const [y0, y1] = getYRange();
+  const logMin = Math.log10(y0);
+  const logMax = Math.log10(y1);
+
+  // Get theme colors
+  const style = getComputedStyle(document.documentElement);
+  const gridColor = style.getPropertyValue('--grid').trim();
+  const textColor = style.getPropertyValue('--grid-text').trim();
+
+  ctx.strokeStyle = gridColor;
+  ctx.lineWidth = 1;
+  ctx.fillStyle = textColor;
+  ctx.font = '11px Inter, sans-serif';
+
+  // Y axis — log ticks
+  const yTicks = [];
+  for (let exp = Math.floor(logMin); exp <= Math.ceil(logMax); exp++) {
+    for (const mult of [1, 2, 5]) {
+      const v = mult * Math.pow(10, exp);
+      if (v >= y0 && v <= y1) yTicks.push(v);
+    }
+  }
+  yTicks.forEach(v => {
+    const y = scaleY(v);
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(W - PAD.right, y); ctx.stroke();
+    let label;
+    if (v >= 1000) label = (v / 1000) + 'T';
+    else if (v >= 1) label = v + 'B';
+    else label = (v * 1000) + 'M';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(label, PAD.left - 8, y);
+  });
+
+  // X axis — years
+  const yearStart = new Date(x0).getFullYear();
+  const yearEnd = new Date(x1).getFullYear();
+  for (let y = yearStart; y <= yearEnd + 1; y++) {
+    const t = new Date(y, 0).getTime();
+    if (t < x0 || t > x1) continue;
+    const x = scaleX(t);
+    ctx.beginPath(); ctx.moveTo(x, PAD.top); ctx.lineTo(x, H - PAD.bottom); ctx.stroke();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText(y.toString(), x, H - PAD.bottom + 8);
+  }
+
+  // Axis labels
+  ctx.fillStyle = textColor;
+  ctx.font = '12px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('发布时间', W / 2, H - 6);
+  ctx.save();
+  ctx.translate(14, H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('参数规模 (对数刻度)', 0, 0);
+  ctx.restore();
+}
+
+function drawConnections() {
+  // Group visible models by company, draw connecting lines
+  const visible = parsedModels.filter(m => activeCompanies.has(m.company));
+  const byCompany = {};
+  visible.forEach((m, i) => {
+    if (!byCompany[m.company]) byCompany[m.company] = [];
+    byCompany[m.company].push(m);
+  });
+
+  Object.entries(byCompany).forEach(([company, models]) => {
+    if (models.length < 2) return;
+    const col = companies[company]?.color || '#888';
+    const isHovered = hoveredIdx >= 0 && parsedModels[hoveredIdx]?.company === company;
+    ctx.strokeStyle = col;
+    ctx.globalAlpha = isHovered ? 0.35 : 0.1;
+    ctx.lineWidth = isHovered ? 2 : 1;
+    ctx.beginPath();
+    models.forEach((m, i) => {
+      const x = scaleX(m._date.getTime());
+      const y = scaleY(m._paramsNum);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  });
+}
+
+function drawUnknownStrip() {
+  // Draw small markers at the bottom for unknown-param models
+  const visible = unknownModels.filter(m => activeCompanies.has(m.company));
+  if (!visible.length) return;
+  const y = H - PAD.bottom - 12;
+
+  visible.forEach((m, i) => {
+    const x = scaleX(m._date.getTime());
+    const col = companies[m.company]?.color || '#888';
+    const isHovered = hoveredIdx >= 0 &&
+      parsedModels[hoveredIdx]?.company === m.company;
+    ctx.globalAlpha = isHovered ? 0.7 : 0.3;
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+}
+
+function drawPoints() {
+  const visible = parsedModels.filter(m => activeCompanies.has(m.company));
+  const now = performance.now();
+  const elapsed = now - animStart;
+  animProgress = Math.min(elapsed / ANIM_DURATION, 1);
+
+  // Easing
+  function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+  visible.forEach((m, vi) => {
+    const idx = parsedModels.indexOf(m);
+    const x = scaleX(m._date.getTime());
+    const y = scaleY(m._paramsNum);
+    const col = companies[m.company]?.color || '#888';
+
+    // Staggered entry: each point appears slightly after the previous
+    const stagger = vi / visible.length * 0.6;
+    const localT = Math.max(0, Math.min(1, (animProgress - stagger) / (1 - stagger)));
+    const scale = ease(localT);
+
+    if (scale <= 0) return;
+
+    const isHovered = idx === hoveredIdx;
+    const sameCompanyHovered = hoveredIdx >= 0 && parsedModels[hoveredIdx]?.company === m.company;
+
+    let r = (m.flagship ? 7 : 5) * scale;
+    let alpha = 1;
+
+    if (hoveredIdx >= 0) {
+      if (isHovered) {
+        // Glow pulse
+        const pulse = 0.5 + 0.5 * Math.sin(now / 300);
+        r += 3 + pulse * 3;
+      } else if (sameCompanyHovered) {
+        alpha = 0.85;
+        r += 1;
+      } else {
+        alpha = 0.25;
+      }
+    }
+
+    // Glow for hovered
+    if (isHovered) {
+      const pulse = 0.5 + 0.5 * Math.sin(now / 300);
+      const glowR = r + 8 + pulse * 6;
+      const grad = ctx.createRadialGradient(x, y, r * 0.5, x, y, glowR);
+      grad.addColorStop(0, col + '60');
+      grad.addColorStop(1, col + '00');
+      ctx.fillStyle = grad;
+      ctx.beginPath(); ctx.arc(x, y, glowR, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // Main dot
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+
+    // Flagship ring
+    if (m.flagship) {
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(x, y, r + 3, 0, Math.PI * 2); ctx.stroke();
+    }
+
+    // Inner highlight
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.beginPath(); ctx.arc(x - r*0.25, y - r*0.25, r * 0.35, 0, Math.PI * 2); ctx.fill();
+
+    ctx.globalAlpha = 1;
+  });
+
+  if (animProgress < 1) requestAnimationFrame(loop);
+}
+
+function loop() { draw(); }
+
+/* ===================== Hover ===================== */
+function onMouseMove(e) {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  const visible = parsedModels.filter(m => activeCompanies.has(m.company));
+  let closest = -1, closestDist = Infinity;
+
+  visible.forEach((m) => {
+    const idx = parsedModels.indexOf(m);
+    const x = scaleX(m._date.getTime());
+    const y = scaleY(m._paramsNum);
+    const d = Math.hypot(mx - x, my - y);
+    const r = m.flagship ? 10 : 8;
+    if (d < r && d < closestDist) {
+      closest = idx; closestDist = d;
+    }
+  });
+
+  if (closest !== hoveredIdx) {
+    hoveredIdx = closest;
+    draw();
+    if (closest >= 0) showTooltip(e, parsedModels[closest]);
+    else hideTooltip();
+  } else if (closest >= 0) {
+    moveTooltip(e);
+    // Keep redrawing for pulse animation
+    requestAnimationFrame(loop);
+  }
+}
+
+function onMouseLeave() {
+  hoveredIdx = -1;
+  hideTooltip();
+  draw();
+}
+
+/* ===================== Tooltip ===================== */
+const tooltip = document.getElementById('tooltip');
+function showTooltip(e, m) {
+  const col = companies[m.company]?.color || '#888';
+  document.getElementById('tt-name').textContent = m.name;
+  document.getElementById('tt-dot').style.background = col;
+  document.getElementById('tt-company').textContent = m.company;
+  document.getElementById('tt-date').textContent = m.date;
+  document.getElementById('tt-params').textContent = m.params;
+  document.getElementById('tt-open').textContent = m.open_source ? '✅ 是' : '❌ 否';
+  document.getElementById('tt-mods').textContent = (m.modalities || []).join(', ');
+  document.getElementById('tt-desc').textContent = m.desc || '—';
+  tooltip.classList.add('show');
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  let x = e.clientX + 16, y = e.clientY + 16;
+  const tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+  if (x + tw > window.innerWidth - 10) x = e.clientX - tw - 10;
+  if (y + th > window.innerHeight - 10) y = e.clientY - th - 10;
+  tooltip.style.left = x + 'px'; tooltip.style.top = y + 'px';
+}
+function hideTooltip() { tooltip.classList.remove('show'); }
+
+/* ===================== Stats ===================== */
+function updateStats() {
+  const visible = allModels.filter(m => activeCompanies.has(m.company));
+  const visibleParsed = parsedModels.filter(m => activeCompanies.has(m.company));
+  const visibleUnknown = unknownModels.filter(m => activeCompanies.has(m.company));
+
+  document.getElementById('stat-total').textContent = visible.length;
+  document.getElementById('stat-companies').textContent = new Set(visible.map(m => m.company)).size;
+
+  // Open source ratio
+  const openCount = visible.filter(m => m.open_source).length;
+  const closedCount = visible.length - openCount;
+  const openPct = visible.length ? Math.round(openCount / visible.length * 100) : 0;
+  document.getElementById('stat-open').textContent = openPct + '%';
+
+  // Bars
+  const total = visible.length || 1;
+  document.getElementById('bar-open').style.width = (openCount / total * 100) + '%';
+  document.getElementById('lbl-open').textContent = openCount;
+  document.getElementById('bar-closed').style.width = (closedCount / total * 100) + '%';
+  document.getElementById('lbl-closed').textContent = closedCount;
+
+  // Median params
+  if (visibleParsed.length) {
+    const sorted = [...visibleParsed].sort((a, b) => a._paramsNum - b._paramsNum);
+    const mid = sorted[Math.floor(sorted.length / 2)]._paramsNum;
+    let medianStr;
+    if (mid >= 1000) medianStr = (mid / 1000).toFixed(1) + 'T';
+    else if (mid >= 1) medianStr = mid.toFixed(0) + 'B';
+    else medianStr = (mid * 1000).toFixed(0) + 'M';
+    document.getElementById('stat-median').textContent = medianStr;
+  } else {
+    document.getElementById('stat-median').textContent = '-';
+  }
+
+  // Company breakdown
+  const counts = {};
+  visible.forEach(m => { counts[m.company] = (counts[m.company] || 0) + 1; });
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const container = document.getElementById('company-stats');
+  container.innerHTML = sorted.map(([c, n]) => {
+    const col = companies[c]?.color || '#888';
+    return `<div class="company-row"><div class="c-dot" style="background:${col}"></div><div class="c-name">${c}</div><div class="c-count">${n}</div></div>`;
+  }).join('');
+}
+
+/* ===================== Theme ===================== */
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  draw();
+}
+
+// Init theme
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+
+/* ===================== Init ===================== */
+load().then(() => { updateStats(); });
+</script>
+</body>
+</html>
