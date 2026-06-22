@@ -2840,5 +2840,142 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "qwen37-max",
+    "name": "Qwen3.7-Max",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-05",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "Qwen3.7 文本旗舰，1M 上下文窗口，闭源 API-only。编码与推理能力前沿。",
+    "tags": [
+      "1M上下文",
+      "推理",
+      "编码"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "qwen37-plus",
+    "name": "Qwen3.7-Plus",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-05",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Qwen3.7 多模态版本，支持视觉，闭源 API-only。",
+    "tags": [
+      "多模态",
+      "视觉",
+      "1M上下文"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "glm52",
+    "name": "GLM-5.2",
+    "company": "智谱AI",
+    "origin": "cn",
+    "date": "2026-06",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "长程任务旗舰，1M 上下文窗口，IndexShare 架构。FrontierSWE 基准逼近 Opus 4.8，超越 GPT-5.5。开源 MIT。",
+    "tags": [
+      "1M上下文",
+      "长程任务",
+      "开源",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "kimi-k26",
+    "name": "Kimi K2.6",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-04",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "开源 Agentic 模型，支持 1000 个并行子 Agent 协作，13 小时连续编码、5 天自主运行。",
+    "tags": [
+      "开源",
+      "Agent",
+      "长程任务",
+      "编码"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "kimi-k27-code",
+    "name": "Kimi K2.7 Code",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-06",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Kimi 系列最强编码模型，开源发布，低 Token 消耗，编码性能为系列最佳。",
+    "tags": [
+      "开源",
+      "编码",
+      "低消耗"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "sarvam-105b",
+    "name": "Sarvam-105B",
+    "company": "Sarvam AI",
+    "origin": "other",
+    "date": "2026-02",
+    "params": "105B (10.3B 激活)",
+    "flagship": true,
+    "desc": "印度首个独立训练的基础模型，MoE 架构，Apache 2.0 开源。",
+    "tags": [
+      "MoE",
+      "开源",
+      "印度"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "param-2",
+    "name": "Param-2",
+    "company": "BharatGen",
+    "origin": "other",
+    "date": "2026-02",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "印度首个 MoE 开源基础模型，Param-1 后续，支持更多印度语言。",
+    "tags": [
+      "MoE",
+      "开源",
+      "印度",
+      "多语言"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
   }
 ]
