@@ -129,25 +129,6 @@
     ]
   },
   {
-    "id": "palm",
-    "name": "PaLM",
-    "company": "Google",
-    "origin": "us",
-    "date": "2022-04",
-    "params": "540B",
-    "flagship": true,
-    "desc": "5400亿参数，Pathways 系统训练，展示了强大的推理和代码能力。",
-    "tags": [
-      "Pathways",
-      "推理",
-      "540B"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
     "id": "gpt35",
     "name": "GPT-3.5",
     "company": "OpenAI",
@@ -160,6 +141,25 @@
       "ChatGPT",
       "RLHF",
       "对话"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "palm",
+    "name": "PaLM",
+    "company": "Google",
+    "origin": "us",
+    "date": "2022-04",
+    "params": "540B",
+    "flagship": true,
+    "desc": "5400亿参数，Pathways 系统训练，展示了强大的推理和代码能力。",
+    "tags": [
+      "Pathways",
+      "推理",
+      "540B"
     ],
     "open_source": false,
     "modalities": [
@@ -1009,25 +1009,6 @@
     ]
   },
   {
-    "id": "o1",
-    "name": "o1",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2024-12",
-    "params": "未公开",
-    "flagship": true,
-    "desc": "首个完整版推理模型，通过Chain-of-Thought推理在数学和编程竞赛中表现突出。前身o1-preview于2024年9月发布。",
-    "tags": [
-      "推理",
-      "CoT",
-      "数学"
-    ],
-    "open_source": false,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
     "id": "qwen25",
     "name": "Qwen 2.5",
     "company": "阿里巴巴",
@@ -1236,6 +1217,25 @@
       "对标o1"
     ],
     "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "o1",
+    "name": "o1",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2024-12",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "首个完整版推理模型，通过Chain-of-Thought推理在数学和编程竞赛中表现突出。前身o1-preview于2024年9月发布。",
+    "tags": [
+      "推理",
+      "CoT",
+      "数学"
+    ],
+    "open_source": false,
     "modalities": [
       "text"
     ]
@@ -2505,6 +2505,87 @@
     ]
   },
   {
+    "id": "sarvam-105b",
+    "name": "Sarvam-105B",
+    "company": "Sarvam AI",
+    "origin": "other",
+    "date": "2026-02",
+    "params": "105B (10.3B 激活)",
+    "flagship": true,
+    "desc": "印度首个独立训练的基础模型，MoE 架构，Apache 2.0 开源。",
+    "tags": [
+      "MoE",
+      "开源",
+      "印度"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "param-2",
+    "name": "Param-2",
+    "company": "BharatGen",
+    "origin": "other",
+    "date": "2026-02",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "印度首个 MoE 开源基础模型，Param-1 后续，支持更多印度语言。",
+    "tags": [
+      "MoE",
+      "开源",
+      "印度",
+      "多语言"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "gemini31pro",
+    "name": "Gemini 3.1 Pro",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-02",
+    "params": "未公开",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "多模态"
+    ],
+    "desc": "Google 2026年2月 Preview 发布，推理能力增强。"
+  },
+  {
+    "id": "grok420beta",
+    "name": "Grok 4.20 Beta",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-02",
+    "params": "未公开",
+    "flagship": false,
+    "tags": [
+      "推理",
+      "Agent"
+    ],
+    "desc": "xAI 速度优化版本，强化 agentic tool calling，低幻觉率。"
+  },
+  {
+    "id": "doubao-seed20",
+    "name": "豆包 Seed 2.0",
+    "company": "字节跳动",
+    "origin": "cn",
+    "date": "2026-02",
+    "params": "未公开",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "多模态"
+    ],
+    "desc": "字节跳动最新稳定版，截至2026年5月用户达3.3亿。"
+  },
+  {
     "id": "mimo_v2_pro",
     "name": "MiMo-V2-Pro",
     "company": "小米",
@@ -2579,6 +2660,35 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "gemini31flashlite",
+    "name": "Gemini 3.1 Flash Lite",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-03",
+    "params": "未公开",
+    "flagship": false,
+    "tags": [
+      "轻量",
+      "多模态"
+    ],
+    "desc": "Google 轻量级多模态模型，适合低成本场景。"
+  },
+  {
+    "id": "phi4-reasoning-vision",
+    "name": "Phi-4-reasoning-vision-15B",
+    "company": "Microsoft",
+    "origin": "us",
+    "date": "2026-03",
+    "params": "15B",
+    "flagship": false,
+    "tags": [
+      "推理",
+      "视觉",
+      "小模型"
+    ],
+    "desc": "微软小模型，支持视觉理解和自主推理决策。"
   },
   {
     "id": "mimo_v25",
@@ -2780,6 +2890,68 @@
     ]
   },
   {
+    "id": "kimi-k26",
+    "name": "Kimi K2.6",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-04",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "开源 Agentic 模型，支持 1000 个并行子 Agent 协作，13 小时连续编码、5 天自主运行。",
+    "tags": [
+      "开源",
+      "Agent",
+      "长程任务",
+      "编码"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "grok43beta",
+    "name": "Grok 4.3 Beta",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-04",
+    "params": "未公开",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "推理"
+    ],
+    "desc": "xAI 新预训练模型，知识截止 2025年12月。"
+  },
+  {
+    "id": "mistral-medium35",
+    "name": "Mistral Medium 3.5",
+    "company": "Mistral AI",
+    "origin": "eu",
+    "date": "2026-04",
+    "params": "128B",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "MoE"
+    ],
+    "desc": "Mistral 首个旗舰级合并模型，128B 参数。"
+  },
+  {
+    "id": "ernie51",
+    "name": "ERNIE 5.1",
+    "company": "百度",
+    "origin": "cn",
+    "date": "2026-04",
+    "params": "未公开",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "开源"
+    ],
+    "desc": "百度新一代旗舰模型，Apache 2.0 开源。"
+  },
+  {
     "id": "gemini35-flash",
     "name": "Gemini 3.5 Flash",
     "company": "Google",
@@ -2881,6 +3053,34 @@
     ]
   },
   {
+    "id": "gemini-omni-flash",
+    "name": "Gemini Omni Flash",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-05",
+    "params": "未公开",
+    "flagship": false,
+    "tags": [
+      "多模态",
+      "视频生成"
+    ],
+    "desc": "Google 原生多模态生成模型，首个支持视频生成的 Flash 系列。"
+  },
+  {
+    "id": "cohere-command-a-plus",
+    "name": "Command A+",
+    "company": "Cohere",
+    "origin": "us",
+    "date": "2026-05",
+    "params": "未公开",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "企业"
+    ],
+    "desc": "Cohere 2026年5月最新旗舰模型，面向企业场景。"
+  },
+  {
     "id": "glm52",
     "name": "GLM-5.2",
     "company": "智谱AI",
@@ -2901,26 +3101,6 @@
     ]
   },
   {
-    "id": "kimi-k26",
-    "name": "Kimi K2.6",
-    "company": "月之暗面",
-    "origin": "cn",
-    "date": "2026-04",
-    "params": "未公开",
-    "flagship": true,
-    "desc": "开源 Agentic 模型，支持 1000 个并行子 Agent 协作，13 小时连续编码、5 天自主运行。",
-    "tags": [
-      "开源",
-      "Agent",
-      "长程任务",
-      "编码"
-    ],
-    "open_source": true,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
     "id": "kimi-k27-code",
     "name": "Kimi K2.7 Code",
     "company": "月之暗面",
@@ -2933,45 +3113,6 @@
       "开源",
       "编码",
       "低消耗"
-    ],
-    "open_source": true,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
-    "id": "sarvam-105b",
-    "name": "Sarvam-105B",
-    "company": "Sarvam AI",
-    "origin": "other",
-    "date": "2026-02",
-    "params": "105B (10.3B 激活)",
-    "flagship": true,
-    "desc": "印度首个独立训练的基础模型，MoE 架构，Apache 2.0 开源。",
-    "tags": [
-      "MoE",
-      "开源",
-      "印度"
-    ],
-    "open_source": true,
-    "modalities": [
-      "text"
-    ]
-  },
-  {
-    "id": "param-2",
-    "name": "Param-2",
-    "company": "BharatGen",
-    "origin": "other",
-    "date": "2026-02",
-    "params": "未公开",
-    "flagship": false,
-    "desc": "印度首个 MoE 开源基础模型，Param-1 后续，支持更多印度语言。",
-    "tags": [
-      "MoE",
-      "开源",
-      "印度",
-      "多语言"
     ],
     "open_source": true,
     "modalities": [
@@ -3007,5 +3148,20 @@
       "编程"
     ],
     "desc": "Anthropic 2026年6月发布的新一代旗舰模型，在编程、推理和多模态能力上全面提升。"
+  },
+  {
+    "id": "grok45beta",
+    "name": "Grok 4.5 Beta",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-06",
+    "params": "1.5T",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程"
+    ],
+    "desc": "xAI 最新旗舰，1.5T 参数 V9 基础模型，集成 Cursor 数据。"
   }
 ]
