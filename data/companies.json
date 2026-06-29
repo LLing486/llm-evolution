@@ -98,5 +98,15 @@
     "color": "#FF6B35",
     "logo": "M",
     "origin": "cn"
+  },
+  "Sarvam AI": {
+    "color": "#FF6B35",
+    "logo": "🇮🇳",
+    "origin": "other"
+  },
+  "BharatGen": {
+    "color": "#138808",
+    "logo": "🇮🇳",
+    "origin": "other"
   }
 }
