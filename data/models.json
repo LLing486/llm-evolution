@@ -3135,21 +3135,6 @@
     ]
   },
   {
-    "id": "claude-fable5",
-    "name": "Claude Fable 5",
-    "company": "Anthropic",
-    "origin": "us",
-    "date": "2026-06",
-    "params": "未公开",
-    "flagship": true,
-    "tags": [
-      "旗舰",
-      "推理",
-      "编程"
-    ],
-    "desc": "Anthropic 2026年6月发布的新一代旗舰模型，在编程、推理和多模态能力上全面提升。"
-  },
-  {
     "id": "grok45beta",
     "name": "Grok 4.5 Beta",
     "company": "xAI",
