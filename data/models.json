@@ -3163,5 +3163,27 @@
       "编程"
     ],
     "desc": "xAI 最新旗舰，1.5T 参数 V9 基础模型，集成 Cursor 数据。"
+  },
+  {
+    "id": "claude-sonnet-5",
+    "name": "Claude Sonnet 5",
+    "company": "Anthropic",
+    "origin": "proprietary",
+    "date": "2026-06-30",
+    "params": null,
+    "flagship": true,
+    "desc": "Anthropic's most agentic Sonnet model. Near-Opus 4.8 performance at lower cost. Major improvements in coding, reasoning, and tool use.",
+    "tags": [
+      "chat",
+      "reasoning",
+      "coding",
+      "agent",
+      "tool-use"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
