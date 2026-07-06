@@ -3170,5 +3170,26 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "claude-fable-5",
+    "name": "Claude Fable 5",
+    "company": "Anthropic",
+    "origin": "proprietary",
+    "date": "2026-06-11",
+    "params": null,
+    "flagship": true,
+    "desc": "Anthropic's strongest model as of June 2026.",
+    "tags": [
+      "chat",
+      "reasoning",
+      "coding",
+      "agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
