@@ -3124,7 +3124,7 @@
     "name": "GPT-5.6 Sol",
     "company": "OpenAI",
     "origin": "us",
-    "date": "2026-06",
+    "date": "2026-07-09",
     "params": "未公开",
     "flagship": true,
     "desc": "OpenAI 最新旗舰模型，引入 max 深度推理和 ultra 子代理模式。Terminal-Bench 2.1 SOTA，网络安全与生物学能力大幅提升。含 Sol/Terra/Luna 三档定价，Preview 阶段发布。",
@@ -3135,11 +3135,11 @@
     ]
   },
   {
-    "id": "grok45beta",
-    "name": "Grok 4.5 Beta",
+    "id": "grok45",
+    "name": "Grok 4.5",
     "company": "xAI",
     "origin": "us",
-    "date": "2026-06",
+    "date": "2026-07-08",
     "params": "1.5T",
     "flagship": true,
     "tags": [
@@ -3185,6 +3185,46 @@
       "reasoning",
       "coding",
       "agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gpt-live-1",
+    "name": "GPT-Live-1",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-07-08",
+    "params": null,
+    "flagship": false,
+    "desc": "OpenAI 新一代语音模型，全双工架构，可同时听说，支持实时对话和后台推理委派。",
+    "tags": [
+      "voice",
+      "full-duplex",
+      "real-time"
+    ],
+    "open_source": false,
+    "modalities": [
+      "audio"
+    ]
+  },
+  {
+    "id": "claude-mythos-5",
+    "name": "Claude Mythos 5",
+    "company": "Anthropic",
+    "origin": "us",
+    "date": "2026-06-09",
+    "params": null,
+    "flagship": true,
+    "desc": "Anthropic 最强网络安全与生物学研究模型，与 Fable 5 同架构但无安全限制。仅限受信任合作伙伴使用，$10/$50 定价。",
+    "tags": [
+      "cybersecurity",
+      "biology",
+      "trusted-access",
+      "limited"
     ],
     "open_source": false,
     "modalities": [
