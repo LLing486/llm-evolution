@@ -3313,5 +3313,28 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "kimi-k3",
+    "name": "Kimi K3",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-07",
+    "params": "2.8T",
+    "flagship": true,
+    "desc": "月之暗面新一代旗舰，2.8万亿参数，原生多模态，百万token上下文，专为长程编程、知识工作与深度推理打造。开源登顶榜单。",
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程",
+      "多模态",
+      "开源",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
