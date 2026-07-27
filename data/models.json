@@ -3120,50 +3120,19 @@
     ]
   },
   {
-    "id": "gpt56-sol",
-    "name": "GPT-5.6 Sol",
-    "company": "OpenAI",
-    "origin": "us",
-    "date": "2026-07-09",
-    "params": "未公开",
-    "flagship": true,
-    "desc": "OpenAI 最新旗舰模型，引入 max 深度推理和 ultra 子代理模式。Terminal-Bench 2.1 SOTA，网络安全与生物学能力大幅提升。含 Sol/Terra/Luna 三档定价，Preview 阶段发布。",
-    "tags": [
-      "旗舰",
-      "推理",
-      "子代理"
-    ]
-  },
-  {
-    "id": "grok45",
-    "name": "Grok 4.5",
-    "company": "xAI",
-    "origin": "us",
-    "date": "2026-07-08",
-    "params": "1.5T",
-    "flagship": true,
-    "tags": [
-      "旗舰",
-      "推理",
-      "编程"
-    ],
-    "desc": "xAI 最新旗舰，1.5T 参数 V9 基础模型，集成 Cursor 数据。"
-  },
-  {
-    "id": "claude-sonnet-5",
-    "name": "Claude Sonnet 5",
+    "id": "claude-mythos-5",
+    "name": "Claude Mythos 5",
     "company": "Anthropic",
-    "origin": "proprietary",
-    "date": "2026-06-30",
+    "origin": "us",
+    "date": "2026-06-09",
     "params": null,
     "flagship": true,
-    "desc": "Anthropic's most agentic Sonnet model. Near-Opus 4.8 performance at lower cost. Major improvements in coding, reasoning, and tool use.",
+    "desc": "Anthropic 最强网络安全与生物学研究模型，与 Fable 5 同架构但无安全限制。仅限受信任合作伙伴使用，$10/$50 定价。",
     "tags": [
-      "chat",
-      "reasoning",
-      "coding",
-      "agent",
-      "tool-use"
+      "cybersecurity",
+      "biology",
+      "trusted-access",
+      "limited"
     ],
     "open_source": false,
     "modalities": [
@@ -3193,6 +3162,43 @@
     ]
   },
   {
+    "id": "claude-sonnet-5",
+    "name": "Claude Sonnet 5",
+    "company": "Anthropic",
+    "origin": "proprietary",
+    "date": "2026-06-30",
+    "params": null,
+    "flagship": true,
+    "desc": "Anthropic's most agentic Sonnet model. Near-Opus 4.8 performance at lower cost. Major improvements in coding, reasoning, and tool use.",
+    "tags": [
+      "chat",
+      "reasoning",
+      "coding",
+      "agent",
+      "tool-use"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "grok45",
+    "name": "Grok 4.5",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-07-08",
+    "params": "1.5T",
+    "flagship": true,
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程"
+    ],
+    "desc": "xAI 最新旗舰，1.5T 参数 V9 基础模型，集成 Cursor 数据。"
+  },
+  {
     "id": "gpt-live-1",
     "name": "GPT-Live-1",
     "company": "OpenAI",
@@ -3212,19 +3218,95 @@
     ]
   },
   {
-    "id": "claude-mythos-5",
-    "name": "Claude Mythos 5",
+    "id": "gpt56-sol",
+    "name": "GPT-5.6 Sol",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-07-09",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "OpenAI 最新旗舰模型，引入 max 深度推理和 ultra 子代理模式。Terminal-Bench 2.1 SOTA，网络安全与生物学能力大幅提升。含 Sol/Terra/Luna 三档定价，Preview 阶段发布。",
+    "tags": [
+      "旗舰",
+      "推理",
+      "子代理"
+    ]
+  },
+  {
+    "id": "gemini-36-flash",
+    "name": "Gemini 3.6 Flash",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-07-21",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Google 新一代高效 Flash 模型，输出 token 消耗减少 17%，编码和知识工作显著提升，性价比高于 3.5 Flash。",
+    "tags": [
+      "轻量",
+      "快速",
+      "性价比",
+      "Agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gemini-35-flash-lite",
+    "name": "Gemini 3.5 Flash-Lite",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-07-21",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Google 最快的 3.5 系列模型，350 tokens/s 输出速度，专为高吞吐 Agent 工作负载设计。",
+    "tags": [
+      "轻量",
+      "快速",
+      "低成本"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gemini-35-flash-cyber",
+    "name": "Gemini 3.5 Flash Cyber",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-07-21",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Google 专为网络安全场景优化的模型，配合 CodeMender 代码安全 Agent 提供前沿安全能力。",
+    "tags": [
+      "网络安全",
+      "专用",
+      "Agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "claude-opus-5",
+    "name": "Claude Opus 5",
     "company": "Anthropic",
     "origin": "us",
-    "date": "2026-06-09",
-    "params": null,
+    "date": "2026-07-24",
+    "params": "未公开",
     "flagship": true,
-    "desc": "Anthropic 最强网络安全与生物学研究模型，与 Fable 5 同架构但无安全限制。仅限受信任合作伙伴使用，$10/$50 定价。",
+    "desc": "Anthropic 新一代 Opus 模型，接近 Fable 5 的推理能力但价格减半，在编码和知识工作评测中达到新 SOTA。",
     "tags": [
-      "cybersecurity",
-      "biology",
-      "trusted-access",
-      "limited"
+      "旗舰",
+      "Agent",
+      "编码",
+      "性价比"
     ],
     "open_source": false,
     "modalities": [
