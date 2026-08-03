@@ -23,7 +23,8 @@ if (!Array.isArray(models)) {
 } else {
   const ids = new Set();
   const VALID_ORIGINS = ['us', 'cn', 'eu', 'other'];
-  const DATE_RE = /^\d{4}(-\d{2})?$/;
+  const DATE_RE = /^\d{4}(-\d{2}(-\d{2})?)?$/;
+  let normalized = false;
 
   models.forEach((m, i) => {
     const prefix = `models[${i}] (${m.name || 'unknown'})`;
@@ -49,9 +50,15 @@ if (!Array.isArray(models)) {
       errors.push(`${prefix}: invalid origin "${m.origin}" (must be one of: ${VALID_ORIGINS.join(', ')})`);
     }
 
-    // date format
+    // date format — accept YYYY, YYYY-MM, or YYYY-MM-DD
     if (m.date && !DATE_RE.test(m.date)) {
-      errors.push(`${prefix}: invalid date format "${m.date}" (must be YYYY-MM or YYYY)`);
+      errors.push(`${prefix}: invalid date format "${m.date}" (must be YYYY, YYYY-MM, or YYYY-MM-DD)`);
+    }
+
+    // normalize: YYYY-MM-DD → YYYY-MM
+    if (m.date && /^\d{4}-\d{2}-\d{2}$/.test(m.date)) {
+      m.date = m.date.slice(0, 7);
+      normalized = true;
     }
 
     // flagship must be boolean
@@ -64,6 +71,12 @@ if (!Array.isArray(models)) {
       errors.push(`${prefix}: "tags" must be an array, got ${typeof m.tags}`);
     }
   });
+
+  // ── Persist normalized dates ──
+  if (normalized) {
+    fs.writeFileSync(modelsPath, JSON.stringify(models, null, 2) + '\n', 'utf-8');
+    console.log(`📝 Normalized: converted YYYY-MM-DD dates to YYYY-MM in data/models.json`);
+  }
 }
 
 // ── Validate companies.json ──

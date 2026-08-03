@@ -3124,7 +3124,7 @@
     "name": "Claude Mythos 5",
     "company": "Anthropic",
     "origin": "us",
-    "date": "2026-06-09",
+    "date": "2026-06",
     "params": null,
     "flagship": true,
     "desc": "Anthropic 最强网络安全与生物学研究模型，与 Fable 5 同架构但无安全限制。仅限受信任合作伙伴使用，$10/$50 定价。",
@@ -3144,8 +3144,8 @@
     "id": "claude-fable-5",
     "name": "Claude Fable 5",
     "company": "Anthropic",
-    "origin": "proprietary",
-    "date": "2026-06-11",
+    "origin": "us",
+    "date": "2026-06",
     "params": null,
     "flagship": true,
     "desc": "Anthropic's strongest model as of June 2026.",
@@ -3165,8 +3165,8 @@
     "id": "claude-sonnet-5",
     "name": "Claude Sonnet 5",
     "company": "Anthropic",
-    "origin": "proprietary",
-    "date": "2026-06-30",
+    "origin": "us",
+    "date": "2026-06",
     "params": null,
     "flagship": true,
     "desc": "Anthropic's most agentic Sonnet model. Near-Opus 4.8 performance at lower cost. Major improvements in coding, reasoning, and tool use.",
@@ -3188,7 +3188,7 @@
     "name": "Grok 4.5",
     "company": "xAI",
     "origin": "us",
-    "date": "2026-07-08",
+    "date": "2026-07",
     "params": "1.5T",
     "flagship": true,
     "tags": [
@@ -3203,7 +3203,7 @@
     "name": "GPT-Live-1",
     "company": "OpenAI",
     "origin": "us",
-    "date": "2026-07-08",
+    "date": "2026-07",
     "params": null,
     "flagship": false,
     "desc": "OpenAI 新一代语音模型，全双工架构，可同时听说，支持实时对话和后台推理委派。",
@@ -3222,7 +3222,7 @@
     "name": "GPT-5.6 Sol",
     "company": "OpenAI",
     "origin": "us",
-    "date": "2026-07-09",
+    "date": "2026-07",
     "params": "未公开",
     "flagship": true,
     "desc": "OpenAI 最新旗舰模型，引入 max 深度推理和 ultra 子代理模式。Terminal-Bench 2.1 SOTA，网络安全与生物学能力大幅提升。含 Sol/Terra/Luna 三档定价，Preview 阶段发布。",
@@ -3237,7 +3237,7 @@
     "name": "Gemini 3.6 Flash",
     "company": "Google",
     "origin": "us",
-    "date": "2026-07-21",
+    "date": "2026-07",
     "params": "未公开",
     "flagship": false,
     "desc": "Google 新一代高效 Flash 模型，输出 token 消耗减少 17%，编码和知识工作显著提升，性价比高于 3.5 Flash。",
@@ -3258,7 +3258,7 @@
     "name": "Gemini 3.5 Flash-Lite",
     "company": "Google",
     "origin": "us",
-    "date": "2026-07-21",
+    "date": "2026-07",
     "params": "未公开",
     "flagship": false,
     "desc": "Google 最快的 3.5 系列模型，350 tokens/s 输出速度，专为高吞吐 Agent 工作负载设计。",
@@ -3278,7 +3278,7 @@
     "name": "Gemini 3.5 Flash Cyber",
     "company": "Google",
     "origin": "us",
-    "date": "2026-07-21",
+    "date": "2026-07",
     "params": "未公开",
     "flagship": false,
     "desc": "Google 专为网络安全场景优化的模型，配合 CodeMender 代码安全 Agent 提供前沿安全能力。",
@@ -3298,7 +3298,7 @@
     "name": "Claude Opus 5",
     "company": "Anthropic",
     "origin": "us",
-    "date": "2026-07-24",
+    "date": "2026-07",
     "params": "未公开",
     "flagship": true,
     "desc": "Anthropic 新一代 Opus 模型，接近 Fable 5 的推理能力但价格减半，在编码和知识工作评测中达到新 SOTA。",
@@ -3312,6 +3312,92 @@
     "modalities": [
       "text",
       "image"
+    ]
+  },
+  {
+    "id": "kimi-k3",
+    "name": "Kimi K3",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-07",
+    "params": "2.8T",
+    "flagship": true,
+    "desc": "月之暗面新一代旗舰，2.8万亿参数，原生多模态，百万token上下文，专为长程编程、知识工作与深度推理打造。开源登顶榜单。",
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程",
+      "多模态",
+      "开源",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "grok-voice-think-fast-2",
+    "name": "Grok Voice Think Fast 2.0",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-07",
+    "params": null,
+    "flagship": false,
+    "desc": "xAI 新一代语音模型，推理与说话并行，转写准确率较上代提升 1.4 倍，全双工对话能力大幅增强，定价 $0.08/分钟。",
+    "tags": [
+      "voice",
+      "speech-to-speech",
+      "real-time"
+    ],
+    "open_source": false,
+    "modalities": [
+      "audio"
+    ]
+  },
+  {
+    "id": "inkling-small",
+    "name": "Inkling-Small",
+    "company": "Thinking Machines",
+    "origin": "us",
+    "date": "2026-07",
+    "params": "276B MoE (12B active)",
+    "flagship": false,
+    "desc": "Thinking Machines Lab（Mira Murati 创立）开源模型，276B MoE 仅 12B 激活，原生音频/图像推理，1M 上下文，Apache 2.0。",
+    "tags": [
+      "开源",
+      "多模态",
+      "MoE",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image",
+      "audio"
+    ]
+  },
+  {
+    "id": "qwen37-flash",
+    "name": "Qwen3.7-Flash",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-07",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Qwen3.7 原生视觉语言 Flash 系列，多模态理解与 Agent 执行能力较 3.6-Flash 全面升级，1M 上下文，低价高效。",
+    "tags": [
+      "多模态",
+      "视觉",
+      "Agent",
+      "1M上下文"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image",
+      "video"
     ]
   }
 ]
