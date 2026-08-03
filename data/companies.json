@@ -108,5 +108,10 @@
     "color": "#138808",
     "logo": "🇮🇳",
     "origin": "other"
+  },
+  "Thinking Machines": {
+    "color": "#7c3aed",
+    "logo": "TM",
+    "origin": "us"
   }
 }

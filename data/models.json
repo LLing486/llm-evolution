@@ -3336,5 +3336,68 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "grok-voice-think-fast-2",
+    "name": "Grok Voice Think Fast 2.0",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-07",
+    "params": null,
+    "flagship": false,
+    "desc": "xAI 新一代语音模型，推理与说话并行，转写准确率较上代提升 1.4 倍，全双工对话能力大幅增强，定价 $0.08/分钟。",
+    "tags": [
+      "voice",
+      "speech-to-speech",
+      "real-time"
+    ],
+    "open_source": false,
+    "modalities": [
+      "audio"
+    ]
+  },
+  {
+    "id": "inkling-small",
+    "name": "Inkling-Small",
+    "company": "Thinking Machines",
+    "origin": "us",
+    "date": "2026-07",
+    "params": "276B MoE (12B active)",
+    "flagship": false,
+    "desc": "Thinking Machines Lab（Mira Murati 创立）开源模型，276B MoE 仅 12B 激活，原生音频/图像推理，1M 上下文，Apache 2.0。",
+    "tags": [
+      "开源",
+      "多模态",
+      "MoE",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image",
+      "audio"
+    ]
+  },
+  {
+    "id": "qwen37-flash",
+    "name": "Qwen3.7-Flash",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-07",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Qwen3.7 原生视觉语言 Flash 系列，多模态理解与 Agent 执行能力较 3.6-Flash 全面升级，1M 上下文，低价高效。",
+    "tags": [
+      "多模态",
+      "视觉",
+      "Agent",
+      "1M上下文"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image",
+      "video"
+    ]
   }
 ]
