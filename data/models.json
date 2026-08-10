@@ -3399,5 +3399,46 @@
       "image",
       "video"
     ]
+  },
+  {
+    "id": "qwen38-max",
+    "name": "Qwen3.8-Max",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "2.4T (95B active)",
+    "flagship": true,
+    "desc": "Qwen 家族迄今最强模型，2.4T 参数（95B active），首次开源 Qwen-Max 级权重（开源权重于发布一周后放出）。编码、工作、研究、长程任务全面升级，支持端到端自主完成复杂任务。",
+    "tags": [
+      "旗舰",
+      "编码",
+      "Agent",
+      "长程任务",
+      "开源"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "gpt56-luna",
+    "name": "GPT-5.6 Luna",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "GPT-5.6 系列高效模型，8月6日起成为 ChatGPT 免费用户默认模型并开放无限文本对话。7 月已在 Codex/Work 提供 Preview，8 月更新版事实性错误较 GPT-5.5 Instant 降低约 62%。",
+    "tags": [
+      "高效",
+      "对话",
+      "Agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
