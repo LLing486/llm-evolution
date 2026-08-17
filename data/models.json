@@ -3440,5 +3440,131 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "gpt56-cyber",
+    "name": "GPT-5.6-Cyber",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "OpenAI 网络安全专用模型（Daybreak Red），面向授权漏洞研究与安全测试，400K 上下文窗口，内部评估中完成 95% 的漏洞利用请求（GPT-5.6 Sol 仅 1.5%），较 GPT-5.5-Cyber 显著提升。",
+    "tags": [
+      "安全",
+      "Agent",
+      "漏洞研究"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "grok46",
+    "name": "Grok 4.6",
+    "company": "xAI",
+    "origin": "us",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "xAI 新一代旗舰模型，Agent 与编码能力大幅提升，Artificial Analysis 智能指数 61 分，定价 $2/百万输入 tokens、$6/百万输出 tokens（另有 fast 变体）。",
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程",
+      "Agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gemini-37-flash",
+    "name": "Gemini 3.7 Flash",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Google 迄今最智能的 Flash 系列模型，编码与 Agent 工作流显著提升（SWE-bench 65.3% vs 3.6 Flash 49.0%），定价 $0.75/百万输入 tokens、$3.75/百万输出 tokens。",
+    "tags": [
+      "轻量",
+      "快速",
+      "性价比",
+      "Agent",
+      "编码"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "qwen38-2.4t-a95b",
+    "name": "Qwen3.8-2.4T-A95B",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "2.4T (95B active)",
+    "flagship": false,
+    "desc": "Qwen3.8-Max 的开源权重版本（8月12日放出），首次将 Qwen-Max 级模型开源，2.4T MoE 架构，编码、专业工作、长程 Agent 任务全面升级。",
+    "tags": [
+      "开源",
+      "MoE",
+      "编码",
+      "Agent",
+      "长程任务"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "qwen38-27b",
+    "name": "Qwen3.8-27B",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "27B",
+    "flagship": false,
+    "desc": "Qwen3.8 开源密集模型，原生视觉-语言多模态，支持图像/视频理解与灵活思考控制，面向复杂多步任务，Apache-2.0 协议。",
+    "tags": [
+      "开源",
+      "多模态",
+      "轻量",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "deepseek-v4-pro-0813",
+    "name": "DeepSeek-V4-Pro-0813",
+    "company": "DeepSeek",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "1.6T",
+    "flagship": true,
+    "desc": "DeepSeek-V4-Pro 正式版（8月13日开源发布，MIT 协议），Agent 能力大幅提升，支持 Responses API 与 Codex 接入，1.6T 参数、1M 上下文。",
+    "tags": [
+      "1.6T",
+      "旗舰",
+      "Agent",
+      "MIT",
+      "1M上下文"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
   }
 ]
