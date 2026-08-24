@@ -3566,5 +3566,25 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "glm53",
+    "name": "GLM-5.3",
+    "company": "智谱AI",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "智谱旗舰推理模型，面向复杂软件工程与长时程 Agent 任务，1M 上下文窗口，具备新出现的 cyber 能力；开源权重准备中（官方博客 8/14，OpenRouter 8/18 上架）。",
+    "tags": [
+      "1M上下文",
+      "Agent",
+      "推理",
+      "编程"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
   }
 ]
