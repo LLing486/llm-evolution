@@ -3586,5 +3586,105 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "gemini-omni-11-flash",
+    "name": "Gemini Omni 1.1 Flash",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-08",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Google 官方 8/27 发布的生成式视频模型（Omni 1.1 更新），支持场景延展（10 秒增量、累计最长 40 秒）、首尾帧插值、360p 快速草稿（成本为 720p 的 1/3）与 4K 放大，经 Gemini API / Google AI Studio / Agent Platform 提供，有官方定价。",
+    "tags": [
+      "多模态",
+      "视频生成"
+    ],
+    "open_source": false,
+    "modalities": [
+      "video"
+    ]
+  },
+  {
+    "id": "qwen38-flash-next",
+    "name": "Qwen3.8-Flash-Next",
+    "company": "阿里巴巴",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "125B (6B active) + 51B n-gram",
+    "flagship": false,
+    "desc": "Qwen 开源多模态 MoE 模型、Qwen4 架构早期预览（Gated DeltaNet + Qwen Sparse Attention），125B 总参数 + 51B n-gram 嵌入、6B 激活，原生 262K 上下文（YaRN 可扩至 1M），训练成本约为 Qwen3.7-Plus 的 1/9；生产版 Qwen3.8-Flash 定价 $0.15/$0.47 每百万 tokens（HF 权重 8/24 放出）。",
+    "tags": [
+      "开源",
+      "MoE",
+      "多模态",
+      "Qwen4架构"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "glm-53-flash",
+    "name": "GLM-5.3-Flash",
+    "company": "智谱AI",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "320B (18B active)",
+    "flagship": false,
+    "desc": "GLM-5 系列首个原生多模态模型，320B 总参数/18B 激活，稀疏+线性注意力混合架构（mHC 超连接），性能超越 GLM-5.2、价格约为其 1/10，编码与 Agent 基准接近 Claude Opus 4.8；8/25 开源权重（zai-org/GLM-5.3-Flash）。",
+    "tags": [
+      "开源",
+      "多模态",
+      "MoE",
+      "高性价比"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "hy4-preview",
+    "name": "Hy4 preview",
+    "company": "腾讯",
+    "origin": "cn",
+    "date": "2026-08",
+    "params": "770B (49B active)",
+    "flagship": true,
+    "desc": "腾讯迄今最强开源大模型（8/28 官方发布），770B 参数/49B 激活、1M 上下文窗口，长时程软件工程、文档办公与科研任务提升最大；已开源，腾讯云与 OpenRouter 可用，API 输入 $0.834/百万 tokens、输出 $2.501/百万 tokens。",
+    "tags": [
+      "开源",
+      "旗舰",
+      "MoE",
+      "1M上下文",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "apodex-11",
+    "name": "Apodex 1.1",
+    "company": "Apodex",
+    "origin": "other",
+    "date": "2026-08",
+    "params": "35B (mini)",
+    "flagship": true,
+    "desc": "Apodex 面向复杂科研/文档任务的自进化 Agent 模型（官方博客 8/24 发布），推理与文件/搜索/代码执行深度整合，支持 Agent Team 并行与中途干预，35B mini 开源可本地部署（FrontierAgent 执行框架）。",
+    "tags": [
+      "Agent",
+      "开源",
+      "科研"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
   }
 ]

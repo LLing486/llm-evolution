@@ -113,5 +113,15 @@
     "color": "#7c3aed",
     "logo": "TM",
     "origin": "us"
+  },
+  "腾讯": {
+    "color": "#0052d9",
+    "logo": "腾",
+    "origin": "cn"
+  },
+  "Apodex": {
+    "color": "#eab308",
+    "logo": "A",
+    "origin": "other"
   }
 }
