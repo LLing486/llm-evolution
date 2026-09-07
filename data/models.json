@@ -3686,5 +3686,109 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "claude-fable-51",
+    "name": "Claude Fable 5.1",
+    "company": "Anthropic",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": true,
+    "desc": "Anthropic 于 2026-09-01 发布的最强编程与知识工作模型（Fable 5.1 为普通访问），设 low/medium/high/xhigh/max 多档 effort；在软件工程、Agent 化任务与科研上显著超越 Fable 5，并宣称推动 AI 参与科学进展。缓存读取降价 75%（$0.25/M tokens），典型负载成本降约 25%、高度 Agent 场景最高约 45%；其余定价同 Fable 5（输入 $10/M、输出 $50/M）。API 名 claude-fable-5-1，已登录 AWS/Google Cloud/Azure。Claude Mythos 5.1 为同模型的高防护版本，仅限受信访问。",
+    "tags": [
+      "旗舰",
+      "编程",
+      "Agent",
+      "科研",
+      "高性价比"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "claude-mythos-51",
+    "name": "Claude Mythos 5.1",
+    "company": "Anthropic",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": true,
+    "desc": "与 Claude Fable 5.1 同源、但采用更高层级安全防护的版本（2026-09-01 发布）：Fable 5.1 通用可用，而 Mythos 5.1 仅通过 Anthropic 受信访问项目面向网络安全与生命科学场景；并与美国政府合作建立生物能力接入项目，其网络安全防护较此前减少 60% 误报。",
+    "tags": [
+      "旗舰",
+      "安全",
+      "受信访问",
+      "生命科学",
+      "网络安全"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "gemini-38-flash",
+    "name": "Gemini 3.8 Flash",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": false,
+    "desc": "Google 于 2026-09-02 发布的 Gemini 3.8：六周内第三次 Flash 迭代，宣称最强推理与编程模型，在软件工程、Agent 化任务与关键多步推理上均较 3.7 Flash 显著提升。输入 $0.75/1M、输出 $3.75/1M（intro 价至 2026-12-31，2027-01-01 起 $1.50/$7.50）。开发者经 Gemini API 调用，企业级经 Gemini Enterprise，消费级面向 Google AI Pro/Ultra，并在 Gemini app、AI Mode / 搜索、Gemini 表格中开放。",
+    "tags": [
+      "编程",
+      "Agent",
+      "推理",
+      "性价比"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gemini-38-flash-cyber",
+    "name": "Gemini 3.8 Flash Cyber",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": false,
+    "desc": "Gemini 3.8 的网络安全专用变体（2026-09-02 发布），具备前沿级网络安全能力，面向可信政府机构、关键基础设施运营者与软件维护者，通过新 Fairwind 项目提供受信优先访问。",
+    "tags": [
+      "网络安全",
+      "政府",
+      "受信访问"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gpt6-astra",
+    "name": "GPT-6 Astra",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": true,
+    "desc": "OpenAI 于 2026-09-03 发布的最新旗舰模型，官方称其为迄今最强大、能力最强的模型，并宣称开启\"计算机与浏览器使用新前沿\"；按 OpenAI 说法是\"目前最好的软件工程模型\"，在漏洞挖掘、终端任务与代码库问答上领先（含自家 Sol 与 Anthropic Fable）。因采用 opaque recurrence（不透明循环）推理技术、弱化可审计的 chain-of-thought 而引发争议。9/3 先向 Daybreak 网络安全用户开放，随后一周推向 Pro/Plus/Enterprise/Business 账户及 API；上线初期遭遇支付用户被锁定的\"混乱\"问题，Altman 为此公开致歉。",
+    "tags": [
+      "旗舰",
+      "编程",
+      "Agent",
+      "安全",
+      "争议"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
   }
 ]
