@@ -3790,5 +3790,48 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "deepseek-v41-flash",
+    "name": "DeepSeek-V4.1-Flash",
+    "company": "DeepSeek",
+    "origin": "cn",
+    "date": "2026-09",
+    "params": "552B (8B prefill / 16B decode 激活)",
+    "flagship": false,
+    "desc": "DeepSeek 于 2026-09-10 正式发布的 V4.1 新架构家族最小模型，原生多模态视觉理解，上下文 1M、最大输出 384K。定位更高能力上限、更快推理与更高吞吐。基准：GPQA Diamond 90.9、HLE 36.8（纯文本子集 39.1）、Codeforces 3471、Terminal-Bench 2.1 90.6、DeepSWE v1.1 74.2、CyberGym 88.1。API 模型名 deepseek-flash，旧名 deepseek-v4-flash / deepseek-v4-flash-vision-exp 已退役并路由至本模型；价随发布下调，峰值/低谷计费（输入 cache miss 低谷 $0.15/M、峰值 $0.3/M；输出低谷 $0.6/M、峰值 $1.2/M），MIT 开源。",
+    "tags": [
+      "多模态",
+      "视觉",
+      "Agent",
+      "编程",
+      "高性价比",
+      "开源"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gpt-image-2-5",
+    "name": "GPT-Image-2.5",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-09",
+    "params": null,
+    "flagship": false,
+    "desc": "OpenAI 于 2026-09-08 通过 “Introducing ChatGPT Images 2.5” 发布的图像生成与编辑模型家族，包含两个变体：GPT-Image-2.5 Sunburst（官方称最强图像生成与编辑模型）与 GPT-Image-2.5 Flare（快速、高质量的日常图像生成）。API 模型名分别为 gpt-image-2.5-sunburst 与 gpt-image-2.5-flare。",
+    "tags": [
+      "图像生成",
+      "图像编辑",
+      "多模态"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
