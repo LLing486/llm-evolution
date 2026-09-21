@@ -123,5 +123,10 @@
     "color": "#eab308",
     "logo": "A",
     "origin": "other"
+  },
+  "阶跃星辰": {
+    "color": "#e11d48",
+    "logo": "阶",
+    "origin": "cn"
   }
 }
