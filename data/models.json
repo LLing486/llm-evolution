@@ -3833,5 +3833,30 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "step-5-preview",
+    "name": "Step 5 Preview",
+    "company": "阶跃星辰",
+    "origin": "cn",
+    "date": "2026-09",
+    "params": "600B 稀疏 MoE（27B 激活）",
+    "flagship": true,
+    "desc": "阶跃星辰于 2026-09-19 亮相、9-20 全量开放的新一代旗舰基模（预览版），面向真实世界的 Agentic 任务，重点覆盖编程与专业知识工作。采用稀疏 MoE 架构，总参数 600B、每 token 仅激活 27B；原生支持文本、图片、视频输入，上下文窗口 1M tokens、最大输出 64K，支持流式输出、工具调用、JSON Schema 结构化输出与 low/medium/high 三档推理强度。官方定价（每 1M tokens）：输入 7 元（缓存未命中）/ 0.35 元（缓存命中），输出 20 元。媒体称其以 6000 亿参数对标 2.8T 级 K3 的性能，把开源旗舰的性价比边界往外推了一格。API 模型名 step-5-preview，完整权重计划 2026-10-15 发布。",
+    "tags": [
+      "旗舰",
+      "MoE",
+      "Agent",
+      "编程",
+      "多模态",
+      "1M上下文",
+      "高性价比"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image",
+      "video"
+    ]
   }
 ]
