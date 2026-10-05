@@ -3994,5 +3994,90 @@
       "video",
       "audio"
     ]
+  },
+  {
+    "id": "claude-sonnet-55",
+    "name": "Claude Sonnet 5.5",
+    "company": "Anthropic",
+    "origin": "us",
+    "date": "2026-09",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Anthropic 于 2026-09-28 发布 Claude Sonnet 5.5，是 Claude 5.5 家族的第二款模型（Haiku 5.5 官方称将在数周内跟进）。定位为 Opus 5.5 更快、更便宜的补充：输出速度提升 30% 以上，完成同样工作所需 token 与工具调用更少，官方称多数任务成本降低最多 30%。定价与 Sonnet 5 持平：输入 $2 / 输出 $10 每百万 tokens，缓存读取 $0.20、缓存写入 $2.50，Batch $1/$5；1M 上下文、最大输出 128K（Batch 配 beta header 可到 300K），默认自适应思考、API 默认 effort 为 high，tokenizer 与 Sonnet 5 相同。官方基准：Terminal-Bench 4.0 从 Sonnet 5 的 10.3% 跃升至 70.6%（高于 Opus 5.5 的 66.4%），GDPval-AA 1844 对 Opus 5.5 的 1846、AA-Briefcase 1811 对 1822，即用约一半价格覆盖过去需要 Opus 的工作。它是首个搭载此前仅供最强模型使用的网络安全 safeguard 的 Sonnet（CyScenarioBench 46.1%，Sonnet 5 仅 0.7%），新增三阶段网络分类器与推理提取拦截，代价是更多拒答。发布当天已在 Claude Platform、Claude Code、AWS Bedrock、Google Cloud 与 Microsoft Foundry 上线，并同步进入 GitHub Copilot 等主流编码工具。",
+    "tags": [
+      "编程",
+      "Agent",
+      "高效",
+      "性价比",
+      "安全"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gpt6-1-sol",
+    "name": "GPT-6.1 Sol",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-09",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "OpenAI 于 2026-09-29 DevDay 发布 GPT-6.1 Sol，是 GPT-6 系列的新一档：官方称其智能接近 GPT-6 Astra（感知式编码、计算机使用与专业工作），而标准输入/输出价格仅为 Astra 的五分之一。定价：输入 $2 / 缓存输入 $0.10（比 GPT-6 Sol 的缓存价再低 50%）/ 输出 $10 每百万 tokens，长上下文档 $4/$15，Batch 半价 $1/$5；1.05M 上下文、最大输出 128K，推理强度支持 low 到 max。官方称在 OSWorld 2.0 离线集上最大推理强度时比 GPT-6 Sol 高 7 个百分点、成本不到一半，距 Astra 仅 2.1 个百分点而单任务成本约其七分之一；发布当天即登上 Code Arena WebDev 第 3 名（1759 分）。上线范围为 ChatGPT Work、Codex 与 API（模型 ID gpt-6.1-sol），暂不进普通 Chat，后续提供最高 8 倍速的 Ultrafast 档。同期 OpenAI 证实原定 10 月发布的 GPT-6.1 Astra 因安全测试未达标（越界与失实汇报）而取消发布。",
+    "tags": [
+      "编程",
+      "Agent",
+      "计算机使用",
+      "性价比"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "ling-3-1-flash",
+    "name": "Ling-3.1-flash",
+    "company": "蚂蚁百灵",
+    "origin": "cn",
+    "date": "2026-09",
+    "params": "560B 稀疏 MoE（25B 激活）",
+    "flagship": false,
+    "desc": "蚂蚁百灵（InclusionAI）于 2026-09-30 发布 Ling-3.1-flash，为其 Flash 档新一代模型：约 560B 总参数、每 token 激活约 25B 的稀疏 MoE，上下文窗口上限 1M，可容纳更长的文档、代码与任务历史。官方称研发围绕通用智能体、搜索、日常办公与软件研发持续优化，并在医疗、金融与材料科学研究等场景提升能力；总规模较上一代扩大约 4.5 倍、单 token 激活参数接近 5 倍。发布时开放为期两周的免费体验（体验期服务长度为 256K），转为付费服务后计划开放 1M 上下文并同步开源权重。",
+    "tags": [
+      "MoE",
+      "Agent",
+      "1M上下文",
+      "开源计划"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "gemini-4-argon",
+    "name": "Gemini 4 Argon",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "Google DeepMind 于 2026-10-01 发布新一代前沿模型 Gemini 4 Argon，面向真实世界软件工程、企业知识工作（法律、金融）与网络安全防御。最直接的规格变化是单次输出上限从此前 Gemini 系列的约 6.4 万 tokens 提升到约 100 万 tokens，单次响应即可承载大型代码迁移这类超长任务。定价为开局价输入 $2 / 输出 $10 每百万 tokens（缓存输入在此基础上再低 95%），官方称后续将上调至 $4/$20。采取受控分阶段上线：先通过 Fairwind Program 面向经过筛选的可信网络防御者开放，同时主动参与美国政府的前沿模型预发布审查流程，待护栏迭代后再向开发者、企业与消费者推出，因此暂不对普通用户开放。第三方数据显示其在 DeepSWE v1.1 上取得 77.9%，并在多项编程与知识工作基准上超过 GPT-6 Astra 与 Claude Opus 5.5。",
+    "tags": [
+      "旗舰",
+      "编程",
+      "推理",
+      "网络安全",
+      "分阶段开放"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
