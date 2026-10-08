@@ -194,6 +194,20 @@
     padding: 2px;
   }
 
+  #filterToggle { display: none; }
+
+  .view-btn.ghost {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .view-btn.ghost.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
   .view-btn {
     padding: 5px 12px;
     border: none;
@@ -931,6 +945,110 @@
   .compare-remove:hover { background: rgba(239,68,68,0.15); color: #f87171; }
 
   /* ===== Table View ===== */
+  /* ===== 列表视图：按月分组的进化流水（手机默认）===== */
+  .list-view { display: none; padding: 0 clamp(16px, 3vw, 48px) 48px; }
+  .list-view.visible { display: block; }
+
+  .list-month {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 0 7px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    font-size: clamp(0.75rem, 1vw, 0.875rem);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .list-month span { font-weight: 500; color: var(--text-secondary); font-size: 0.8125rem; }
+
+  .list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .list-item.open { background: rgba(79,70,229,0.045); }
+
+  .list-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .list-dot.flagship {
+    width: 13px;
+    height: 13px;
+    border-width: 3px;
+    border-color: #f472b6;
+    background: rgba(244,114,182,0.15);
+    margin-top: 3px;
+  }
+
+  .list-main { flex: 1; min-width: 0; }
+
+  .list-name {
+    font-size: clamp(0.8125rem, 1vw, 0.9375rem);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .list-meta {
+    margin-top: 2px;
+    font-size: clamp(0.6875rem, 0.8vw, 0.75rem);
+    color: var(--text-secondary);
+  }
+
+  .list-badges { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; }
+
+  .list-badge {
+    font-size: 11px;
+    line-height: 1.7;
+    padding: 0 7px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+  }
+
+  .list-badge.flagship { color: #be185d; border-color: rgba(244,114,182,0.55); background: rgba(244,114,182,0.12); }
+  .list-badge.multi { color: #0369a1; border-color: rgba(14,165,233,0.45); background: rgba(14,165,233,0.10); }
+
+  .list-desc {
+    margin-top: 6px;
+    font-size: clamp(0.6875rem, 0.8vw, 0.75rem);
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  /* 时间线默认只显示点；名字按需出现（悬停 / 打开开关） */
+  .model-name { display: none; }
+  .show-labels .model-name { display: block; }
+  .model-node:hover .model-name { display: block; }
+
+  @media (max-width: 768px) {
+    .stats-bar { padding: 8px 12px; gap: 12px; }
+    .legend { margin: 4px 12px 0; padding: 6px 10px; gap: 6px 12px; }
+    .legend-note { display: none; }
+    .list-view { padding: 0 12px 40px; }
+    .list-item { padding: 8px 0; }
+
+    /* 手机上把筛选收起来，否则首屏只剩 3 条 */
+    .filters { display: none; }
+    .filters.open { display: flex; }
+    #filterToggle { display: inline-flex; }
+  }
+
   .table-view {
     display: none;
     padding: 0 clamp(16px, 3vw, 48px) 120px;
@@ -1153,8 +1271,11 @@
   </div>
   <div class="view-toggle">
     <button class="view-btn active" data-view="timeline">时间线</button>
+    <button class="view-btn" data-view="list">列表</button>
     <button class="view-btn" data-view="table">表格</button>
+    <button class="view-btn" id="labelToggle" onclick="toggleLabels()" title="在时间线上显示模型名">显示名称</button>
   </div>
+  <button class="view-btn ghost" id="filterToggle" onclick="toggleFilters()" title="展开/收起筛选">筛选</button>
   <span class="kbd-hint"><kbd>/</kbd> 搜索 <kbd>Esc</kbd> 清除 <kbd>←</kbd><kbd>→</kbd> 滚动</span>
 </div>
 
@@ -1212,6 +1333,9 @@
     <div id="timelineBody"></div>
   </div>
 </div>
+
+<!-- List View（按月分组）-->
+<div class="list-view" id="listView"></div>
 
 <!-- Table View -->
 <div class="table-view" id="tableView">
@@ -1443,8 +1567,13 @@ async function init() {
   renderFilters();
   renderTimeline();
   renderTable();
+  renderMobileList();
   updateFooter();
   bindEvents();
+
+  // 手机默认用列表（横向时间轴在窄屏上只能看到 3 行，竖向流水更好读）
+  if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) setView('list');
+  else setView('timeline');
 
   // Sync slider with initial zoom
   document.getElementById('zoomSlider').value = zoomNorm;
@@ -1601,6 +1730,7 @@ function updateFilters() {
   renderStats();
   renderTimeline();
   renderTable();
+  renderMobileList();
   updateSearchCount();
 }
 
@@ -1819,6 +1949,16 @@ function renderTimeline() {
 
 // ===== 标签排布：二维占位（上/下都可放，按距离优先）=====
 function layoutRowLabels() {
+  const tlView = document.getElementById('timelineView');
+  if (tlView && !tlView.classList.contains('show-labels')) {
+    document.querySelectorAll('.model-name').forEach(l => {
+      l.classList.remove('label-hidden');
+      l.style.top = '';
+      l.style.left = '';
+    });
+    document.querySelectorAll('.row-collapsed-badge').forEach(b => b.remove());
+    return;
+  }
   const scrollW = TOTAL_MONTHS * currentPxPerMonth;
   const MAX_STEPS = 4;      // 最多向外 4 步
   const LANE_STEP = 13;     // 每步间距(px)
@@ -2242,13 +2382,84 @@ function hideTooltip() { tooltip.classList.remove('visible'); }
 // ===== VIEW TOGGLE =====
 function setView(mode) {
   viewMode = mode;
-  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === mode));
-  document.getElementById('timelineView').style.display = mode === 'timeline' ? '' : 'none';
+  const isTl = mode === 'timeline', isTb = mode === 'table', isLs = mode === 'list';
+  document.querySelectorAll('.view-btn[data-view]').forEach(b => b.classList.toggle('active', b.dataset.view === mode));
+  document.getElementById('timelineView').style.display = isTl ? '' : 'none';
   const tableView = document.getElementById('tableView');
-  if (mode === 'table') { tableView.classList.add('visible'); tableView.style.display = ''; }
+  if (isTb) { tableView.classList.add('visible'); tableView.style.display = ''; }
   else { tableView.classList.remove('visible'); tableView.style.display = 'none'; }
-  document.getElementById('legend').style.display = mode === 'timeline' ? '' : 'none';
-  document.querySelector('.zoom-bar').style.display = mode === 'timeline' ? '' : 'none';
+  const listView = document.getElementById('listView');
+  if (isLs) { listView.classList.add('visible'); renderMobileList(); }
+  else { listView.classList.remove('visible'); }
+  document.getElementById('legend').style.display = isTl ? '' : 'none';
+  document.querySelector('.zoom-bar').style.display = isTl ? '' : 'none';
+  const lt = document.getElementById('labelToggle');
+  if (lt) {
+    lt.style.display = isTl ? '' : 'none';
+    lt.classList.toggle('active', document.getElementById('timelineView').classList.contains('show-labels'));
+  }
+  updateHash();
+}
+
+// ===== 列表视图（按月分组，新的在前）=====
+function renderMobileList() {
+  const host = document.getElementById('listView');
+  if (!host) return;
+  const models = getFilteredModels().slice().sort((a, b) =>
+    b.date.localeCompare(a.date) || (a.company < b.company ? -1 : a.company > b.company ? 1 : 0)
+  );
+  const groups = {};
+  models.forEach(m => { (groups[m.date] = groups[m.date] || []).push(m); });
+
+  let html = '';
+  Object.keys(groups).sort().reverse().forEach(mo => {
+    const list = groups[mo];
+    html += `<div class="list-month">${mo.replace('-', '.')}<span>${list.length} 个</span></div>`;
+    list.forEach(m => {
+      const cfg = COMPANIES[m.company] || { color: '#64748b', logo: '?' };
+      const badges = [
+        m.flagship ? '<span class="list-badge flagship">旗舰</span>' : '',
+        m.open_source === true ? '<span class="list-badge">开源</span>'
+          : m.open_source === false ? '<span class="list-badge">闭源</span>' : '',
+        (m.modalities && m.modalities.length > 1) ? '<span class="list-badge multi">多模态</span>' : '',
+        ...(m.tags || [])
+          .filter(t => !['旗舰', '多模态', '纯文本', '开源', '闭源'].includes(t))
+          .slice(0, 1)
+          .map(t => `<span class="list-badge">${t}</span>`)
+      ].join('');
+      html += `<div class="list-item" data-id="${m.id}">
+  <span class="list-dot${m.flagship ? ' flagship' : ''}"${m.flagship ? '' : ` style="border-color:${cfg.color}"`}></span>
+  <div class="list-main">
+    <div class="list-name">${m.name}</div>
+    <div class="list-meta">${cfg.logo} ${m.company} · ${m.params || '参数未公开'}</div>
+    <div class="list-badges">${badges}</div>
+    <div class="list-desc" hidden>${m.desc || ''}</div>
+  </div>
+</div>`;
+    });
+  });
+  host.innerHTML = html || '<div class="list-month">没有符合条件的模型</div>';
+
+  host.querySelectorAll('.list-item').forEach(el => {
+    el.onclick = () => {
+      const d = el.querySelector('.list-desc');
+      if (d) d.hidden = !d.hidden;
+      el.classList.toggle('open');
+    };
+  });
+}
+
+function toggleFilters() {
+  const f = document.getElementById('filters');
+  f.classList.toggle('open');
+  document.getElementById('filterToggle').classList.toggle('active', f.classList.contains('open'));
+}
+
+function toggleLabels() {
+  const tv = document.getElementById('timelineView');
+  tv.classList.toggle('show-labels');
+  document.getElementById('labelToggle').classList.toggle('active', tv.classList.contains('show-labels'));
+  layoutRowLabels();
 }
 
 // ===== HASH =====
