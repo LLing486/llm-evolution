@@ -508,8 +508,8 @@
   .company-row:hover .company-label { background: rgba(79,70,229,0.055); }
 
   .company-label {
-    width: 140px;
-    min-width: 140px;
+    width: 184px;
+    min-width: 184px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -520,6 +520,17 @@
     background: var(--bg-primary);
     border-right: 1px solid var(--border);
     transition: background 0.3s, border-color 0.3s;
+  }
+
+  .company-label::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -14px;
+    bottom: 0;
+    width: 14px;
+    background: linear-gradient(to right, var(--bg-primary), rgba(0,0,0,0));
+    pointer-events: none;
   }
 
   .company-logo {
@@ -567,9 +578,12 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--border);
-    opacity: 0.5;
+    background: #A9B0BB;
   }
+
+  /* 暗色主题下的刻度线（避免浅色线在深底上过亮/过暗） */
+  [data-theme="dark"] .year-grid-line { background: #4A4D5E; }
+  [data-theme="dark"] .quarter-grid-line { background: #2E3140; }
 
   .year-axis, .year-bands { position: relative; }
 
@@ -578,8 +592,7 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--border);
-    opacity: 0.22;
+    background: #D8DCE2;
   }
 
   .today-line {
@@ -1042,7 +1055,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: clamp(0.5625rem, 0.75vw, 0.6875rem);
+    font-size: clamp(0.625rem, 0.8vw, 0.75rem);
     color: var(--text-secondary);
   }
 
@@ -1692,8 +1705,8 @@ function renderTimeline() {
     label.innerHTML = `
       <div class="company-logo" style="background:${companyBg(cfg.color, 0.12)};color:${cfg.color};border:1px solid ${companyBorder(cfg.color)};">${cfg.logo}</div>
       <div class="company-info">
-        <div class="company-name">${ORIGIN_FLAGS[cfg.origin] || '🌐'} ${company}</div>
-        <div class="company-origin">${ORIGIN_LABELS[cfg.origin] || '其他'}</div>
+        <div class="company-name">${company}</div>
+        <div class="company-origin">${ORIGIN_FLAGS[cfg.origin] || '🌐'} ${ORIGIN_LABELS[cfg.origin] || '其他'}</div>
       </div>`;
     row.appendChild(label);
 
