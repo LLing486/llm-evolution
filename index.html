@@ -1442,6 +1442,16 @@ async function init() {
     drawEvolutionLines();
     drawSparkline();
   });
+
+  // 字体加载完成后重排标签（webfont 会改变标签实测宽度，不重排会残余压盖）
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => layoutRowLabels());
+  }
+  let _relayoutTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_relayoutTimer);
+    _relayoutTimer = setTimeout(layoutRowLabels, 150);
+  });
 }
 
 // ===== TIME RANGE =====
