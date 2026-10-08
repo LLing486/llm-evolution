@@ -13,14 +13,14 @@
   :root, [data-theme="light"] {
     --bg-primary: #FAFAFA;
     --bg-secondary: #FFFFFF;
-    --bg-tertiary: #F3F4F6;
+    --bg-tertiary: #EDEFF3;
     --bg-hover: #E5E7EB;
     --text-primary: #1A1A1A;
-    --text-secondary: #6B7280;
-    --text-tertiary: #9CA3AF;
+    --text-secondary: #4B5563;
+    --text-tertiary: #6B7280;
     --border: #E5E7EB;
-    --accent: #6366F1;
-    --accent-hover: #4F46E5;
+    --accent: #4F46E5;
+    --accent-hover: #4338CA;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
@@ -28,7 +28,7 @@
     --band-bright: transparent;
     --dim-opacity: 0.4;
     --company-alpha: 0.5;
-    --search-ring: rgba(99,102,241,0.4);
+    --search-ring: rgba(79,70,229,0.4);
     --compare-panel-shadow: 0 -4px 16px rgba(0,0,0,0.08);
   }
 
@@ -498,13 +498,14 @@
   /* ===== Company Rows ===== */
   .company-row {
     display: flex;
-    min-height: 80px;
+    min-height: 88px;
     border-bottom: 1px solid var(--border);
     transition: background 0.3s;
     position: relative;
   }
 
-  .company-row:hover { background: var(--bg-tertiary); }
+  .company-row:hover { background: rgba(79,70,229,0.055); }
+  .company-row:hover .company-label { background: rgba(79,70,229,0.055); }
 
   .company-label {
     width: 140px;
@@ -570,6 +571,59 @@
     opacity: 0.5;
   }
 
+  .year-axis, .year-bands { position: relative; }
+
+  .quarter-grid-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+    opacity: 0.22;
+  }
+
+  .today-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0.4;
+    z-index: 1;
+  }
+
+  .today-flag {
+    position: absolute;
+    top: 3px;
+    transform: translateX(-50%);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--accent);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0 7px;
+    white-space: nowrap;
+    z-index: 6;
+  }
+
+  .model-name.label-hidden { display: none; }
+  .model-node.label-collapsed .model-dot { opacity: 0.55; }
+
+  .row-collapsed-badge {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0 7px;
+  }
+
   /* ===== Model Node ===== */
   .model-node {
     position: absolute;
@@ -598,10 +652,10 @@
 
   .model-name {
     position: absolute;
-    top: -18px;
+    top: -20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: clamp(0.5rem, 0.7vw, 0.625rem);
+    font-size: clamp(0.6875rem, 0.78vw, 0.75rem);
     font-weight: 500;
     white-space: nowrap;
     color: var(--text-secondary);
@@ -966,19 +1020,20 @@
 
   /* ===== Legend ===== */
   .legend {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    padding: 10px 24px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    margin: 6px clamp(16px, 3vw, 48px) 0;
+    padding: 8px 16px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: 24px;
-    box-shadow: var(--shadow-md);
-    z-index: 50;
-    transition: bottom 0.3s, background 0.3s, border-color 0.3s;
+    border-radius: 12px;
+  }
+
+  .legend-note {
+    font-size: clamp(0.5625rem, 0.75vw, 0.6875rem);
+    color: var(--text-secondary);
   }
 
   .legend.shifted-up { bottom: 90px; }
@@ -1043,6 +1098,7 @@
       padding-right: 16px;
     }
     .company-label { width: 100px; min-width: 100px; }
+    .row-collapsed-badge { display: none; }
     .year-axis { margin-left: 100px; }
     .year-bands { left: 100px; }
     .compare-panel { padding: 16px; }
@@ -1118,6 +1174,21 @@
   <span class="zoom-label" id="zoomLabel">2025.01 — 2026.12</span>
 </div>
 
+<div class="legend" id="legend">
+  <span class="legend-note">颜色 = 公司 · 圆点大小 = 旗舰</span>
+  <div class="legend-item">
+    <div class="legend-dot flagship" style="border-color: #f472b6; background: rgba(244,114,182,0.2);"></div>
+    <span>旗舰模型</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="border-color: var(--accent); background: var(--bg-tertiary);"></div>
+    <span>常规模型</span>
+  </div>
+  <div class="legend-item"><span>🇺🇸</span><span>美国</span></div>
+  <div class="legend-item"><span>🇨🇳</span><span>中国</span></div>
+  <div class="legend-item"><span>🇪🇺</span><span>欧洲</span></div>
+</div>
+
 <!-- Timeline View -->
 <div class="timeline-container" id="timelineView">
   <div class="timeline-scroll" id="timelineScroll">
@@ -1163,27 +1234,13 @@
   <a href="https://github.com/LLing486/llm-evolution" target="_blank" rel="noopener">GitHub 仓库</a>
 </div>
 
-<div class="legend" id="legend">
-  <div class="legend-item">
-    <div class="legend-dot flagship" style="border-color: #f472b6; background: rgba(244,114,182,0.2);"></div>
-    <span>旗舰模型</span>
-  </div>
-  <div class="legend-item">
-    <div class="legend-dot" style="border-color: var(--accent); background: var(--bg-tertiary);"></div>
-    <span>重要模型</span>
-  </div>
-  <div class="legend-item"><span>🇺🇸</span><span>美国</span></div>
-  <div class="legend-item"><span>🇨🇳</span><span>中国</span></div>
-  <div class="legend-item"><span>🇪🇺</span><span>欧洲</span></div>
-</div>
-
 <script>
 // ===== DATA =====
 let MODELS = [];
 let COMPANIES = {};
 
-const ORIGIN_FLAGS = { us: '🇺🇸', cn: '🇨🇳', eu: '🇪🇺' };
-const ORIGIN_LABELS = { us: '美国', cn: '中国', eu: '欧洲' };
+const ORIGIN_FLAGS = { us: '🇺🇸', cn: '🇨🇳', eu: '🇪🇺', other: '🌐' };
+const ORIGIN_LABELS = { us: '美国', cn: '中国', eu: '欧洲', other: '其他' };
 
 // ===== STATE =====
 let activeRegion = 'all';
@@ -1197,6 +1254,8 @@ let sortCol = 'date';
 let sortDir = 1;
 
 let YEAR_MIN, YEAR_MAX, TOTAL_MONTHS;
+let LATEST_MONTH = null, LATEST_DATE = '';
+let TODAY_MONTH = new Date().getFullYear() * 12 + new Date().getMonth() + 1;
 
 // ===== ZOOM STATE =====
 let zoomNorm = 0.5;
@@ -1331,8 +1390,13 @@ function updateZoomLabel() {
 
 function scrollToDefaultViewport() {
   const container = document.getElementById('timelineView');
-  const monthsFromStart = (2025 - YEAR_MIN) * 12;
-  container.scrollLeft = monthsFromStart * currentPxPerMonth;
+  const scrollWidth = TOTAL_MONTHS * currentPxPerMonth;
+  const viewW = container.clientWidth;
+  // 右对齐到最新数据（留 80px 余量）：开屏就能看到最近的一批模型
+  const latestPx = (dateToPercent(LATEST_DATE) / 100) * scrollWidth;
+  const target = latestPx - viewW + 80;
+  const maxScroll = Math.max(0, scrollWidth - viewW);
+  container.scrollLeft = Math.max(0, Math.min(target, maxScroll));
   updateZoomLabel();
 }
 
@@ -1388,6 +1452,8 @@ function computeTimeRange() {
   YEAR_MIN = Math.floor((minMonth - 1) / 12);
   YEAR_MAX = Math.floor((maxMonth - 1) / 12);
   TOTAL_MONTHS = (YEAR_MAX - YEAR_MIN + 1) * 12;
+  LATEST_MONTH = maxMonth;
+  LATEST_DATE = `${Math.floor((maxMonth - 1) / 12)}-${String((maxMonth - 1) % 12 + 1).padStart(2, '0')}`;
 }
 
 function dateToPercent(dateStr) {
@@ -1435,7 +1501,16 @@ function renderStats() {
 function renderFilters() {
   const regionDiv = document.getElementById('regionFilters');
   regionDiv.innerHTML = '';
-  [{key:'all',label:'全部'},{key:'us',label:'🇺🇸 美国'},{key:'cn',label:'🇨🇳 中国'},{key:'eu',label:'🇪🇺 欧洲'}].forEach(r => {
+  const originOrder = ['us', 'cn', 'eu', 'other'];
+  const origins = [...new Set(MODELS.map(m => m.origin))]
+    .sort((a, b) => {
+      const ia = originOrder.indexOf(a), ib = originOrder.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+  [{key:'all',label:'全部'}, ...origins.map(k => ({
+    key: k,
+    label: `${ORIGIN_FLAGS[k] || '🌐'} ${ORIGIN_LABELS[k] || '其他'}`
+  }))].forEach(r => {
     const btn = document.createElement('button');
     btn.className = 'filter-btn' + (r.key === activeRegion ? ' active' : '');
     btn.textContent = r.label;
@@ -1566,6 +1641,23 @@ function renderTimeline() {
   yearAxis.style.minWidth = scrollWidth + 'px';
   bandsDiv.style.minWidth = scrollWidth + 'px';
 
+  // “今天”参考线：只画一条，跨整个时间轴
+  if (TODAY_MONTH) {
+    const tPct = ((TODAY_MONTH - 1 - YEAR_MIN * 12) / TOTAL_MONTHS) * 100;
+    if (tPct >= 0 && tPct <= 100) {
+      const tl = document.createElement('div');
+      tl.className = 'today-line';
+      tl.style.left = tPct + '%';
+      bandsDiv.appendChild(tl);
+
+      const flag = document.createElement('div');
+      flag.className = 'today-flag';
+      flag.style.left = tPct + '%';
+      flag.textContent = '今天';
+      yearAxis.appendChild(flag);
+    }
+  }
+
   const filtered = getFilteredModels();
   const matchIds = getSearchMatchIds();
   const companyOrder = Object.keys(COMPANIES);
@@ -1590,8 +1682,8 @@ function renderTimeline() {
     label.innerHTML = `
       <div class="company-logo" style="background:${companyBg(cfg.color, 0.12)};color:${cfg.color};border:1px solid ${companyBorder(cfg.color)};">${cfg.logo}</div>
       <div class="company-info">
-        <div class="company-name">${ORIGIN_FLAGS[cfg.origin]} ${company}</div>
-        <div class="company-origin">${ORIGIN_LABELS[cfg.origin]}</div>
+        <div class="company-name">${ORIGIN_FLAGS[cfg.origin] || '🌐'} ${company}</div>
+        <div class="company-origin">${ORIGIN_LABELS[cfg.origin] || '其他'}</div>
       </div>`;
     row.appendChild(label);
 
@@ -1605,6 +1697,14 @@ function renderTimeline() {
       line.className = 'year-grid-line';
       line.style.left = ((y - YEAR_MIN) * 12 / TOTAL_MONTHS * 100) + '%';
       track.appendChild(line);
+
+      // 季度细线：每年 4 / 7 / 10 月
+      [4, 7, 10].forEach(mo => {
+        const q = document.createElement('div');
+        q.className = 'quarter-grid-line';
+        q.style.left = (((y - YEAR_MIN) * 12 + (mo - 1)) / TOTAL_MONTHS * 100) + '%';
+        track.appendChild(q);
+      });
     }
 
     // Overlap offsets
@@ -1618,7 +1718,7 @@ function renderTimeline() {
     Object.values(monthGroups).forEach(group => {
       if (group.length > 1) {
         group.forEach((m, i) => {
-          offsetMap[m.id] = (i - (group.length - 1) / 2) * 20;
+          offsetMap[m.id] = (i - (group.length - 1) / 2) * 16;
         });
       }
     });
@@ -1691,10 +1791,112 @@ function renderTimeline() {
   document.getElementById('timelineScroll').style.minWidth = scrollWidth + 'px';
 
   // Redraw overlays after DOM is ready
-  requestAnimationFrame(() => { drawEvolutionLines(); drawSparkline(); });
+  requestAnimationFrame(() => { layoutRowLabels(); drawEvolutionLines(); drawSparkline(); });
 }
 
-// ===== EVOLUTION LINES =====
+// ===== 标签排布：二维占位（上/下都可放，按距离优先）=====
+function layoutRowLabels() {
+  const scrollW = TOTAL_MONTHS * currentPxPerMonth;
+  const MAX_STEPS = 4;      // 最多向外 4 步
+  const LANE_STEP = 13;     // 每步间距(px)
+  const LABEL_H = 14;       // 标签占用高度(px)
+  const GAP = 6;            // 标签之间最小水平间隙(px)
+
+  document.querySelectorAll('.company-row').forEach(row => {
+    const track = row.querySelector('.model-track');
+    if (!track) return;
+    const badgeHost = row.querySelector('.company-label');
+    const stale = row.querySelector('.row-collapsed-badge');
+    if (stale) stale.remove();
+
+    const nodes = Array.from(track.querySelectorAll('.model-node'));
+    if (!nodes.length) return;
+    const H = row.clientHeight || 88;
+    const rowRect = row.getBoundingClientRect();
+
+    const items = [];
+    nodes.forEach(node => {
+      const label = node.querySelector('.model-name');
+      if (!label) return;
+      label.classList.remove('label-hidden');
+      label.style.top = '';
+      label.style.left = '';
+      node.classList.remove('label-collapsed');
+
+      const dot = node.querySelector('.model-dot');
+      // 几何一律实测：百分比 top 的解析基准与行高并不一致（实测偏 5~21px）
+      const nRect = node.getBoundingClientRect();
+      const dRect = dot ? dot.getBoundingClientRect() : nRect;
+      const nodeTop = nRect.top - rowRect.top;                     // 节点盒顶边（行内 y）
+      const base = (dRect.top - rowRect.top) + dRect.height / 2;   // 圆点中心
+
+      items.push({
+        node, label,
+        x: (parseFloat(node.style.left) || 0) / 100 * scrollW,
+        w: label.offsetWidth || 60,
+        h: label.offsetHeight || 16,
+        nodeTop,
+        base,
+        flagship: !!(dot && dot.classList.contains('flagship'))
+      });
+    });
+
+    // 优先级：旗舰优先，其次名字短（更易读、更可能是主线型号）
+    const order = items.slice().sort((a, b) =>
+      (b.flagship - a.flagship) || (a.w - b.w) || (a.x - b.x)
+    );
+
+    const placed = [];
+    let hidden = 0;
+
+    order.forEach(it => {
+      const half = it.w / 2;
+      const h = it.h;
+
+      // 贴边夹取：先定最终水平位置，再按该位置判冲突
+      let shift = 0;
+      if (it.x - half < 2) shift = 2 - (it.x - half);
+      else if (it.x + half > scrollW - 2) shift = (scrollW - 2) - (it.x + half);
+      const l = it.x - half + shift - GAP;
+      const r = it.x + half + shift + GAP;
+
+      // 候选：由近及远，上/下交替
+      const cands = [];
+      for (let i = 0; i < MAX_STEPS; i++) {
+        cands.push(it.base - 20 - i * LANE_STEP);
+        cands.push(it.base + 16 + i * LANE_STEP);
+      }
+
+      let yTop = null;
+      for (const y of cands) {
+        if (y < 0 || y + h > H) continue;
+        const clash = placed.some(p => l < p.r && r > p.l && y < p.yb && y + h > p.yt);
+        if (!clash) { yTop = y; break; }
+      }
+
+      if (yTop === null) {
+        it.label.classList.add('label-hidden');
+        it.node.classList.add('label-collapsed');
+        hidden++;
+        return;
+      }
+
+      placed.push({ l, r, yt: yTop, yb: yTop + h });
+      it.label.style.top = (yTop - it.nodeTop) + 'px';
+      if (shift) it.label.style.left = 'calc(50% + ' + Math.round(shift) + 'px)';
+    });
+
+    if (hidden && badgeHost) {
+      const badge = document.createElement('span');
+      badge.className = 'row-collapsed-badge';
+      badge.textContent = '+' + hidden;
+      badge.title = hidden + ' 个模型名空间不足未标注，悬停圆点可看详情';
+      badgeHost.appendChild(badge);
+    }
+  });
+}
+
+// ===== EVOLUTION LINES ======
 function drawEvolutionLines() {
   const svg = document.getElementById('evoLinesSvg');
   svg.innerHTML = '';
