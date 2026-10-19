@@ -133,5 +133,20 @@
     "color": "#1677ff",
     "logo": "蚁",
     "origin": "cn"
+  },
+  "NVIDIA": {
+    "color": "#76b900",
+    "logo": "NV",
+    "origin": "us"
+  },
+  "Liquid AI": {
+    "color": "#06b6d4",
+    "logo": "LQ",
+    "origin": "us"
+  },
+  "Reflection": {
+    "color": "#7c3aed",
+    "logo": "R",
+    "origin": "us"
   }
 }
