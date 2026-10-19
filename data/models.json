@@ -4079,5 +4079,157 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "claude-haiku-55",
+    "name": "Claude Haiku 5.5",
+    "company": "Anthropic",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "Anthropic 于 2026-10-07 发布 Claude Haiku 5.5（API 模型名 claude-haiku-5-5），官方称其为该系列迄今最快、最便宜也最强的小模型，面向高并发、成本敏感场景（摘要、上下文压缩、数据库查询、分类），也可作为 Opus 5.5 / Sonnet 5.5 的编码子代理；它是首个带可调 effort 档位的 Haiku 级模型。定价按 100K 提示长度分两档：输入 $0.10 / $0.50、输出 $0.50 / $2.50 每百万 tokens（缓存读 $0.01 / $0.05、缓存写 $0.125 / $0.625），较 Haiku 4.5 分别低 90% 与 50%，官方称平均使用成本下降约 75%。基准：GDPval-AA v2.1 1620（Haiku 4.5 为 735、GPT-6 Luna 1437、Sonnet 5.5 1840）、HLE 无工具 45.9%、OSWorld 2.1 离线子集 72.4%、Terminal-Bench 4.0 39.2%、FrontierCode 1.1 46.4%、Chartography 46.4%。同步把 Sonnet 5.5 的缓存读取价格减半。",
+    "tags": [
+      "小模型",
+      "高性价比",
+      "低延迟",
+      "Agent"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "mistral-large-4",
+    "name": "Mistral Large 4",
+    "company": "Mistral AI",
+    "origin": "eu",
+    "date": "2026-10",
+    "params": "1.05T (52B 激活) + 1.6B 视觉编码器",
+    "flagship": true,
+    "desc": "Mistral AI 于 2026-10-06 发布 Mistral Large 4（昵称 le Chonk，API 名 mistral-large-4）公测预览，称其为公司最大最强模型，也是开源权重性能的新前沿。1.05T 总参数、52B 激活的细粒度 MoE，另带 1.6B 视觉编码器，原生多模态，上下文 1M tokens。定价（每百万 tokens）：输入 $1.36、缓存输入 $0.14、输出 $4.18，首发期半价为 $0.68 / $0.07 / $2.09。训练在欧洲自有数据中心 3800 块 NVIDIA Grace Blackwell 上从零完成，RL 训练仍在持续、官方称尚未饱和。它强调在网络安全、金融、法律等企业负载上为开源权重 SOTA，并在 Surge AI 的盲测编码质量评比中仅次于 Claude Opus 5（3.74 分，高于 Kimi K3 3.59、GLM-5.3 3.60）。当前只开预览 API，权重承诺本月底随架构与后训练方法一并放出，期间与安全厂商、政府机构做红队测试。",
+    "tags": [
+      "旗舰",
+      "MoE",
+      "多模态",
+      "1M上下文",
+      "预览"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "reflection-beam",
+    "name": "Beam",
+    "company": "Reflection",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "501B (23B 激活)",
+    "flagship": true,
+    "desc": "Reflection AI 于 2026-10-05 发布其首个开源权重模型 Beam，501B 总参数、23B 激活的稀疏 MoE，面向编程、推理与 Agent 负载。预训练使用 23.8 万亿 tokens（网页加授权私有数据），RL 阶段动用 10.5K 块 NVIDIA GB300 训练四周、生成逾 1 亿条 rollout，最大上下文 256K。官方定位是「在推理效率上取胜」：编码与 Agent 任务上接近 Qwen3.8-Max、原始能力仍落后 Kimi K3，但同等分数下算力与 token 消耗更低。发布时处于早期访问与最终红队阶段，权重、技术报告、模型卡承诺本月内以 Apache 2.0 放出（截至巡检日 Hugging Face 上仍无公开仓库）。",
+    "tags": [
+      "开源",
+      "MoE",
+      "Agent",
+      "编程",
+      "高效率"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "nemotron-35-super-vl",
+    "name": "Nemotron 3.5 Super VL",
+    "company": "NVIDIA",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "120B (12B 激活)",
+    "flagship": true,
+    "desc": "NVIDIA 于 2026-10-15 在 Hugging Face 放出 Nemotron 3.5 Super VL 权重（120B-A12B，BF16 与 NVFP4 两版），面向推理、编码、工具调用、文档理解与视频理解。架构为 Mamba-2 + MoE + Attention 交错层，配 C-RADIO 视觉编码器与视觉语言连接器，总参数 120B、每 token 激活 12B，上下文最长 1M tokens，支持多 token 预测（MTP）实现原生投机解码，推理预算分 off / on(medium) / on 三档可调。许可证为 OpenMDW-1.1，BF16 版可在 4 张 H100 上服务。同批还放出面向 24GB 显存的 Nemotron 3.5 Bolt 74B-A9B。",
+    "tags": [
+      "开源",
+      "多模态",
+      "视频理解",
+      "1M上下文",
+      "Agent"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image",
+      "video"
+    ]
+  },
+  {
+    "id": "lfm25-24b-a2b",
+    "name": "LFM2.5-24B-A2B",
+    "company": "Liquid AI",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "24B (2B 激活)",
+    "flagship": false,
+    "desc": "Liquid AI 于 2026-10-13 发布 LFM2.5-24B-A2B，24B 总参数、每 token 仅 2B 激活的 MoE 推理模型，定位端侧私有 Agent，是 LFM2.5 家族（230M 到 24B，跨两个数量级）的收官之作。官方称端侧推理比同级 MoE 快 1.7 倍：Apple M5 Max 上 184 tok/s，单卡 NVIDIA B300 上输出可达 21K tok/s；模型始终先思考再作答，支持英、中、阿、法等 16 种语言。权重按 LFM Open License v1.0 开放。同周还发布了决策专用模型 d1-ultra。",
+    "tags": [
+      "端侧",
+      "MoE",
+      "Agent",
+      "开源",
+      "高效率"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
+  },
+  {
+    "id": "minicpm-v-47",
+    "name": "MiniCPM-V 4.7",
+    "company": "面壁智能",
+    "origin": "cn",
+    "date": "2026-10",
+    "params": "35B-A3B (3B 激活) / 1B 双版本",
+    "flagship": false,
+    "desc": "面壁智能于 2026-10-12 开源 MiniCPM-V 4.7，提供 35B-A3B（系列首个 MoE）与 1B 两个版本，Apache 2.0 许可。官方称 35B-A3B 在更少推理时间下综合分高于 Qwen3.6 35B-A3B，1B 版则在核心能力上超过 MiniCPM-V 4.6 并大幅领先 Qwen3.5 0.8B；借助 Lookahead Expert Scheduling（LES）成为首个能端侧流畅运行的开源 MoE——iPhone 17 Pro Max 上仅占约 3GB 内存即可跑到 13+ tokens/s。同时开源 DSpark 投机解码头（BF16 / GGUF）与 Self-Replay Fine-Tuning 方法，支持 iOS、Android、鸿蒙以及 Intel、AMD、Arm、瑞芯微、后摩等芯片平台。",
+    "tags": [
+      "端侧",
+      "多模态",
+      "MoE",
+      "开源",
+      "视觉"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "muse-spark-open",
+    "name": "Muse Spark Open",
+    "company": "Meta",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "816B (42B 激活)",
+    "flagship": true,
+    "desc": "Meta 超级智能实验室于 2026-10-15 开放 Muse Spark Open 的权重，官方称其为迄今最强的美国开源权重模型。816B 总参数、42B 激活的 MoE（每层 256 个专家、每 token 取 8 个），原生多模态，上下文 1M tokens，面向编码、Agent 与长程多步任务。权重以 Meta 自有许可证在 Hugging Face 发布，支持 MLX、llama.cpp、vLLM、SGLang、TensorRT-LLM 与 Transformers，也能通过云厂商推理；托管服务超过收入阈值需另签协议。模型卡对标 GLM 5.3 与 Kimi K3：Artificial Analysis 智能指数 39（对手 45 / 44）、Terminal-Bench 2.1 76.4（83.9 / 85.0），但 MCP-Atlas 以 89.2 领先（84.2 / 82.3）。",
+    "tags": [
+      "开源",
+      "旗舰",
+      "MoE",
+      "多模态",
+      "1M上下文"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
   }
 ]
