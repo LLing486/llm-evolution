@@ -113,6 +113,71 @@ if (Array.isArray(models) && companies) {
   });
 }
 
+// ── Validate milestones.json (key-nodes page) ──
+const milestonesPath = path.join(ROOT, 'data', 'milestones.json');
+let milestoneCount = 0;
+if (fs.existsSync(milestonesPath)) {
+  let ms;
+  try {
+    ms = JSON.parse(fs.readFileSync(milestonesPath, 'utf-8'));
+  } catch (err) {
+    errors.push(`milestones.json: invalid JSON — ${err.message}`);
+  }
+  if (ms) {
+    const MILESTONE_TYPES = ['模型', '产品', '协议', '论文', '事件'];
+    const MS_DATE_RE = /^\d{4}-\d{2}(-\d{2})?$/;
+    const eraIds = new Set((ms.eras || []).map(e => e.id));
+    const mIds = new Set();
+
+    if (!ms.meta || !ms.meta.method) {
+      errors.push('milestones.meta: missing "method"');
+    }
+    (ms.eras || []).forEach((e, i) => {
+      ['id', 'range', 'title', 'summary'].forEach(f => {
+        if (!e[f]) errors.push(`milestones.eras[${i}]: missing required field "${f}"`);
+      });
+    });
+
+    (ms.nodes || []).forEach((n, i) => {
+      const prefix = `milestones.nodes[${i}] (${n.id || 'unknown'})`;
+      ['id', 'date', 'era', 'type', 'title', 'lead', 'why', 'shift'].forEach(f => {
+        if (!n[f]) errors.push(`${prefix}: missing required field "${f}"`);
+      });
+      if (n.id) {
+        if (mIds.has(n.id)) errors.push(`${prefix}: duplicate id "${n.id}"`);
+        mIds.add(n.id);
+      }
+      if (n.date && !MS_DATE_RE.test(n.date)) {
+        errors.push(`${prefix}: invalid date "${n.date}" (must be YYYY-MM or YYYY-MM-DD)`);
+      }
+      if (n.type && !MILESTONE_TYPES.includes(n.type)) {
+        errors.push(`${prefix}: invalid type "${n.type}" (must be one of: ${MILESTONE_TYPES.join(', ')})`);
+      }
+      if (n.era && !eraIds.has(n.era)) {
+        errors.push(`${prefix}: era "${n.era}" not found in milestones.eras`);
+      }
+      if (n.company && companies && !Object.keys(companies).includes(n.company)) {
+        errors.push(`${prefix}: company "${n.company}" not found in companies.json`);
+      }
+      if (n.tags && !Array.isArray(n.tags)) {
+        errors.push(`${prefix}: "tags" must be an array`);
+      }
+      if (n.sources) {
+        if (!Array.isArray(n.sources)) {
+          errors.push(`${prefix}: "sources" must be an array`);
+        } else {
+          n.sources.forEach((s, j) => {
+            if (!s || !s.label || !s.url) {
+              errors.push(`${prefix}: sources[${j}] needs "label" and "url"`);
+            }
+          });
+        }
+      }
+    });
+    milestoneCount = (ms.nodes || []).length;
+  }
+}
+
 // ── Report ──
 if (errors.length > 0) {
   console.log(`❌ Validation failed with ${errors.length} error(s):\n`);
@@ -120,5 +185,5 @@ if (errors.length > 0) {
   console.log(`\n`);
   process.exit(1);
 } else {
-  console.log(`✅ All validations passed (${Array.isArray(models) ? models.length : 0} models, ${Object.keys(companies).length} companies)`);
+  console.log(`✅ All validations passed (${Array.isArray(models) ? models.length : 0} models, ${Object.keys(companies).length} companies${milestoneCount ? `, ${milestoneCount} milestones` : ''})`);
 }

@@ -1,0 +1,658 @@
+{
+  "meta": {
+    "title": "关键节点",
+    "subtitle": "大模型与 AI 应用的 28 个转折点，2017–2026",
+    "updated": "2026-10-20",
+    "method": "一个事件要进这份清单，得同时回答三个问题：能力曲线有没有拐（同一件事以前做不了）？分发方式有没有变（谁能用、多少钱、在哪用）？人的使用形态有没有变（从提问变成交付，从网页变成工作流）？只满足一条的，都是进步，不是节点。"
+  },
+  "eras": [
+    {
+      "id": "era-1",
+      "range": "2017 — 2021",
+      "title": "底座：规模化就是能力",
+      "summary": "这五年没有爆款产品，但决定了后面的一切：注意力取代循环、预训练取代一任务一模型、模型变成 API。等到 2022 年那个空白输入框出现时，能力其实已经躺在这里了。"
+    },
+    {
+      "id": "era-2",
+      "range": "2022",
+      "title": "拐点：能力第一次触达普通人",
+      "summary": "图像生成开源、ChatGPT 上线。技术上的新东西不多，变的是接口：从「你得会调用」变成「你只要会说话」。"
+    },
+    {
+      "id": "era-3",
+      "range": "2023",
+      "title": "竞赛：上限和分发方式同时被改写",
+      "summary": "开源权重意外流出、GPT-4 把天花板推到专家门槛、模型学会调用工具。这一年之后，行业分成了三条线：闭源旗舰、开源权重、应用层。"
+    },
+    {
+      "id": "era-4",
+      "range": "2024",
+      "title": "Agent 前夜：模型开始看见屏幕、伸手拿工具",
+      "summary": "多模态、思维链、操作电脑、工具协议依次就位。每一块单看都像 demo，拼起来就是 2025 年的 agent。"
+    },
+    {
+      "id": "era-5",
+      "range": "2025",
+      "title": "推理与 Agent：从演示走向生产",
+      "summary": "DeepSeek-R1 把推理变成可复现的公开方法，Claude Code 把「模型 + 工具循环」做成产品，Manus 把「交付结果」卖成商品。Agent 从概念变成工作和账单。"
+    },
+    {
+      "id": "era-6",
+      "range": "2026",
+      "title": "帕累托期：成本、开源与应用层重新洗牌",
+      "summary": "比的不再是「谁更聪明」，而是「一次任务的总成本」和「谁的分发渠道更宽」。开源旗舰追到同一条量级，模型开始按 harness 交付，AI 进入大众日常语汇。"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "transformer-2017",
+      "date": "2017-06-12",
+      "era": "era-1",
+      "type": "论文",
+      "title": "Transformer：把「顺序」换成「注意力」",
+      "lead": "《Attention Is All You Need》(arXiv 1706.03762)",
+      "company": "Google",
+      "tags": [
+        "底座",
+        "并行训练"
+      ],
+      "why": "它本身不是产品，但解决了「训练能不能扩到互联网规模」这个前置问题。RNN 必须一个词一个词算，GPU 再多也只能排队；自注意力让整句话同时并行，堆层就堆参数，参数多就能吃更多数据。今天所有大模型名字里那个 T，都是它。",
+      "shift": "串行、难扩展的循环网络 → 可并行、可堆叠的注意力网络",
+      "sources": [
+        {
+          "label": "arXiv 1706.03762",
+          "url": "https://arxiv.org/abs/1706.03762"
+        }
+      ]
+    },
+    {
+      "id": "gpt1-2018",
+      "date": "2018-06-11",
+      "era": "era-1",
+      "type": "模型",
+      "title": "GPT-1：先读一遍互联网，再学做任务",
+      "lead": "GPT-1（117M 参数）",
+      "company": "OpenAI",
+      "tags": [
+        "预训练",
+        "范式"
+      ],
+      "why": "提出「预训练 + 微调」两段式：先在大量无标注文本上学语言，再用少量标注数据调到具体任务。在这之前，每个任务都要单独训一个模型；在这之后，「一个底座 + 许多任务」成了默认范式。",
+      "shift": "一任务一模型 → 一底座多任务",
+      "note": "1.17 亿参数，今天看小得可笑。范式比规模重要，这是整条线第一次验证这件事。",
+      "sources": [
+        {
+          "label": "OpenAI 原始博客",
+          "url": "https://openai.com/index/language-unsupervised/"
+        }
+      ]
+    },
+    {
+      "id": "gpt3-2020",
+      "date": "2020-05-28",
+      "era": "era-1",
+      "type": "模型",
+      "title": "GPT-3：不训练，只给例子",
+      "lead": "GPT-3（175B 参数），同年 6 月开放 API",
+      "company": "OpenAI",
+      "tags": [
+        "Few-shot",
+        "API 化"
+      ],
+      "why": "1750 亿参数，把「上下文学习」变成事实：不改权重，只在提示里给几个例子，模型就能照做。它第一次让「写提示词」成为一种工程能力，也让 OpenAI 意识到模型本身可以当产品卖——2020 年 6 月 API 上线，「模型即服务」由此开始。",
+      "shift": "每次使用都要训练 → 一次训练，处处调用",
+      "sources": [
+        {
+          "label": "arXiv 2005.14165",
+          "url": "https://arxiv.org/abs/2005.14165"
+        }
+      ]
+    },
+    {
+      "id": "copilot-2021",
+      "date": "2021-06-29",
+      "era": "era-1",
+      "type": "产品",
+      "title": "Copilot：AI 第一次住进程序员的编辑器",
+      "lead": "GitHub Copilot 技术预览（基于 OpenAI Codex）",
+      "tags": [
+        "编程",
+        "工作流"
+      ],
+      "why": "它只做一件事：你打字的时候补全下一段。但这是第一次，AI 不是被单独打开一个网页，而是嵌进专业工具里，和人的工作流同频。后来所有 coding agent 的争论，起点都在这儿：模型到底该「建议」，还是该「执行」。",
+      "shift": "打开一个 AI 网站提问 → AI 待在编辑器里，跟着你写",
+      "sources": [
+        {
+          "label": "TechCrunch 报道",
+          "url": "https://techcrunch.com/2021/06/29/github-previews-new-ai-tool-that-makes-coding-suggestions/"
+        }
+      ]
+    },
+    {
+      "id": "diffusion-2022",
+      "date": "2022-08-22",
+      "era": "era-2",
+      "type": "产品",
+      "title": "图像生成进入大众：DALL·E 2 与 Stable Diffusion",
+      "lead": "DALL·E 2（4 月）/ Stable Diffusion 权重公开（8 月）",
+      "tags": [
+        "开源权重",
+        "社区生态"
+      ],
+      "why": "DALL·E 2 展示了「文字直接变成可用的图」；Stable Diffusion 把权重放出来，几周内社区就在消费级显卡上跑起来，LoRA、ControlNet 这类插件式创新全长在它身上。这是「开源权重能催生生态」的第一次完整演示——半年后 LLaMA 的剧本几乎是照抄它。",
+      "shift": "图像生成是实验室演示 → 几万人在本地跑、在上面二次开发",
+      "sources": [
+        {
+          "label": "Stable Diffusion 论文",
+          "url": "https://arxiv.org/abs/2112.10752"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt-2022",
+      "date": "2022-11-30",
+      "era": "era-2",
+      "type": "产品",
+      "title": "ChatGPT：把「能力」包装成「对话」",
+      "lead": "ChatGPT（底座 GPT-3.5 + RLHF）",
+      "company": "OpenAI",
+      "tags": [
+        "RLHF",
+        "消费级"
+      ],
+      "why": "技术上没有新模型——底座是 GPT-3.5，加 RLHF 让输出像人在说话。真正的变化在产品形态：一个空白输入框，不用学提示词、不用调 API。5 天 100 万用户，2 个月约 1 亿。它证明了一件事：模型能力早就超过了大众的使用方式，差的只是一个入口。",
+      "shift": "要会 API 才能用 → 打开网页就能用",
+      "note": "你印象里「GPT-3.5 展示了令人吃惊的智能」，其实是能力 × 界面两个因素叠出来的。模型本身在 2020 年就发过论文了，只是没人用得上。",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/chatgpt/"
+        }
+      ]
+    },
+    {
+      "id": "llama-leak-2023",
+      "date": "2023-02-24",
+      "era": "era-3",
+      "type": "事件",
+      "title": "LLaMA 泄露：开源权重生态从一场意外开始",
+      "lead": "LLaMA 7B–65B（一周后权重流出）",
+      "company": "Meta",
+      "tags": [
+        "开源",
+        "本地部署"
+      ],
+      "why": "Meta 只打算给研究机构审批使用，一周后权重出现在 4chan，随后 Alpaca、Vicuna、llama.cpp 在几周内出现——几百美元就能微调出接近 GPT-3.5 的对话模型。这是开源第一次在能力上追近闭源，也让「本地跑模型」从极客话题变成产业选项。7 月 Meta 顺势发布可商用的 Llama 2。",
+      "shift": "强模型只能通过 API 调用 → 权重可以下载、可以在本地改",
+      "note": "这条路线后来在 DeepSeek 手上被推到极端：不是「泄露」，而是主动开源 + 更低成本。",
+      "sources": [
+        {
+          "label": "新智元复盘（IT之家）",
+          "url": "https://m.ithome.com/html/685656.htm"
+        }
+      ]
+    },
+    {
+      "id": "gpt4-2023",
+      "date": "2023-03-14",
+      "era": "era-3",
+      "type": "模型",
+      "title": "GPT-4：把天花板推到专家门槛",
+      "lead": "GPT-4（支持图像输入）",
+      "company": "OpenAI",
+      "tags": [
+        "多模态",
+        "专业能力"
+      ],
+      "why": "第一次同时在多模态和「考试级」任务上跨档：模拟律师资格考试进前 10%，各类标准化测试进入人类高分区间。它让「AI 能不能做知识工作」从争论变成采购决策，也把旗舰模型的发布会变成了行业定价事件。",
+      "shift": "会聊天的模型 → 能考过专业考试的模型",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/hello-gpt-4/"
+        }
+      ]
+    },
+    {
+      "id": "plugins-2023",
+      "date": "2023-03-23",
+      "era": "era-3",
+      "type": "协议",
+      "title": "Plugins 与 function calling：模型开始伸手",
+      "lead": "ChatGPT Plugins（3 月）/ function calling（6 月）",
+      "company": "OpenAI",
+      "tags": [
+        "工具调用",
+        "Agent 雏形"
+      ],
+      "why": "Plugins 让模型调用外部服务，6 月的 function calling 把「输出一个结构化调用请求」变成 API 标准能力。这两步让模型从「生成文本」变成「决定下一步做什么」——想 → 调 → 看结果 → 再想，这是 agent 的最小闭环。今天所有 tool use、MCP、harness，都是这条线的延长。",
+      "shift": "模型只输出文本 → 模型自己决定调用哪个工具",
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/chatgpt-plugins/"
+        }
+      ]
+    },
+    {
+      "id": "sora-2024",
+      "date": "2024-02-15",
+      "era": "era-4",
+      "type": "模型",
+      "title": "Sora：视频成为「世界模型」的想象载体",
+      "lead": "Sora（Diffusion Transformer）",
+      "company": "OpenAI",
+      "tags": [
+        "视频生成",
+        "世界模型"
+      ],
+      "why": "一分钟、多镜头、物理上大致自洽的视频，把「生成」从文本和图像推到时间维度。当时真正的冲击不是产品（并未开放），而是叙事：如果模型能预测世界的下一帧，它理解的不只是语言。这个叙事撑起了后来整整两年的视频生成与世界模型投入。",
+      "shift": "生成一帧画面 → 生成一段连续的世界",
+      "note": "冷静一点看：它并没有掌握物理规律，反重力、物体凭空增减都很常见。叙事价值远大于技术证明。",
+      "sources": [
+        {
+          "label": "OpenAI 技术说明",
+          "url": "https://openai.com/index/video-generation-models-as-world-simulators/"
+        }
+      ]
+    },
+    {
+      "id": "claude3-2024",
+      "date": "2024-03-04",
+      "era": "era-4",
+      "type": "模型",
+      "title": "Claude 3：第一次有模型在部分基准上超过 GPT-4",
+      "lead": "Claude 3 Opus / Sonnet / Haiku",
+      "company": "Anthropic",
+      "tags": [
+        "分档",
+        "竞争格局"
+      ],
+      "why": "Opus 在多项基准上压过 GPT-4，打破「只有 OpenAI 定义最强」的格局；更重要的是三档产品线（大而慢、均衡、小而快）成了行业标准配置——用户开始按任务和成本挑模型，而不是只挑最强。竞争从「谁第一」变成「性价比梯度」。",
+      "shift": "单一旗舰 → 按成本分档的模型家族",
+      "sources": [
+        {
+          "label": "Anthropic 发布页",
+          "url": "https://www.anthropic.com/news/claude-3-family"
+        }
+      ]
+    },
+    {
+      "id": "gpt4o-2024",
+      "date": "2024-05-13",
+      "era": "era-4",
+      "type": "模型",
+      "title": "GPT-4o：交互从「打字」变成「说话」",
+      "lead": "GPT-4o（omni，端到端多模态）",
+      "company": "OpenAI",
+      "tags": [
+        "实时语音",
+        "多模态"
+      ],
+      "why": "文本、音频、视觉端到端训练，语音延迟压到接近真人对话的水平，能被打断、能听出语气。技术上是多模态统一，产品上意味着聊天机器人终于可以像人一样聊天——大量非技术用户是从这里开始把 AI 当日常工具的。",
+      "shift": "打字提问、等它回答 → 像打电话一样实时对话",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/hello-gpt-4o/"
+        }
+      ]
+    },
+    {
+      "id": "claude35-2024",
+      "date": "2024-06-20",
+      "era": "era-4",
+      "type": "模型",
+      "title": "Claude 3.5 Sonnet 与 Artifacts：产物直接出现在对话里",
+      "lead": "Claude 3.5 Sonnet",
+      "company": "Anthropic",
+      "tags": [
+        "编程",
+        "界面"
+      ],
+      "why": "编程能力比上一代 Opus 还强，价格却在中档；同时 Artifacts 把「生成的东西」从一段文本变成可预览、可迭代的独立面板。两件事合起来，第一次让「和模型一起做出一个东西」有了工作台的感觉——后来 Claude Code、Cursor 的交互设计都从这种循环里长出来。",
+      "shift": "复制代码到自己电脑里跑 → 在对话里看着它跑起来",
+      "sources": [
+        {
+          "label": "Anthropic 发布页",
+          "url": "https://www.anthropic.com/news/claude-3-5-sonnet"
+        }
+      ]
+    },
+    {
+      "id": "o1-2024",
+      "date": "2024-09-12",
+      "era": "era-4",
+      "type": "模型",
+      "title": "o1：把「思考时间」变成新的扩展轴",
+      "lead": "o1-preview / o1",
+      "company": "OpenAI",
+      "tags": [
+        "推理",
+        "Test-time compute"
+      ],
+      "why": "此前提升能力主要靠训练时堆算力；o1 证明推理时多想一会儿也能换能力——数学、代码、科学题跨档提升，代价是更慢更贵。它把「思维链」从提示技巧变成训练目标，直接催生了 2025 年一整代推理模型，包括 DeepSeek-R1。",
+      "shift": "参数和训练算力决定上限 → 想多久也决定上限",
+      "sources": [
+        {
+          "label": "OpenAI：Learning to Reason with LLMs",
+          "url": "https://openai.com/index/learning-to-reason-with-llms/"
+        }
+      ]
+    },
+    {
+      "id": "computeruse-2024",
+      "date": "2024-10-22",
+      "era": "era-4",
+      "type": "模型",
+      "title": "Computer Use：模型开始操作电脑",
+      "lead": "升级版 Claude 3.5 Sonnet（computer use 公测）",
+      "company": "Anthropic",
+      "tags": [
+        "GUI",
+        "Agent 形态"
+      ],
+      "why": "通过截屏 + 鼠标键盘事件，模型第一次能直接操作「给人设计的软件」——不需要为每个网站写 API。这是 agent 形态的分水岭：此前所有自动化都要预接接口，此后模型可以像人一样看着屏幕点。当时还很笨，会点错、会跑偏，但方向对了。",
+      "shift": "工具必须事先接好 → 模型看着屏幕自己操作",
+      "sources": [
+        {
+          "label": "Anthropic 发布页",
+          "url": "https://www.anthropic.com/news/3-5-models-and-computer-use"
+        }
+      ]
+    },
+    {
+      "id": "mcp-2024",
+      "date": "2024-11-25",
+      "era": "era-4",
+      "type": "协议",
+      "title": "MCP：给 agent 生态装一个插座",
+      "lead": "Model Context Protocol（开源）",
+      "company": "Anthropic",
+      "tags": [
+        "标准",
+        "生态"
+      ],
+      "why": "MCP 之前，每个 AI 应用接每个数据源都要写一遍胶水代码（N×M 问题）；MCP 把它变成 N+M：服务端实现一次，所有客户端都能用。2025 年 OpenAI、Google 陆续支持，规范迭代把扩展机制和身份认证标准化——它成了 agent 时代的 HTTP。",
+      "shift": "每家各写一套集成 → 一个协议，所有工具通用",
+      "sources": [
+        {
+          "label": "Anthropic 发布页",
+          "url": "https://www.anthropic.com/news/model-context-protocol"
+        }
+      ]
+    },
+    {
+      "id": "v3-2024",
+      "date": "2024-12-26",
+      "era": "era-4",
+      "type": "模型",
+      "title": "DeepSeek-V3：开源第一次真正贴住闭源",
+      "lead": "DeepSeek-V3（671B 总参数 / 37B 激活）",
+      "company": "DeepSeek",
+      "tags": [
+        "MoE",
+        "低成本",
+        "开源"
+      ],
+      "why": "MoE 架构 + 极致工程优化，训练成本约 557 万美元（同期同级模型的十分之一量级），多项基准追平 GPT-4o。开源权重、低成本、可商用三个条件同时满足，让「开源 = 落后一代」的判断第一次失效。一个月后的 R1 才有能力把它推到舆论中心。",
+      "shift": "开源 = 差半代 → 开源可以打平",
+      "sources": [
+        {
+          "label": "DeepSeek 官方公告",
+          "url": "https://api-docs.deepseek.com/news/news241226"
+        }
+      ]
+    },
+    {
+      "id": "r1-2025",
+      "date": "2025-01-20",
+      "era": "era-5",
+      "type": "模型",
+      "title": "DeepSeek-R1：推理可以自己「试」出来",
+      "lead": "DeepSeek-R1（基于 V3-Base，671B）",
+      "company": "DeepSeek",
+      "tags": [
+        "纯 RL",
+        "思维链",
+        "开源"
+      ],
+      "why": "不做 SFT 打样，直接对结果做强化学习，模型自己长出更长的思维链、自我检查，甚至出现「等等，我重新算一下」这类回溯行为。它把推理能力从少数实验室的配方变成可复现的公开方法（9 月 17 日论文登上 Nature 封面，是首个通过同行评审的主流大模型），同时以开源权重发布，性能对标 o1、API 价格低一个量级。",
+      "shift": "推理要靠人类示范 → 推理可以靠试错自己长出来",
+      "note": "市场侧面：1 月 27 日英伟达单日跌 16.97%，市值蒸发近 6000 亿美元；DeepSeek App 登顶美区 App Store 免费榜。你记忆里的「专家模式」是产品层的命名——同年 8 月 V3.1 起以「思考 / 非思考」双模式提供，V4 时期网页端叫 Expert / Instant。",
+      "sources": [
+        {
+          "label": "DeepSeek 官方公告",
+          "url": "https://api-docs.deepseek.com/news/news250120"
+        },
+        {
+          "label": "Nature 封面论文报道",
+          "url": "https://www.stcn.com/article/detail/3345249.html"
+        }
+      ]
+    },
+    {
+      "id": "claudecode-2025",
+      "date": "2025-02-24",
+      "era": "era-5",
+      "type": "产品",
+      "title": "Claude Code：把「模型 + 工具循环」做成产品",
+      "lead": "Claude Code（研究预览）",
+      "company": "Anthropic",
+      "tags": [
+        "Harness",
+        "终端",
+        "编程"
+      ],
+      "why": "一个终端程序，把读文件、改文件、跑命令、看报错串成循环，由模型自己决定下一步。它没有发明 agent，但第一次让这种工程形态被大量开发者日常使用——同一套东西后来被叫做 harness。5 月 22 日随 Claude 4 正式 GA。",
+      "shift": "AI 写代码片段、人来跑 → AI 自己跑完、人来看结果",
+      "note": "你的记忆没错：当时大家叫「agent 工具 / coding agent」，harness 这个说法是 2026 年才通用的——连 DeepSeek 都直接把自己的 agent 框架命名为 Harness。概念滞后于产品，这很常见。",
+      "sources": [
+        {
+          "label": "MIT AI Agent Index 条目",
+          "url": "https://aiagentindex.mit.edu/2025/claude-code/"
+        }
+      ]
+    },
+    {
+      "id": "manus-2025",
+      "date": "2025-03-05",
+      "era": "era-5",
+      "type": "产品",
+      "title": "Manus：通用 agent 第一次卖「交付结果」",
+      "lead": "Manus（蝴蝶效应，多智能体 + 云端虚拟机）",
+      "tags": [
+        "通用 Agent",
+        "应用层"
+      ],
+      "why": "它不训练模型，靠多智能体编排加云端虚拟机，把「帮我做个行业调研报告」这类任务从头跑到尾，交付文档、网页、表格。发布即刷屏（邀请码被炒到数万元），也立刻被质疑「没有技术壁垒」。但它真正的贡献是产品定义：用户买的不是对话，是被完成的任务。九个月后（2025-12-29）被 Meta 以数十亿美元收购，这个价格就是对这条产品线的定价。",
+      "shift": "用户要自己执行 AI 给的步骤 → AI 端到端把结果交出来",
+      "sources": [
+        {
+          "label": "36 氪：官宣收购",
+          "url": "https://www.36kr.com/p/3617299017303301"
+        },
+        {
+          "label": "证券时报：并购细节",
+          "url": "https://stcn.com/article/detail/3565400.html"
+        }
+      ]
+    },
+    {
+      "id": "claude4-2025",
+      "date": "2025-05-22",
+      "era": "era-5",
+      "type": "模型",
+      "title": "Claude 4 与 Claude Code GA：agent 编程进入生产",
+      "lead": "Claude Opus 4 / Sonnet 4",
+      "company": "Anthropic",
+      "tags": [
+        "长任务",
+        "Agent 编程"
+      ],
+      "why": "长任务能力（连续数小时自主编码）加上后台任务、IDE 集成、SDK，让 agent 编程从「演示很酷」变成「团队真的在用」。同期 Google、Meta 和国内厂商全线跟进 agent 能力，2025 年因此被叫作 agent 元年——不是概念元年，是账单元年。",
+      "shift": "agent 编程是极客玩物 → 是工程流程的一部分",
+      "sources": [
+        {
+          "label": "Anthropic：Introducing Claude 4",
+          "url": "https://www.anthropic.com/news/claude-4"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt-agent-2025",
+      "date": "2025-07-17",
+      "era": "era-5",
+      "type": "产品",
+      "title": "ChatGPT Agent：把浏览器、终端、研究合成一个入口",
+      "lead": "ChatGPT Agent（Operator + Deep Research 合并）",
+      "company": "OpenAI",
+      "tags": [
+        "通用 Agent",
+        "工具编排"
+      ],
+      "why": "把 Operator（浏览器操作）和 Deep Research（长报告）合并，再给一个能跑代码的终端，形成「一台虚拟电脑里三种工具」的通用 agent。它标志着大厂产品形态收敛：不做许多小工具，而是做一个能自己选工具的执行体。",
+      "shift": "一个产品一个能力 → 一个入口调度所有能力",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/introducing-chatgpt-agent/"
+        }
+      ]
+    },
+    {
+      "id": "gpt5-2025",
+      "date": "2025-08-07",
+      "era": "era-5",
+      "type": "模型",
+      "title": "GPT-5：模型开始替你决定「想多久」",
+      "lead": "GPT-5（统一路由系统）",
+      "company": "OpenAI",
+      "tags": [
+        "路由",
+        "产品收敛"
+      ],
+      "why": "统一系统：简单问题走快模型，复杂问题自动切推理模式，用户不再需要选「o 系列还是 4o」。能力提升之外，它最像基础设施的地方是把「选模型」这个负担从用户手里拿走了。同月 Claude Opus 4.1、DeepSeek V3.1 也都在做思考 / 非思考的合并。",
+      "shift": "用户挑模型和模式 → 系统按任务自动路由",
+      "sources": [
+        {
+          "label": "OpenAI 发布页",
+          "url": "https://openai.com/index/introducing-gpt-5/"
+        }
+      ]
+    },
+    {
+      "id": "gemini3-2025",
+      "date": "2025-11-18",
+      "era": "era-5",
+      "type": "模型",
+      "title": "Gemini 3：多模态与长程 agent 的旗舰对齐",
+      "lead": "Gemini 3 Pro / Deep Think",
+      "company": "Google",
+      "tags": [
+        "多模态",
+        "Agentic coding"
+      ],
+      "why": "LMArena 1501 Elo 登顶，HLE 无工具 37.5%，主推多模态理解与 agentic coding，Deep Think 把推理再拉一档。它让「三家轮流坐庄」成为常态——单一公司长期领先的时代结束，旗舰能力进入互相咬着的区间。",
+      "shift": "一家定义「最强」 → 三家每季度互相刷新",
+      "sources": [
+        {
+          "label": "新华社报道",
+          "url": "http://english.news.cn/northamerica/20251119/b43c1cb58fe74fcda7ced4eae7f6381c/c.html"
+        }
+      ]
+    },
+    {
+      "id": "openclaw-2026",
+      "date": "2026-01-29",
+      "era": "era-6",
+      "type": "事件",
+      "title": "OpenClaw 爆火：个人 agent 从极客玩具变成大众话题",
+      "lead": "OpenClaw（前 Clawdbot / Moltbot）",
+      "tags": [
+        "个人 Agent",
+        "FOMO",
+        "分发"
+      ],
+      "why": "2025 年 11 月的一个周末项目，2026 年 1 月下旬在 Hacker News 引爆，成为 GitHub 星标增速最快的项目之一；1 月 27 日因商标问题改名 Moltbot，1 月 29 日定为 OpenClaw。它把过去一年攒下的 agent 能力（工具调用、长期记忆、persona 文件）打包成「你自己的助理」，核心框架是极简的 Pi。技术门槛没降低，但认知门槛降低了：普通人第一次意识到 AI 可以住在聊天软件里、有记忆、能自己干活。2 月作者加入 OpenAI，项目转由基金会维护。",
+      "shift": "AI = 一个问答网站 → AI = 一个住在你手机里的存在",
+      "note": "你的保留意见我同意一半：它不是技术突破，是分发与叙事的突破。它踩着 Pi 和过去一年的应用积累，门槛不低，靠 FOMO 推到高位。但它作为节点成立的理由恰恰不在技术——它把「agent」从行业内部词变成了大众词。",
+      "sources": [
+        {
+          "label": "极客公园：OpenClaw 背后的 Pi",
+          "url": "http://www.geekpark.net/news/371212"
+        },
+        {
+          "label": "改名始末（pcmarket）",
+          "url": "https://www.pcmarket.com.hk/clawdbot-rename-again-from-moltbot-to-openclaw/"
+        }
+      ]
+    },
+    {
+      "id": "v4-2026",
+      "date": "2026-04-24",
+      "era": "era-6",
+      "type": "模型",
+      "title": "DeepSeek-V4：把「性能 / 成本」压成一条前沿",
+      "lead": "DeepSeek-V4-Pro（1.6T / 49B 激活）、V4-Flash（284B / 13B 激活）",
+      "company": "DeepSeek",
+      "tags": [
+        "1M 上下文",
+        "稀疏注意力",
+        "MIT",
+        "成本"
+      ],
+      "why": "新的注意力结构（token 压缩 + DSA 稀疏注意力）把 1M 上下文变成默认配置，同时把长上下文的算力与显存成本压下来；Pro 对标顶级闭源，Flash 主打「简单 agent 任务上与 Pro 持平 + 极低价格」。MIT 权重、双模式（thinking / non-thinking）、同时兼容 OpenAI 与 Anthropic 接口——连接入成本也一起降了。你说的「性能和成本的绝佳平衡」，落点就在这里。",
+      "shift": "长上下文是奢侈品 → 1M 是默认配置",
+      "note": "后面还有 08-13 V4-Pro GA、09-10 V4.1-Flash、10-17 V4.1-Flash-1017。官方的说法是：提升代码 / agent / 视觉的同时缩短运行时间与输出长度——同一个任务更便宜。2026 年的主战场不是谁更聪明，是谁能把一次任务的总成本压得更低。",
+      "sources": [
+        {
+          "label": "DeepSeek：V4 Preview",
+          "url": "https://api-docs.deepseek.com/news/news260424"
+        }
+      ]
+    },
+    {
+      "id": "open-weights-2026",
+      "date": "2026-07",
+      "era": "era-6",
+      "type": "模型",
+      "title": "开源权重进到万亿级：Kimi K3、Qwen3.8-Max",
+      "lead": "Kimi K3（2.8T）、Qwen3.8-Max（2.4T / 95B 激活）",
+      "company": "月之暗面",
+      "tags": [
+        "开源",
+        "万亿参数"
+      ],
+      "why": "2023 年开源还在「追平上一代」，2026 年开源权重里已经出现万亿级参数，和闭源旗舰在同一条量级上竞争。开源不再是便宜的替代品，而是另一个首发渠道。代价是推理成本高——真正被大规模使用的仍然是中档权重，这也解释了为什么各家都在同一年拼命压缩单位成本。",
+      "shift": "开源 = 追赶者 → 开源 = 与闭源同级的首发渠道",
+      "sources": [
+        {
+          "label": "本仓库 models.json 条目",
+          "url": "https://github.com/LLing486/llm-evolution/blob/main/data/models.json"
+        }
+      ]
+    },
+    {
+      "id": "harness-2026",
+      "date": "2026-10-17",
+      "era": "era-6",
+      "type": "事件",
+      "title": "模型发布说明里开始写「支持哪些 harness」",
+      "lead": "DeepSeek-V4.1-Flash-1017 与 Agent Integrations",
+      "company": "DeepSeek",
+      "tags": [
+        "Harness",
+        "交付形态"
+      ],
+      "why": "这次更新在官方文档里把 Agent Integrations 当成一等公民：Claude Code、Codex、OpenCode、OpenClaw、Hermes 逐个列出配置方式，另外单开一个 DeepSeek Harness 开发者预览。模型不再只是「给 API 调用的权重」，而是「为某几个 harness 调优过的执行体」。从 2025 年 2 月 Claude Code 那一步算起，这条线走了 20 个月。",
+      "shift": "模型和工具是两个世界 → 模型按 harness 交付",
+      "sources": [
+        {
+          "label": "DeepSeek 更新日志",
+          "url": "https://api-docs.deepseek.com/updates"
+        }
+      ]
+    }
+  ]
+}
