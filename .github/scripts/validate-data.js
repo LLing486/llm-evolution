@@ -132,6 +132,12 @@ if (fs.existsSync(milestonesPath)) {
     if (!ms.meta || !ms.meta.method) {
       errors.push('milestones.meta: missing "method"');
     }
+    const threadIds = new Set((ms.meta && ms.meta.threads || []).map(t => t.id));
+    (ms.meta && ms.meta.threads || []).forEach((t, i) => {
+      ['id', 'name', 'color', 'desc'].forEach(f => {
+        if (!t[f]) errors.push(`milestones.meta.threads[${i}]: missing required field "${f}"`);
+      });
+    });
     (ms.eras || []).forEach((e, i) => {
       ['id', 'range', 'title', 'summary'].forEach(f => {
         if (!e[f]) errors.push(`milestones.eras[${i}]: missing required field "${f}"`);
@@ -161,6 +167,17 @@ if (fs.existsSync(milestonesPath)) {
       }
       if (n.tags && !Array.isArray(n.tags)) {
         errors.push(`${prefix}: "tags" must be an array`);
+      }
+      if (n.threads) {
+        if (!Array.isArray(n.threads)) {
+          errors.push(`${prefix}: "threads" must be an array`);
+        } else {
+          n.threads.forEach(tid => {
+            if (!threadIds.has(tid)) {
+              errors.push(`${prefix}: thread "${tid}" not found in milestones.meta.threads`);
+            }
+          });
+        }
       }
       if (n.sources) {
         if (!Array.isArray(n.sources)) {
