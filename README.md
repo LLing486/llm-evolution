@@ -12,6 +12,8 @@
 
 **🌐 [在线预览](https://lling486.github.io/llm-evolution/)** → 打开即用，零依赖
 
+[🧭 关键节点编年史](https://lling486.github.io/llm-evolution/milestones.html) · [📊 参数规模趋势](https://lling486.github.io/llm-evolution/chart.html)
+
 </div>
 
 ---
@@ -22,7 +24,7 @@
 
 ### 特性
 
-- 🎯 **209 个模型** — 覆盖 27 家公司/团队的代表性大模型
+- 🎯 **216 个模型** — 覆盖 30 家公司/团队的代表性大模型
 - 🌍 **全球视野** — 🇺🇸 美国 / 🇨🇳 中国 / 🇪🇺 欧洲，国内外模型对比
 - 🔍 **交互筛选** — 按地区、公司、开源/闭源、模态自由过滤
 - 📅 **时间刻度** — 年份 + 季度细线 + 「今天」参考线，能看出同一个模型谁先谁后
@@ -30,7 +32,8 @@
 - 💡 **悬停详情** — 发布时间、参数规模、能力标签一目了然
 - 🏆 **旗舰标记** — 粉色圆点标识各公司旗舰模型
 - 📱 **响应式设计** — 桌面端、移动端均可浏览
-- 🚀 **零依赖** — 单个 HTML 文件，浏览器直开，无需任何构建工具
+- 🧭 **关键节点编年史** — 独立页面 [milestones.html](milestones.html)：2017–2026 的 28 个转折点，模型、产品、协议、事件混排，每条都写清「为什么是节点」和「改变了什么」
+- 🚀 **零依赖** — 无框架、无构建工具，纯 HTML/CSS/JS
 
 ## 📊 覆盖公司
 
@@ -43,17 +46,16 @@
 
 ## 🚀 快速开始
 
-### 方式一：直接打开
+### 方式一：本地起一个静态服务器
+
+页面通过 `fetch` 读取 `data/*.json`，所以需要走 HTTP（直接双击 `index.html` 会被浏览器的同源策略拦住，读不到数据）。
 
 ```bash
-# 克隆仓库
 git clone https://github.com/LLing486/llm-evolution.git
 cd llm-evolution
 
-# 浏览器打开
-open index.html        # macOS
-xdg-open index.html    # Linux
-start index.html       # Windows
+python3 -m http.server 8000
+# 然后打开 http://localhost:8000/
 ```
 
 ### 方式二：GitHub Pages
@@ -71,9 +73,12 @@ start index.html       # Windows
 
 ```
 llm-evolution/
-├── index.html                    # 主页面（渲染引擎）
+├── index.html                    # 主页面（时间轴渲染引擎）
+├── milestones.html               # 关键节点编年史
+├── chart.html                    # 参数规模趋势图
 ├── data/
-│   ├── models.json               # 模型数据（唯一数据源）
+│   ├── models.json               # 模型数据（主时间线数据源）
+│   ├── milestones.json           # 关键节点数据（含阶段划分、来源链接）
 │   └── companies.json            # 公司配置
 ├── .github/
 │   ├── workflows/

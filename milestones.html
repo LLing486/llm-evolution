@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关键节点 — 大模型与 AI 应用编年史 | LLM Evolution</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+
+  :root, [data-theme="light"] {
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #EDEFF3;
+    --bg-hover: #E5E7EB;
+    --text-primary: #1A1A1A;
+    --text-secondary: #4B5563;
+    --text-tertiary: #6B7280;
+    --border: #E5E7EB;
+    --accent: #4F46E5;
+    --accent-soft: rgba(79,70,229,0.08);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+    --rail: #E5E7EB;
+    --code-bg: #F3F4F6;
+  }
+
+  [data-theme="dark"] {
+    --bg-primary: #0F1117;
+    --bg-secondary: #1A1B23;
+    --bg-tertiary: #252630;
+    --bg-hover: #2D2E3A;
+    --text-primary: #E8E8ED;
+    --text-secondary: #9CA3AF;
+    --text-tertiary: #6B7280;
+    --border: #2D2E3A;
+    --accent: #818CF8;
+    --accent-soft: rgba(129,140,248,0.12);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+    --rail: #2D2E3A;
+    --code-bg: #14151E;
+  }
+
+  body {
+    font-family: 'Inter', 'Noto Sans SC', -apple-system, system-ui, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+    padding: 18px clamp(16px, 4vw, 48px) 14px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-left { min-width: 0; }
+  .header h1 {
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .header h1 em { font-style: normal; color: var(--accent); }
+  .header p {
+    margin-top: 4px; color: var(--text-secondary);
+    font-size: clamp(0.72rem, 0.9vw, 0.82rem); font-weight: 300; line-height: 1.5;
+  }
+  .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 500;
+    color: var(--text-secondary); text-decoration: none;
+    border: 1px solid var(--border); background: var(--bg-secondary);
+    transition: all .18s; white-space: nowrap;
+  }
+  .nav-link:hover { color: var(--accent); border-color: var(--accent); }
+  .nav-link.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-link.primary:hover { opacity: .88; color: #fff; }
+  .theme-toggle {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg-secondary);
+    color: var(--text-secondary); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all .2s; flex-shrink: 0;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle svg { width: 17px; height: 17px; }
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  /* ===== Era nav ===== */
+  .era-nav {
+    display: flex; gap: 6px; align-items: center;
+    padding: 10px clamp(16px, 4vw, 48px);
+    background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .era-nav::-webkit-scrollbar { display: none; }
+  .era-chip {
+    flex-shrink: 0; padding: 6px 11px; border-radius: 999px;
+    font-size: 12px; font-weight: 500; color: var(--text-secondary);
+    background: transparent; border: 1px solid transparent;
+    cursor: pointer; transition: all .18s; white-space: nowrap;
+  }
+  .era-chip:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+  .era-chip.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+  .era-chip .r { font-weight: 600; }
+  .era-chip .t { opacity: .72; margin-left: 5px; }
+
+  /* ===== Layout ===== */
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px) 72px; }
+
+  /* ===== Intro ===== */
+  .intro { padding: clamp(28px, 4vw, 48px) 0 clamp(20px, 3vw, 32px); }
+  .intro h2 {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem); font-weight: 600; margin-bottom: 10px;
+  }
+  .intro p { color: var(--text-secondary); font-size: 14.5px; line-height: 1.85; max-width: 720px; }
+  .intro .stats {
+    display: flex; gap: clamp(18px, 4vw, 40px); flex-wrap: wrap;
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .stat .v { font-size: 22px; font-weight: 700; color: var(--accent); line-height: 1.1; }
+  .stat .k { font-size: 11.5px; color: var(--text-tertiary); margin-top: 3px; }
+
+  /* ===== Toolbar ===== */
+  .toolbar {
+    position: sticky; top: 63px; z-index: 90;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 12px 0; margin-bottom: 8px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+  }
+  .type-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .type-chip {
+    padding: 5px 11px; border-radius: 999px; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-secondary);
+    border: 1px solid var(--border); cursor: pointer; transition: all .18s;
+  }
+  .type-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .type-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .search-wrap {
+    position: relative; margin-left: auto; flex: 1 1 200px; max-width: 300px; min-width: 160px;
+  }
+  .search-wrap svg {
+    position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 14px; color: var(--text-tertiary);
+  }
+  .search-wrap input {
+    width: 100%; padding: 7px 10px 7px 30px; font-size: 13px;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg-secondary); color: var(--text-primary);
+    font-family: inherit; outline: none; transition: border-color .18s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .count { font-size: 12px; color: var(--text-tertiary); white-space: nowrap; }
+
+  /* ===== Era section ===== */
+  .era { padding-top: clamp(30px, 5vw, 52px); scroll-margin-top: 130px; }
+  .era-head { margin-bottom: 26px; }
+  .era-range {
+    display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .08em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .era-head h2 {
+    font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 700; line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+  .era-head p {
+    margin-top: 10px; max-width: 700px;
+    color: var(--text-secondary); font-size: 13.5px; line-height: 1.85;
+  }
+
+  /* ===== Nodes ===== */
+  .nodes { position: relative; }
+  .nodes::before {
+    content: ''; position: absolute; left: 88px; top: 6px; bottom: 6px;
+    width: 1px; background: var(--rail);
+  }
+  .node {
+    position: relative; display: grid; grid-template-columns: 74px 1fr;
+    gap: 28px; padding-bottom: 22px;
+  }
+  .node::before {
+    content: ''; position: absolute; left: 84px; top: 16px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg-primary); border: 2px solid var(--accent);
+    z-index: 2;
+  }
+  .node-date { padding-top: 10px; text-align: right; }
+  .node-date .y { display: block; font-size: 10.5px; color: var(--text-tertiary); letter-spacing: .04em; line-height: 1.3; }
+  .node-date .md { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.35; font-variant-numeric: tabular-nums; }
+  .node-card {
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s, border-color .2s, transform .2s;
+  }
+  .node-card:hover { box-shadow: var(--shadow-md); border-color: var(--accent); }
+  .node-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 9px; }
+  .type-badge {
+    font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 5px;
+    letter-spacing: .02em; border: 1px solid transparent;
+  }
+  .type-模型 { background: rgba(79,70,229,.09); color: #4F46E5; }
+  .type-产品 { background: rgba(16,185,129,.10); color: #059669; }
+  .type-协议 { background: rgba(245,158,11,.12); color: #B45309; }
+  .type-论文 { background: rgba(107,114,128,.12); color: #4B5563; }
+  .type-事件 { background: rgba(236,72,153,.10); color: #BE185D; }
+  [data-theme="dark"] .type-模型 { background: rgba(129,140,248,.14); color: #A5B4FC; }
+  [data-theme="dark"] .type-产品 { background: rgba(16,185,129,.14); color: #6EE7B7; }
+  [data-theme="dark"] .type-协议 { background: rgba(245,158,11,.14); color: #FCD34D; }
+  [data-theme="dark"] .type-论文 { background: rgba(156,163,175,.14); color: #D1D5DB; }
+  [data-theme="dark"] .type-事件 { background: rgba(236,72,153,.14); color: #F9A8D4; }
+  .company-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11.5px; color: var(--text-secondary); font-weight: 500;
+  }
+  .company-chip .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--text-tertiary); flex-shrink: 0;
+  }
+  .node-card h3 {
+    font-size: clamp(1rem, 1.4vw, 1.12rem); font-weight: 600;
+    line-height: 1.45; letter-spacing: -0.01em; margin-bottom: 5px;
+  }
+  .node-lead {
+    font-size: 12.5px; color: var(--text-tertiary); line-height: 1.6;
+    margin-bottom: 12px; font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    word-break: break-word;
+  }
+  .node-why {
+    font-size: 13.8px; line-height: 1.9; color: var(--text-secondary);
+  }
+  .node-shift {
+    display: flex; gap: 8px; align-items: flex-start;
+    margin-top: 13px; padding: 10px 12px; border-radius: 9px;
+    background: var(--bg-tertiary); font-size: 13px; line-height: 1.65;
+  }
+  .node-shift .arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; line-height: 1.65; }
+  .node-shift .txt { color: var(--text-primary); font-weight: 500; }
+  .node-note {
+    margin-top: 12px; padding: 3px 0 3px 12px;
+    border-left: 2px solid var(--accent);
+    font-size: 13px; line-height: 1.8; color: var(--text-secondary);
+  }
+  .node-note b {
+    display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 3px;
+  }
+  .node-foot {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    margin-top: 14px; padding-top: 11px; border-top: 1px dashed var(--border);
+  }
+  .tag {
+    font-size: 11px; color: var(--text-tertiary);
+    background: var(--code-bg); padding: 2px 7px; border-radius: 4px;
+  }
+  .srcs { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+  .srcs a {
+    font-size: 11.5px; color: var(--text-tertiary); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: color .18s;
+  }
+  .srcs a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .empty {
+    padding: 60px 0; text-align: center; color: var(--text-tertiary); font-size: 14px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-tertiary); line-height: 1.9;
+  }
+  .footer a { color: var(--text-secondary); text-decoration: none; }
+  .footer a:hover { color: var(--accent); }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 720px) {
+    .header { padding: 14px 16px 12px; flex-wrap: wrap; }
+    .header-right { width: 100%; justify-content: flex-start; }
+    .toolbar { top: 106px; }
+    .era-nav { padding: 8px 16px; }
+    .nodes::before { left: 5px; }
+    .node { grid-template-columns: 1fr; gap: 6px; padding-left: 24px; }
+    .node::before { left: 1px; top: 20px; }
+    .node-date { text-align: left; padding-top: 0; display: flex; align-items: baseline; gap: 6px; }
+    .node-date .y { display: inline; }
+    .node-date .md { display: inline; font-size: 13px; }
+    .node-card { padding: 16px; }
+    .srcs { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>关键节点 <em>·</em> 编年史</h1>
+    <p>大模型与 AI 应用的 28 个转折点 — 每个节点都改变了一次「谁能用什么做什么」</p>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="nav-link">← 时间线</a>
+    <a href="chart.html" class="nav-link">📊 参数趋势</a>
+    <button class="theme-toggle" id="themeToggle" title="切换主题">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</div>
+
+<nav class="era-nav" id="eraNav">
+  <button class="era-chip" data-era="all">全部</button>
+</nav>
+
+<div class="wrap">
+  <section class="intro">
+    <h2>怎么判断一个节点</h2>
+    <p id="methodText">加载中…</p>
+    <div class="stats">
+      <div class="stat"><div class="v" id="statNodes">—</div><div class="k">个节点</div></div>
+      <div class="stat"><div class="v" id="statSpan">—</div><div class="k">年跨度</div></div>
+      <div class="stat"><div class="v" id="statEras">—</div><div class="k">个阶段</div></div>
+      <div class="stat"><div class="v" id="statSources">—</div><div class="k">个可追溯来源</div></div>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="type-chips" id="typeChips">
+      <button class="type-chip active" data-type="all">全部</button>
+      <button class="type-chip" data-type="模型">模型</button>
+      <button class="type-chip" data-type="产品">产品</button>
+      <button class="type-chip" data-type="协议">协议</button>
+      <button class="type-chip" data-type="事件">事件</button>
+      <button class="type-chip" data-type="论文">论文</button>
+    </div>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="搜节点 / 公司 / 标签…" autocomplete="off" />
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+
+  <main id="timeline"></main>
+
+  <footer class="footer">
+    <p><strong>数据与判断</strong>：节点与日期以官方发布页、论文或权威媒体为准，来源逐条附在卡片底部；无法核实的内容不写。同一件事的「意义」部分是我的判断，不是事实陈述，已与事实分开标注。</p>
+    <p style="margin-top:8px">模型与公司数据来自本仓 <a href="index.html">大模型进化史</a> 主时间线 · <a href="https://github.com/LLing486/llm-evolution" target="_blank" rel="noopener">GitHub 仓库</a> · 更新于 <span id="updated">—</span></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var state = { era: 'all', type: 'all', q: '' };
+  var DATA = null, COMPANIES = {};
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  try {
+    var saved = localStorage.getItem('llm-evo-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  document.getElementById('themeToggle').addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('llm-evo-theme', next); } catch (e) {}
+  });
+
+  /* ---------- helpers ---------- */
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function fmtDate(d) {
+    var p = d.split('-');
+    return { y: p[0], md: p[2] ? p[1] + '.' + p[2] : p[1], full: d };
+  }
+  function match(node) {
+    if (state.type !== 'all' && node.type !== state.type) return false;
+    if (state.era !== 'all' && node.era !== state.era) return false;
+    if (!state.q) return true;
+    var q = state.q.toLowerCase();
+    var hay = [node.title, node.lead, node.why, node.shift, node.note || '',
+               (node.tags || []).join(' '), node.company || ''].join(' ').toLowerCase();
+    return hay.indexOf(q) !== -1;
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    var timeline = document.getElementById('timeline');
+    timeline.innerHTML = '';
+    var shown = 0;
+
+    DATA.eras.forEach(function (era) {
+      var nodes = DATA.nodes.filter(function (n) { return n.era === era.id && match(n); });
+      var anyInEra = DATA.nodes.some(function (n) { return n.era === era.id; });
+      if (!anyInEra) return;
+
+      var sec = el('section', 'era');
+      sec.id = era.id;
+
+      var head = el('div', 'era-head');
+      head.appendChild(el('span', 'era-range', era.range));
+      head.appendChild(el('h2', null, era.title));
+      head.appendChild(el('p', null, era.summary));
+      sec.appendChild(head);
+
+      if (!nodes.length) {
+        sec.appendChild(el('div', 'empty', '这个阶段没有匹配的节点'));
+        timeline.appendChild(sec);
+        return;
+      }
+
+      var list = el('div', 'nodes');
+      nodes.forEach(function (n) {
+        shown++;
+        var d = fmtDate(n.date);
+        var node = el('article', 'node');
+
+        var dateCol = el('div', 'node-date');
+        dateCol.title = d.full;
+        dateCol.appendChild(el('span', 'y', d.y));
+        dateCol.appendChild(el('span', 'md', d.md));
+        node.appendChild(dateCol);
+
+        var card = el('div', 'node-card');
+
+        var meta = el('div', 'node-meta');
+        meta.appendChild(el('span', 'type-badge type-' + n.type, n.type));
+        if (n.company) {
+          var cc = el('span', 'company-chip');
+          var dot = el('span', 'dot');
+          var conf = COMPANIES[n.company];
+          if (conf && conf.color) dot.style.background = conf.color;
+          cc.appendChild(dot);
+          cc.appendChild(document.createTextNode(n.company));
+          meta.appendChild(cc);
+        }
+        card.appendChild(meta);
+
+        card.appendChild(el('h3', null, n.title));
+        card.appendChild(el('div', 'node-lead', n.lead));
+        card.appendChild(el('p', 'node-why', n.why));
+
+        var shift = el('div', 'node-shift');
+        shift.appendChild(el('span', 'arrow', '→'));
+        var st = el('span');
+        st.appendChild(el('strong', null, '改变了什么：'));
+        st.appendChild(document.createTextNode(n.shift));
+        st.className = 'txt';
+        shift.appendChild(st);
+        card.appendChild(shift);
+
+        if (n.note) {
+          var note = el('div', 'node-note');
+          note.appendChild(el('b', null, '观察'));
+          note.appendChild(document.createTextNode(n.note));
+          card.appendChild(note);
+        }
+
+        var foot = el('div', 'node-foot');
+        (n.tags || []).forEach(function (t) { foot.appendChild(el('span', 'tag', t)); });
+        if (n.sources && n.sources.length) {
+          var srcs = el('div', 'srcs');
+          n.sources.forEach(function (s) {
+            var a = el('a', null, s.label + ' ↗');
+            a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
+            srcs.appendChild(a);
+          });
+          foot.appendChild(srcs);
+        }
+        card.appendChild(foot);
+
+        node.appendChild(card);
+        list.appendChild(node);
+      });
+
+      sec.appendChild(list);
+      timeline.appendChild(sec);
+    });
+
+    document.getElementById('count').textContent = shown + ' / ' + DATA.nodes.length + ' 个节点';
+    document.getElementById('statNodes').textContent = DATA.nodes.length;
+    document.getElementById('statEras').textContent = DATA.eras.length;
+    document.getElementById('statSources').textContent = DATA.nodes.reduce(function (a, n) {
+      return a + ((n.sources && n.sources.length) || 0);
+    }, 0);
+    var years = DATA.nodes.map(function (n) { return parseInt(n.date.slice(0, 4), 10); });
+    document.getElementById('statSpan').textContent =
+      Math.max.apply(null, years) - Math.min.apply(null, years);
+
+    if (!shown) {
+      timeline.appendChild(el('div', 'empty', '没有匹配的节点，换个关键词试试'));
+    }
+  }
+
+  /* ---------- nav ---------- */
+  function buildNav() {
+    var nav = document.getElementById('eraNav');
+    DATA.eras.forEach(function (era) {
+      var b = el('button', 'era-chip');
+      b.dataset.era = era.id;
+      var r = el('span', 'r', era.range + ' ·');
+      var t = el('span', 't', era.title.split('：')[0]);
+      b.appendChild(r); b.appendChild(t);
+      nav.appendChild(b);
+    });
+    nav.addEventListener('click', function (e) {
+      var b = e.target.closest('.era-chip');
+      if (!b) return;
+      var id = b.dataset.era;
+      setActiveNav(id);
+      if (id === 'all') {
+        if (history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+        window.scrollTo(0, 0);
+        return;
+      }
+      // hash 让地址可分享；真正的滚动放到下一帧，避开点击按钮时浏览器把焦点滚回原位的默认行为
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+      b.blur();
+      setTimeout(function () {
+        var t = document.getElementById(id);
+        if (t) t.scrollIntoView({ block: 'start' });
+      }, 0);
+    });
+    window.addEventListener('hashchange', function () {
+      var id = location.hash.replace('#', '');
+      if (id) setActiveNav(id);
+    });
+  }
+  function setActiveNav(eraId) {
+    document.querySelectorAll('.era-chip').forEach(function (c) {
+      c.classList.toggle('active', c.dataset.era === eraId);
+    });
+  }
+  function observeEras() {
+    if (!('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) setActiveNav(en.target.id);
+      });
+    }, { rootMargin: '-140px 0px -60% 0px', threshold: 0 });
+    document.querySelectorAll('.era').forEach(function (s) { obs.observe(s); });
+  }
+
+  /* ---------- filters ---------- */
+  document.getElementById('typeChips').addEventListener('click', function (e) {
+    var b = e.target.closest('.type-chip');
+    if (!b) return;
+    state.type = b.dataset.type;
+    document.querySelectorAll('.type-chip').forEach(function (c) {
+      c.classList.toggle('active', c === b);
+    });
+    render();
+  });
+  var input = document.getElementById('searchInput');
+  var timer = null;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      state.q = input.value.trim();
+      render();
+    }, 120);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== input) {
+      e.preventDefault(); input.focus();
+    } else if (e.key === 'Escape' && document.activeElement === input) {
+      input.value = ''; state.q = ''; render(); input.blur();
+    }
+  });
+
+  /* ---------- load ---------- */
+  Promise.all([
+    fetch('data/milestones.json').then(function (r) {
+      if (!r.ok) throw new Error('milestones ' + r.status); return r.json();
+    }),
+    fetch('data/companies.json').then(function (r) {
+      if (!r.ok) throw new Error('companies ' + r.status); return r.json();
+    }).catch(function () { return {}; })
+  ]).then(function (res) {
+    DATA = res[0]; COMPANIES = res[1] || {};
+    document.getElementById('methodText').textContent = DATA.meta.method;
+    document.getElementById('updated').textContent = DATA.meta.updated;
+    document.title = '关键节点 — 大模型与 AI 应用编年史 | LLM Evolution';
+    buildNav();
+    render();
+    observeEras();
+  }).catch(function (err) {
+    document.getElementById('timeline').innerHTML =
+      '<div class="empty">数据加载失败（' + err.message + '）。<br>' +
+      '请用本地服务器打开，例如：<code>python3 -m http.server 8000</code>，' +
+      '再访问 <code>localhost:8000/milestones.html</code>。</div>';
+  });
+})();
+</script>
+</body>
+</html>
