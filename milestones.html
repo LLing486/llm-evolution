@@ -408,7 +408,7 @@
   <main id="timeline"></main>
 
   <footer class="footer">
-    <p><strong>数据与判断</strong>：节点与日期以官方发布页、论文或权威媒体为准，来源逐条附在卡片底部；无法核实的内容不写。同一件事的「意义」部分是我的判断，不是事实陈述，已与事实分开标注。</p>
+    <p><strong>数据与判断</strong>：节点与日期以官方发布页、论文或权威媒体为准，来源逐条附在卡片底部；无法核实的内容不写。同一件事的「意义」部分属于判断而非事实陈述，已与事实分开标注。</p>
     <p style="margin-top:8px">模型与公司数据来自本仓 <a href="index.html">大模型进化史</a> 主时间线 · <a href="https://github.com/LLing486/llm-evolution" target="_blank" rel="noopener">GitHub 仓库</a> · 更新于 <span id="updated">—</span></p>
   </footer>
 </div>
@@ -527,7 +527,7 @@
 
         if (n.note) {
           var note = el('div', 'node-note');
-          note.appendChild(el('b', null, '观察'));
+          note.appendChild(el('b', null, '作者观察'));
           note.appendChild(document.createTextNode(n.note));
           card.appendChild(note);
         }
