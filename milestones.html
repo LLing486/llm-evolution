@@ -11,6 +11,8 @@
 
 
   :root, [data-theme="light"] {
+    --header-h: 88px;
+    --toolbar-h: 100px;
     --bg-primary: #FAFAFA;
     --bg-secondary: #FFFFFF;
     --bg-tertiary: #EDEFF3;
@@ -135,7 +137,7 @@
 
   /* ===== Toolbar ===== */
   .toolbar {
-    position: sticky; top: 63px; z-index: 90;
+    position: sticky; top: var(--header-h); z-index: 90;
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     padding: 12px 0; margin-bottom: 8px;
     background: var(--bg-primary);
@@ -165,8 +167,45 @@
   .search-wrap input:focus { border-color: var(--accent); }
   .count { font-size: 12px; color: var(--text-tertiary); white-space: nowrap; }
 
+  /* ===== Threads (叙事网) ===== */
+  .thread-bar {
+    flex-basis: 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    padding-top: 4px;
+  }
+  .thread-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    color: var(--text-tertiary); text-transform: uppercase;
+  }
+  .thread-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .thread-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-secondary);
+    border: 1px solid var(--border); cursor: pointer; transition: all .18s;
+  }
+  .thread-chip .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .thread-chip:hover { border-color: var(--text-tertiary); color: var(--text-primary); }
+  .thread-chip.active { color: var(--text-primary); font-weight: 600; }
+  .thread-desc {
+    flex-basis: 100%; display: none;
+    font-size: 12.5px; line-height: 1.75; color: var(--text-secondary);
+    padding: 8px 12px; border-radius: 8px; background: var(--bg-tertiary);
+  }
+  .thread-desc.show { display: block; }
+  .thread-desc b { color: var(--text-primary); font-weight: 600; }
+
+  .thread-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--text-secondary);
+    background: var(--bg-tertiary); padding: 2px 7px; border-radius: 4px;
+  }
+  .thread-tag .dot { width: 6px; height: 6px; border-radius: 50%; }
+
   /* ===== Era section ===== */
-  .era { padding-top: clamp(30px, 5vw, 52px); scroll-margin-top: 130px; }
+  .era {
+    padding-top: clamp(30px, 5vw, 52px);
+    scroll-margin-top: calc(var(--header-h) + var(--toolbar-h) + 8px);
+  }
   .era-head { margin-bottom: 26px; }
   .era-range {
     display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .08em;
@@ -285,10 +324,19 @@
 
   /* ===== Responsive ===== */
   @media (max-width: 720px) {
-    .header { padding: 14px 16px 12px; flex-wrap: wrap; }
-    .header-right { width: 100%; justify-content: flex-start; }
-    .toolbar { top: 106px; }
-    .era-nav { padding: 8px 16px; }
+    .header { padding: 10px 14px 9px; flex-wrap: nowrap; align-items: center; gap: 10px; }
+    .header h1 { font-size: 1.12rem; }
+    .header p {
+      font-size: 10.5px; line-height: 1.4; margin-top: 2px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .header-right { width: auto; gap: 6px; }
+    .nav-link { padding: 5px 8px; font-size: 11px; border-radius: 7px; }
+    .theme-toggle { width: 30px; height: 30px; }
+    .theme-toggle svg { width: 15px; height: 15px; }
+    /* 手机上筛选区不吸顶，避免吃掉大半个屏幕 */
+    .toolbar { position: static; }
+    .era-nav { padding: 8px 14px; }
     .nodes::before { left: 5px; }
     .node { grid-template-columns: 1fr; gap: 6px; padding-left: 24px; }
     .node::before { left: 1px; top: 20px; }
@@ -325,6 +373,7 @@
   <section class="intro">
     <h2>怎么判断一个节点</h2>
     <p id="methodText">加载中…</p>
+    <p style="margin-top:8px">同一个节点常常同时属于几条线——按「脉络」切换，可以只看一条线二十年是怎么走的。</p>
     <div class="stats">
       <div class="stat"><div class="v" id="statNodes">—</div><div class="k">个节点</div></div>
       <div class="stat"><div class="v" id="statSpan">—</div><div class="k">年跨度</div></div>
@@ -347,6 +396,13 @@
       <input type="text" id="searchInput" placeholder="搜节点 / 公司 / 标签…" autocomplete="off" />
     </div>
     <span class="count" id="count"></span>
+    <div class="thread-bar">
+      <span class="thread-label">脉络</span>
+      <div class="thread-chips" id="threadChips">
+        <button class="thread-chip active" data-thread="all">全部</button>
+      </div>
+    </div>
+    <div class="thread-desc" id="threadDesc"></div>
   </div>
 
   <main id="timeline"></main>
@@ -361,7 +417,8 @@
 (function () {
   'use strict';
 
-  var state = { era: 'all', type: 'all', q: '' };
+  var state = { era: 'all', type: 'all', thread: 'all', q: '' };
+  var THREADS = [];
   var DATA = null, COMPANIES = {};
 
   /* ---------- theme ---------- */
@@ -387,8 +444,13 @@
     var p = d.split('-');
     return { y: p[0], md: p[2] ? p[1] + '.' + p[2] : p[1], full: d };
   }
+  function threadOf(id) {
+    for (var i = 0; i < THREADS.length; i++) if (THREADS[i].id === id) return THREADS[i];
+    return null;
+  }
   function match(node) {
     if (state.type !== 'all' && node.type !== state.type) return false;
+    if (state.thread !== 'all' && (node.threads || []).indexOf(state.thread) === -1) return false;
     if (state.era !== 'all' && node.era !== state.era) return false;
     if (!state.q) return true;
     var q = state.q.toLowerCase();
@@ -471,6 +533,16 @@
         }
 
         var foot = el('div', 'node-foot');
+        (n.threads || []).forEach(function (tid) {
+          var th = threadOf(tid);
+          if (!th) return;
+          var badge = el('span', 'thread-tag');
+          var bd = el('span', 'dot');
+          bd.style.background = th.color;
+          badge.appendChild(bd);
+          badge.appendChild(document.createTextNode(th.name));
+          foot.appendChild(badge);
+        });
         (n.tags || []).forEach(function (t) { foot.appendChild(el('span', 'tag', t)); });
         if (n.sources && n.sources.length) {
           var srcs = el('div', 'srcs');
@@ -491,7 +563,12 @@
       timeline.appendChild(sec);
     });
 
-    document.getElementById('count').textContent = shown + ' / ' + DATA.nodes.length + ' 个节点';
+    var cText = shown + ' / ' + DATA.nodes.length + ' 个节点';
+    if (state.thread !== 'all') {
+      var cur = threadOf(state.thread);
+      if (cur) cText += ' · ' + cur.name;
+    }
+    document.getElementById('count').textContent = cText;
     document.getElementById('statNodes').textContent = DATA.nodes.length;
     document.getElementById('statEras').textContent = DATA.eras.length;
     document.getElementById('statSources').textContent = DATA.nodes.reduce(function (a, n) {
@@ -504,6 +581,7 @@
     if (!shown) {
       timeline.appendChild(el('div', 'empty', '没有匹配的节点，换个关键词试试'));
     }
+    syncStickyHeights();
   }
 
   /* ---------- nav ---------- */
@@ -555,6 +633,57 @@
     document.querySelectorAll('.era').forEach(function (s) { obs.observe(s); });
   }
 
+  function syncStickyHeights() {
+    var head = document.querySelector('.header');
+    var bar = document.querySelector('.toolbar');
+    if (!head || !bar) return;
+    var root2 = document.documentElement.style;
+    var stickyBar = window.getComputedStyle(bar).position === 'sticky';
+    root2.setProperty('--header-h', Math.round(head.getBoundingClientRect().height) + 'px');
+    root2.setProperty('--toolbar-h', stickyBar ? Math.round(bar.getBoundingClientRect().height) + 'px' : '0px');
+  }
+
+  function buildThreads() {
+    THREADS = DATA.meta.threads || [];
+    var box = document.getElementById('threadChips');
+    THREADS.forEach(function (th) {
+      var b = el('button', 'thread-chip');
+      b.dataset.thread = th.id;
+      b.title = th.desc;
+      var d = el('span', 'dot');
+      d.style.background = th.color;
+      b.appendChild(d);
+      b.appendChild(document.createTextNode(th.name));
+      box.appendChild(b);
+    });
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.thread-chip');
+      if (!b) return;
+      state.thread = b.dataset.thread;
+      box.querySelectorAll('.thread-chip').forEach(function (c) {
+        var active = c === b;
+        c.classList.toggle('active', active);
+        var th = threadOf(c.dataset.thread);
+        c.style.borderColor = active && th ? th.color : '';
+        c.style.background = active && th ? th.color + '14' : '';
+        c.style.color = active && th ? th.color : '';
+      });
+      var desc = document.getElementById('threadDesc');
+      var cur = threadOf(state.thread);
+      if (cur) {
+        desc.innerHTML = '';
+        var strong = el('b', null, cur.name + '：');
+        desc.appendChild(strong);
+        desc.appendChild(document.createTextNode(cur.desc));
+        desc.classList.add('show');
+      } else {
+        desc.textContent = '';
+        desc.classList.remove('show');
+      }
+      render();
+    });
+  }
+
   /* ---------- filters ---------- */
   document.getElementById('typeChips').addEventListener('click', function (e) {
     var b = e.target.closest('.type-chip');
@@ -595,8 +724,12 @@
     document.getElementById('methodText').textContent = DATA.meta.method;
     document.getElementById('updated').textContent = DATA.meta.updated;
     document.title = '关键节点 — 大模型与 AI 应用编年史 | LLM Evolution';
+    buildThreads();
     buildNav();
     render();
+    syncStickyHeights();
+    window.addEventListener('resize', syncStickyHeights);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncStickyHeights);
     observeEras();
   }).catch(function (err) {
     document.getElementById('timeline').innerHTML =

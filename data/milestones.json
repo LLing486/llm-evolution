@@ -3,7 +3,39 @@
     "title": "关键节点",
     "subtitle": "大模型与 AI 应用的 28 个转折点，2017–2026",
     "updated": "2026-10-20",
-    "method": "一个事件要进这份清单，得同时回答三个问题：能力曲线有没有拐（同一件事以前做不了）？分发方式有没有变（谁能用、多少钱、在哪用）？人的使用形态有没有变（从提问变成交付，从网页变成工作流）？只满足一条的，都是进步，不是节点。"
+    "method": "一个事件要进这份清单，得同时回答三个问题：能力曲线有没有拐（同一件事以前做不了）？分发方式有没有变（谁能用、多少钱、在哪用）？人的使用形态有没有变（从提问变成交付，从网页变成工作流）？只满足一条的，都是进步，不是节点。",
+    "threads": [
+      {
+        "id": "capability",
+        "name": "能力线",
+        "color": "#4F46E5",
+        "desc": "模型自身的上限：参数规模 → 推理能力 → 上下文的长度与密度。"
+      },
+      {
+        "id": "form",
+        "name": "形态线",
+        "color": "#059669",
+        "desc": "人怎么用它：聊天 → 语音 → 产物 → 交付整个任务。"
+      },
+      {
+        "id": "open",
+        "name": "开源线",
+        "color": "#B45309",
+        "desc": "权重在谁手里：意外泄露 → 可商用 → 万亿级开源旗舰。"
+      },
+      {
+        "id": "cost",
+        "name": "成本线",
+        "color": "#BE185D",
+        "desc": "一个任务到底多少钱：训练成本 → 推理定价 → 单位任务总成本。"
+      },
+      {
+        "id": "protocol",
+        "name": "协议线",
+        "color": "#0891B2",
+        "desc": "模型怎么接上世界：function calling → MCP → harness 适配。"
+      }
+    ]
   },
   "eras": [
     {
@@ -63,6 +95,9 @@
           "label": "arXiv 1706.03762",
           "url": "https://arxiv.org/abs/1706.03762"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -85,6 +120,9 @@
           "label": "OpenAI 原始博客",
           "url": "https://openai.com/index/language-unsupervised/"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -106,6 +144,10 @@
           "label": "arXiv 2005.14165",
           "url": "https://arxiv.org/abs/2005.14165"
         }
+      ],
+      "threads": [
+        "capability",
+        "cost"
       ]
     },
     {
@@ -126,6 +168,9 @@
           "label": "TechCrunch 报道",
           "url": "https://techcrunch.com/2021/06/29/github-previews-new-ai-tool-that-makes-coding-suggestions/"
         }
+      ],
+      "threads": [
+        "form"
       ]
     },
     {
@@ -146,6 +191,10 @@
           "label": "Stable Diffusion 论文",
           "url": "https://arxiv.org/abs/2112.10752"
         }
+      ],
+      "threads": [
+        "form",
+        "open"
       ]
     },
     {
@@ -168,6 +217,9 @@
           "label": "OpenAI 发布页",
           "url": "https://openai.com/index/chatgpt/"
         }
+      ],
+      "threads": [
+        "form"
       ]
     },
     {
@@ -190,6 +242,9 @@
           "label": "新智元复盘（IT之家）",
           "url": "https://m.ithome.com/html/685656.htm"
         }
+      ],
+      "threads": [
+        "open"
       ]
     },
     {
@@ -211,6 +266,9 @@
           "label": "OpenAI 发布页",
           "url": "https://openai.com/index/hello-gpt-4/"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -232,6 +290,9 @@
           "label": "OpenAI 公告",
           "url": "https://openai.com/index/chatgpt-plugins/"
         }
+      ],
+      "threads": [
+        "protocol"
       ]
     },
     {
@@ -254,6 +315,9 @@
           "label": "OpenAI 技术说明",
           "url": "https://openai.com/index/video-generation-models-as-world-simulators/"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -275,6 +339,10 @@
           "label": "Anthropic 发布页",
           "url": "https://www.anthropic.com/news/claude-3-family"
         }
+      ],
+      "threads": [
+        "capability",
+        "cost"
       ]
     },
     {
@@ -296,6 +364,10 @@
           "label": "OpenAI 发布页",
           "url": "https://openai.com/index/hello-gpt-4o/"
         }
+      ],
+      "threads": [
+        "capability",
+        "form"
       ]
     },
     {
@@ -317,6 +389,10 @@
           "label": "Anthropic 发布页",
           "url": "https://www.anthropic.com/news/claude-3-5-sonnet"
         }
+      ],
+      "threads": [
+        "capability",
+        "form"
       ]
     },
     {
@@ -338,6 +414,9 @@
           "label": "OpenAI：Learning to Reason with LLMs",
           "url": "https://openai.com/index/learning-to-reason-with-llms/"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -359,6 +438,9 @@
           "label": "Anthropic 发布页",
           "url": "https://www.anthropic.com/news/3-5-models-and-computer-use"
         }
+      ],
+      "threads": [
+        "form"
       ]
     },
     {
@@ -380,6 +462,9 @@
           "label": "Anthropic 发布页",
           "url": "https://www.anthropic.com/news/model-context-protocol"
         }
+      ],
+      "threads": [
+        "protocol"
       ]
     },
     {
@@ -402,6 +487,10 @@
           "label": "DeepSeek 官方公告",
           "url": "https://api-docs.deepseek.com/news/news241226"
         }
+      ],
+      "threads": [
+        "open",
+        "cost"
       ]
     },
     {
@@ -429,6 +518,11 @@
           "label": "Nature 封面论文报道",
           "url": "https://www.stcn.com/article/detail/3345249.html"
         }
+      ],
+      "threads": [
+        "capability",
+        "open",
+        "cost"
       ]
     },
     {
@@ -452,6 +546,10 @@
           "label": "MIT AI Agent Index 条目",
           "url": "https://aiagentindex.mit.edu/2025/claude-code/"
         }
+      ],
+      "threads": [
+        "form",
+        "protocol"
       ]
     },
     {
@@ -476,6 +574,9 @@
           "label": "证券时报：并购细节",
           "url": "https://stcn.com/article/detail/3565400.html"
         }
+      ],
+      "threads": [
+        "form"
       ]
     },
     {
@@ -497,6 +598,10 @@
           "label": "Anthropic：Introducing Claude 4",
           "url": "https://www.anthropic.com/news/claude-4"
         }
+      ],
+      "threads": [
+        "capability",
+        "form"
       ]
     },
     {
@@ -518,6 +623,10 @@
           "label": "OpenAI 发布页",
           "url": "https://openai.com/index/introducing-chatgpt-agent/"
         }
+      ],
+      "threads": [
+        "form",
+        "protocol"
       ]
     },
     {
@@ -539,6 +648,10 @@
           "label": "OpenAI 发布页",
           "url": "https://openai.com/index/introducing-gpt-5/"
         }
+      ],
+      "threads": [
+        "capability",
+        "form"
       ]
     },
     {
@@ -560,6 +673,9 @@
           "label": "新华社报道",
           "url": "http://english.news.cn/northamerica/20251119/b43c1cb58fe74fcda7ced4eae7f6381c/c.html"
         }
+      ],
+      "threads": [
+        "capability"
       ]
     },
     {
@@ -586,6 +702,10 @@
           "label": "改名始末（pcmarket）",
           "url": "https://www.pcmarket.com.hk/clawdbot-rename-again-from-moltbot-to-openclaw/"
         }
+      ],
+      "threads": [
+        "form",
+        "open"
       ]
     },
     {
@@ -610,6 +730,11 @@
           "label": "DeepSeek：V4 Preview",
           "url": "https://api-docs.deepseek.com/news/news260424"
         }
+      ],
+      "threads": [
+        "capability",
+        "cost",
+        "open"
       ]
     },
     {
@@ -631,6 +756,9 @@
           "label": "本仓库 models.json 条目",
           "url": "https://github.com/LLing486/llm-evolution/blob/main/data/models.json"
         }
+      ],
+      "threads": [
+        "open"
       ]
     },
     {
@@ -652,6 +780,9 @@
           "label": "DeepSeek 更新日志",
           "url": "https://api-docs.deepseek.com/updates"
         }
+      ],
+      "threads": [
+        "protocol"
       ]
     }
   ]
