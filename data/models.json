@@ -4231,5 +4231,75 @@
       "text",
       "image"
     ]
+  },
+  {
+    "id": "kimi-k3-1-pro",
+    "name": "Kimi K3.1 Pro",
+    "company": "月之暗面",
+    "origin": "cn",
+    "date": "2026-10",
+    "params": "3T（激活参数未公开）",
+    "flagship": true,
+    "desc": "月之暗面 2026-10-24 发布的 K3.1 系列首个模型，3 万亿级参数、100 万 token 上下文，官方称其为迄今能力最强的月之暗面模型。相比 K3 大幅加码强化学习算力，主打长程编程、3D 创作、金融研究与端到端知识工作交付：Terminal-Bench 4.0 得分 65.7%，超过 GPT-6 Astra 的 58.2%、接近 Claude Opus 5.5 的 66.4%；内部 Kimi Code Bench 3.0 Long-horizon 61.2%（K3 为 55.95%）。开源权重版在开放前移除网络攻防数据，相关能力从 90.5% 降到 81.0%。API 定价每百万 token：输入 13 元、缓存命中 1.3 元、输出 68 元（海外 $2/$10）；另有速度 2~3 倍、价格翻倍的 Highspeed 版。完整权重承诺 11 月 4 日前发布。",
+    "tags": [
+      "旗舰",
+      "推理",
+      "编程",
+      "1M上下文",
+      "Agent",
+      "多模态"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "minimax-m3-1-flash",
+    "name": "MiniMax-M3.1-Flash",
+    "company": "MiniMax",
+    "origin": "cn",
+    "date": "2026-10",
+    "params": "428B (23B 激活)",
+    "flagship": false,
+    "desc": "MiniMax 2026-10-19 在开放平台上线、10 月 23 日开源权重（Hugging Face: MiniMaxAI/MiniMax-M3.1-Flash，MiniMax Community 许可）。原生多模态 MoE，428B 总参数、23B 激活，1M 上下文，支持文本/图像/视频输入；相比 M3 全模型改用稀疏注意力（MSA，前三个全注意力层也换成稀疏）、加量化感知训练与 DSpark 投机解码，官方称线上推理速度约为上代 3 倍、Agent 类任务综合使用成本降低 70%。基准：BankerToolBench 76.2、DeepSWE v1.1 73.7%、OSWorld V2 61.7、CyberGym 82.2、Agents' Last Exam 29.6、Automation-Bench 62.8。定价每百万 token 输入 1 元、输出 4 元、缓存读取 0.1 元；上线 72 小时处理超 100 万亿 token，昇腾、平头哥、NVIDIA、AMD 等首日接入。",
+    "tags": [
+      "多模态",
+      "MoE",
+      "1M上下文",
+      "开源",
+      "Agent",
+      "编程",
+      "性价比"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image",
+      "video"
+    ]
+  },
+  {
+    "id": "raon-1-mini-preview",
+    "name": "Raon-1 mini (Preview)",
+    "company": "KRAFTON AI",
+    "origin": "other",
+    "date": "2026-10",
+    "params": "28.8B (4.3B 激活)",
+    "flagship": false,
+    "desc": "韩国游戏公司 KRAFTON（魁匠团）旗下 KRAFTON AI 于 2026-10-21 在 Hugging Face 放出 Raon-1 mini 预览版权重（Apache 2.0，需申请访问），官方口径 30B-A4B，架构设计与从零训练全程自研。25 层中 18 层为自研 Raon Delta Attention（解耦 Kimi Delta Attention 的擦除/写入门控，改长上下文表现）、7 层 Gated MLA，仅 MLA 层保留 KV cache；每 token 激活 128 个路由专家中的 6 个加 1 个共享专家，标称 262,144 token 上下文。训练语言含韩英日中西班牙法泰七语，主打韩语对话与 Agent 工具调用，已适配 Hermes Agent、OpenCode，另附 DFlash2 投机解码草稿模型与 MXFP8/NVFP4 量化（单张 RTX 5090 32GB 可跑）。官方称编程与 Agent 任务与 Meta Muse Glimmer 30B 相当、速度更快；预览版规格可能变动，正式版与更大模型后续发布。",
+    "tags": [
+      "MoE",
+      "开源",
+      "多语言",
+      "Agent",
+      "长上下文",
+      "预览"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
   }
 ]

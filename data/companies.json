@@ -148,5 +148,10 @@
     "color": "#7c3aed",
     "logo": "R",
     "origin": "us"
+  },
+  "KRAFTON AI": {
+    "color": "#004C97",
+    "logo": "KR",
+    "origin": "other"
   }
 }
