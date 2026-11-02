@@ -4301,5 +4301,93 @@
     "modalities": [
       "text"
     ]
+  },
+  {
+    "id": "gemini-4-carbon",
+    "name": "Gemini 4 Carbon",
+    "company": "Google",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "未公开",
+    "flagship": true,
+    "desc": "Google DeepMind 于 2026-10-28 发布的前沿模型，距离 Gemini 4 Argon 发布仅两周，官方称其为最强模型，主打网络安全防御与长程（long-horizon）工程任务。Artificial Analysis 智能指数 v5.0 更新后以 59 分登顶第一，超过 Claude Opus 5.5 与 GPT-6 Astra；在漏洞发现 SEC-bench Pro（88.2%）、漏洞利用验证 ExploitGym（54.8%）、根因修补 CWE-bench（71.0%）三项上创下 SOTA，Gray Swan 间接提示注入攻击成功率降至 0.0%，Terminal-Bench 4.0 作弊率 0.0%，内部高严重度失准告警下降约 80%；WebDev Arena 提升 89 elo 至第 4 名（1768）。定价延续 Argon 的尝鲜价：输入 $2 / 输出 $10 每百万 tokens，缓存输入再低 95%；介绍期结束后恢复 $4/$20，官方称即便原价每道测试题成本仍比 Claude Opus 5.5 低约 23%。发布节奏审慎：先向部分网络防御者开放，再通过 Fairwind Program 扩至可信伙伴，之后才向开发者、企业与消费者推出，参与美国政府预发布测试流程；官方尚未公布 API 模型 ID 与上下文窗口。",
+    "tags": [
+      "旗舰",
+      "网络安全",
+      "编程",
+      "长程任务",
+      "分阶段开放"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "gpt6-1-terra",
+    "name": "GPT-6.1 Terra",
+    "company": "OpenAI",
+    "origin": "us",
+    "date": "2026-10",
+    "params": "未公开",
+    "flagship": false,
+    "desc": "OpenAI 于 2026-10-26 在 API 上线 GPT-6.1 Terra，接替 GPT-5.6 Terra 的「快而省」档，官方定位是视觉推理、精确计算机使用与清晰自然的写作，典型任务为商品图与目录匹配、技术图纸比对、操作应用界面、起草与改写文本。规格：1,050,000 tokens 上下文的原生多模态模型（最大输入 922K、最大输出 128K），知识截止 2026-06-01，输入文本与图像、输出文本，推理强度支持 none / low / medium / high / xhigh / max（Astra 与 6.1 Sol 不支持 none）。定价每百万 tokens：输入 $1、缓存输入 $0.05、缓存写入 $1.25（12 小时保留 $2.50）、输出 $5，为同代 GPT-6.1 Sol 的一半、GPT-6 Astra 的十分之一；超过 272K 输入 tokens 的请求按 2 倍输入与 1.5 倍输出计价，Batch / Flex 半价、Fast 档 2 倍价。通过 Responses 与 Chat Completions 提供服务，工具调用需走 Responses API。",
+    "tags": [
+      "性价比",
+      "视觉",
+      "计算机使用",
+      "1M上下文",
+      "高效"
+    ],
+    "open_source": false,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "sensenova-loop-9b",
+    "name": "SenseNova-Loop-9B-Preview",
+    "company": "商汤科技",
+    "origin": "cn",
+    "date": "2026-10",
+    "params": "9B（推理时约 14.6B，激活未公开）",
+    "flagship": false,
+    "desc": "商汤 2026-10-30 开源的多模态预览模型，用循环 Transformer 以共享权重换取计算深度：32 层解码器中第 4–27 层连续执行两遍，单次前向等价 56 层计算而只存 32 层权重，因此总参数约 9B、推理参数量记为约 14.6B；循环段内用双路流形约束超连接（mHC，Sinkhorn 归一化 20 次迭代）管理两条残差流，注意力按「3 层线性 + 1 层全注意力」交替。隐层 4096、FFN 12288、词表 248,320、全注意力头/KV 头 16/4，训练序列最长 262,144 tokens（输入输出共享，官方提示训练长度不等于服务上限），输入文本与图像、输出文本，面向长文档理解、编程与外部工具调用。权重以 Apache 2.0 在 Hugging Face（sensenova/SenseNova-Loop-9B-Preview）与 GitHub 放出，支持 MTP 投机解码，Dspark 与 Dflash2 仍在训练；官方宣称 9B 可媲美约 27B 参数模型，并给出 BIRD-Dev、Terminal Bench 2.1、TeamBench、AutomationBench、RaccoonPPTBench 等 8 项基准的对比，技术报告尚未发布。",
+    "tags": [
+      "开源",
+      "多模态",
+      "循环计算",
+      "长上下文",
+      "Agent",
+      "预览"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "id": "apex-35b-v1",
+    "name": "Apex-35B-V1.0",
+    "company": "超衍智能",
+    "origin": "cn",
+    "date": "2026-10",
+    "params": "35B（约 3B 激活）",
+    "flagship": false,
+    "desc": "超衍智能（Apex Intelligence，清华助理教授陈勇超创立）2026-10-28 在 Hugging Face 放出的首个基础模型，基于 Qwen3.6-35B-A3B 继续做中训练与后训练，35B 总参数、每 token 约 3B 激活，262,144 tokens 上下文（输入输出共享），输入输出均为文本。主打「递归自我改进（RSI）」：内部 Apex Research 自动化研究系统参与训练数据构造、自动化实验与训练配方探索、GPU kernel 与推理优化，官方称已验证的成果会回流到后续训练；同时面向通用任务与科研场景（AI 研究、计算科学、机器人仿真），并支持动态思考（自行决定是否推理及思考长度）。权重与代码以 Apache 2.0 放出（Hugging Face: Apexintelligence-AI/Apex-35B-V1.0），GGUF 提供 BF16 与 28 种量化（Q8_0 37.8GB 至 IQ1_S 9.0GB）。模型卡基准：SciCode 62.6 / 75.6（基座 Qwen3.6-35B-A3B 为 37.5 / 60.6）、FrontierScience 40.0（基座 21.7），但 SciCode 仍低于 GLM-5.3 的 79.2 / 91.3。",
+    "tags": [
+      "开源",
+      "MoE",
+      "Agent",
+      "科研",
+      "长上下文"
+    ],
+    "open_source": true,
+    "modalities": [
+      "text"
+    ]
   }
 ]
