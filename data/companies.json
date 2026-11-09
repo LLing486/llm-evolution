@@ -163,5 +163,10 @@
     "color": "#a21caf",
     "logo": "超",
     "origin": "cn"
+  },
+  "美团": {
+    "color": "#FFD100",
+    "logo": "团",
+    "origin": "cn"
   }
 }
